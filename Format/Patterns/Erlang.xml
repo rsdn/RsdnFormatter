@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<language xmlns="http://rsdn.ru/coloring" name="Erlang" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m:%.*?$)</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry><![CDATA["((?<!\\)\\"|[^"])*"]]></entry>
+		<entry>\$(\W|\w(?!\w)|\\['"\\bdefnrstv]|\\\^[A-Z@\[\\\]\^_]|\\[0-7]{1,3})</entry>
+	</pattern>
+	<!-- preprocessor definitions -->
+	<pattern name="kw" postfix="\b">
+        <entry>-author</entry>
+        <entry>-compile</entry>
+        <entry>-copyright</entry>
+        <entry>-date</entry>
+        <entry>-define</entry>
+        <entry>-doc</entry>
+        <entry>-else</entry>
+        <entry>-endif</entry>
+        <entry>-export</entry>
+        <entry>-file</entry>
+        <entry>-ifdef</entry>
+        <entry>-ifndef</entry>
+        <entry>-import</entry>
+        <entry>-include</entry>
+        <entry>-include_lib</entry>
+        <entry>-module</entry>
+        <entry>-record</entry>
+        <entry>-undef</entry>
+        <entry>-vsn</entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>after</entry>
+        <entry>and</entry>
+        <entry>andalso</entry>
+        <entry>band</entry>
+        <entry>begin</entry>
+        <entry>bnot</entry>
+        <entry>bor</entry>
+        <entry>bsl</entry>
+        <entry>bsr</entry>
+        <entry>bxor</entry>
+        <entry>case</entry>
+        <entry>catch</entry>
+        <entry>cond</entry>
+        <entry>div</entry>
+        <entry>end</entry>
+        <entry>fun</entry>
+        <entry>if</entry>
+        <entry>let</entry>
+        <entry>not</entry>
+        <entry>of</entry>
+        <entry>or</entry>
+        <entry>orelse</entry>
+        <entry>query</entry>
+        <entry>receive</entry>
+        <entry>rem</entry>
+        <entry>try</entry>
+        <entry>when</entry>
+        <entry>xor</entry>
+	</pattern>
+	<!-- define clause -->
+	<pattern name="kw">
+		<entry>-&gt;</entry>
+		<entry>;</entry>
+		<entry>.</entry>
+	</pattern>
+</language>

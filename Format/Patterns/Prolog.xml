@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<language xmlns="http://rsdn.ru/coloring" name="Prolog" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m:%.*?$)</entry>
+		<entry>(?s:/\*.*?\*/)</entry>
+	</pattern>
+	<!-- strings -->
+	<pattern name="str">
+		<entry><![CDATA["((?<!\\)\\"|[^"])*"]]></entry>
+	</pattern>
+	<!-- there are no keywords, so we highlight the common predicates -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>abolish</entry>
+        <entry>append</entry>
+        <entry>arg</entry>
+        <entry>asserta</entry>
+        <entry>assertz</entry>
+        <entry>at_end_of_stream</entry>
+        <entry>atom</entry>
+        <entry>atom_chars</entry>
+        <entry>atom_codes</entry>
+        <entry>atom_concat</entry>
+        <entry>atom_length</entry>
+        <entry>atomic</entry>
+        <entry>bagof</entry>
+        <entry>call</entry>
+        <entry>catch</entry>
+        <entry>char_code</entry>
+        <entry>char_conversion</entry>
+        <entry>clause</entry>
+        <entry>close</entry>
+        <entry>compound</entry>
+        <entry>copy_term</entry>
+        <entry>current_char_conversion</entry>
+        <entry>current_input</entry>
+        <entry>current_op</entry>
+        <entry>current_output</entry>
+        <entry>current_predicate</entry>
+        <entry>current_prolog_flag</entry>
+        <entry>dynamic</entry>
+        <entry>fail</entry>
+        <entry>findall</entry>
+        <entry>float</entry>
+        <entry>flush_output</entry>
+        <entry>functor</entry>
+        <entry>get_byte</entry>
+        <entry>get_char</entry>
+        <entry>get_code</entry>
+        <entry>halt</entry>
+        <entry>integer</entry>
+        <entry>is</entry>
+        <entry>meta_predicate</entry>
+        <entry>module</entry>
+        <entry>multifile</entry>
+        <entry>nl</entry>
+        <entry>nonvar</entry>
+        <entry>number</entry>
+        <entry>number_chars</entry>
+        <entry>number_codes</entry>
+        <entry>once</entry>
+        <entry>op</entry>
+        <entry>open</entry>
+        <entry>peek_byte</entry>
+        <entry>peek_char</entry>
+        <entry>peek_code</entry>
+        <entry>put_byte</entry>
+        <entry>put_char</entry>
+        <entry>put_code</entry>
+        <entry>read</entry>
+        <entry>read_term</entry>
+        <entry>repeat</entry>
+        <entry>retract</entry>
+        <entry>set_input</entry>
+        <entry>set_output</entry>
+        <entry>set_prolog_flag</entry>
+        <entry>set_stream_position</entry>
+        <entry>setof</entry>
+        <entry>stream_property</entry>
+        <entry>sub_atom</entry>
+        <entry>throw</entry>
+        <entry>true</entry>
+        <entry>unify_with_occurs_check</entry>
+        <entry>var</entry>
+        <entry>write</entry>
+        <entry>write_canonical</entry>
+        <entry>write_term</entry>
+        <entry>writeq</entry>
+	</pattern>
+</language>

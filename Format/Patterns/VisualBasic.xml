@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language xmlns="http://rsdn.ru/coloring" name="VisualBasic" options="(?in)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m:'.*?$)</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry>(?s)"(""|[^"])*"</entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+	
+		<!-- Operators -->
+		<entry>AddressOf</entry>
+		<entry>And</entry>
+		<entry>Eqv</entry>
+		<entry>Imp</entry>
+		<entry>Is</entry>
+		<entry>Like</entry>
+		<entry>Mod</entry>
+		<entry>Not</entry>
+		<entry>Or</entry>
+		<entry>Xor</entry>
+		
+    <!-- Declarative statements -->
+    <entry>Option Base (0|1)</entry>
+    <entry>Option Compare Binary</entry>
+    <entry>Option Compare Text</entry>
+    <entry>Option Compare</entry>
+    <entry>Database</entry>
+    <entry>Option Explicit</entry>
+		<entry>Option Private Module</entry>
+    
+ 		<entry>Private</entry>
+		<entry>Public</entry>
+		<entry>Static</entry>
+		<entry>Friend</entry>
+		<entry>Global</entry>
+		<entry>WithEvents</entry>
+
+		<entry>Const</entry>
+		<entry>Dim</entry>
+		<entry>Type</entry>
+		<entry>Function</entry>
+		<entry>Sub</entry>
+		<entry>Property</entry>
+		<entry>Enum</entry>
+		<entry>Event</entry>
+
+		<entry>Declare</entry>
+		<entry>Lib</entry>
+		<entry>Alias</entry>
+		<entry>Any</entry>
+
+		<entry>Get</entry>
+		<entry>Let</entry>
+		<entry>Set</entry>
+
+		<entry>ByRef</entry>
+		<entry>ByVal</entry>
+		<entry>Optional</entry>
+		<entry>ParamArray</entry>
+		
+		<entry>As</entry>
+		<entry>New</entry>
+
+		<entry>With</entry>
+		
+		<entry>Implements</entry>
+		
+		<entry>DefBool</entry>
+		<entry>DefByte</entry>
+		<entry>DefCur</entry>
+		<entry>DefDate</entry>
+		<entry>DefDbl</entry>
+		<entry>DefInt</entry>
+		<entry>DefLng</entry>
+		<entry>DefObj</entry>
+		<entry>DefSng</entry>
+		<entry>DefStr</entry>
+		<entry>DefVar</entry>
+
+		<!--Simple data types -->
+		<entry>Binary</entry>
+		<entry>Boolean</entry>
+		<entry>Byte</entry>
+		<entry>Date</entry>
+		<entry>Currency</entry>
+		<entry>Double</entry>
+		<entry>Integer</entry>
+		<entry>Long</entry>
+		<entry>Object</entry>
+		<entry>Single</entry>
+		<entry>String</entry>
+		<entry>Variant</entry>
+
+		<!-- Program flow statements -->
+		<entry>Call</entry>
+		<entry>Exit</entry>
+		<entry>GoSub</entry>
+		<entry>GoTo</entry>
+		<entry>On</entry>
+		<entry>Resume</entry>
+		<entry>Return</entry>
+		<entry>Stop</entry>
+		<entry>Error</entry>
+		<entry>Debug</entry>
+		<entry>RaiseEvent</entry>
+
+		<!-- Conditional statements and loops -->				
+		<entry>End</entry>
+		<entry>If</entry>
+		<entry>Else</entry>
+		<entry>Then</entry>
+		<entry>In</entry>
+		<entry>Do</entry>
+		<entry>Loop</entry>
+		<entry>For</entry>
+		<entry>To</entry>
+		<entry>Next</entry>
+		<entry>Step</entry>
+		<entry>Each</entry>
+		<entry>Select</entry>
+		<entry>Case</entry>
+		<entry>While</entry>
+		<entry>Wend</entry>
+
+		<!-- Data type conversion functions -->
+		<entry>CBool</entry>
+		<entry>CByte</entry>
+		<entry>CCur</entry>
+		<entry>CDate</entry>
+		<entry>CDbl</entry>
+		<entry>CΙnt</entry>
+		<entry>CLng</entry>
+		<entry>CSng</entry>
+		<entry>CStr</entry>
+		<entry>CVar</entry>
+		
+		<!-- File operations statements -->
+		<entry>Open</entry>
+		<entry>Close</entry>
+		<entry>Input</entry>
+		<entry>Output</entry>
+		<entry>Random</entry>
+		<entry>Read</entry>
+		<entry>Write</entry>
+		<entry>Len</entry>
+		<entry>Line</entry>
+		<entry>Print</entry>
+		<entry>Name</entry>
+		<entry>Get</entry>
+		<entry>Put</entry>
+		<entry>Seek</entry>	
+		<entry>Lock</entry>
+		<entry>Unlock</entry>
+		<entry>Spc</entry>
+		<entry>Tab</entry>
+
+		<!-- Array statements -->
+		<entry>LBound</entry>
+		<entry>UBound</entry>
+		<entry>Erase</entry>
+		<entry>ReDim</entry>
+		<entry>Preserve</entry>
+
+		<!-- Misc -->
+		<entry>CVErr</entry>
+		<entry>LSet</entry>
+		<entry>RSet</entry>
+		<entry>Nothing</entry>
+		<entry>Null</entry>
+
+		<!-- Others -->		
+		<entry>Try</entry>
+		<entry>Catch</entry>
+		<entry>Finally</entry>
+		<entry>End Try</entry>
+		<entry>ElseIf</entry>
+		<entry>Explicit</entry>
+		<entry>Option</entry>
+		<entry>Randomize</entry>
+		<entry>Empty</entry>
+		<entry>False</entry>
+		<entry>True</entry>
+		<entry>Abs</entry>
+		<entry>Array</entry>
+		<entry>Asc</entry>
+		<entry>Atn</entry>
+		<entry>Chr</entry>
+		<entry>Cos</entry>
+		<entry>CreateObject</entry>
+		<entry>DateAdd</entry>
+		<entry>DateDiff</entry>
+		<entry>DatePart</entry>
+		<entry>DateSerial</entry>
+		<entry>DateValue</entry>
+		<entry>Day</entry>
+		<entry>Exp</entry>
+		<entry>Filter</entry>
+		<entry>Fix</entry>
+		<entry>FormatCurrency</entry>
+		<entry>FormatDateTime</entry>
+		<entry>FormatNumber</entry>
+		<entry>FormatPercent</entry>
+		<entry>GetObject</entry>
+		<entry>Hex</entry>
+		<entry>Hour</entry>
+		<entry>InputBox</entry>
+		<entry>InStr</entry>
+		<entry>InStrRev</entry>
+		<entry>Int</entry>
+		<entry>IsArray</entry>
+		<entry>IsDate</entry>
+		<entry>IsEmpty</entry>
+		<entry>IsNull</entry>
+		<entry>IsNumeric</entry>
+		<entry>IsObject</entry>
+		<entry>Join</entry>
+		<entry>LCase</entry>
+		<entry>LoadPicture</entry>
+		<entry>Log</entry>
+		<entry>LTrim</entry>
+		<entry>Mid</entry>
+		<entry>Minute</entry>
+		<entry>Month</entry>
+		<entry>MonthName</entry>
+		<entry>MsgBox</entry>
+		<entry>Now</entry>
+		<entry>Oct</entry>
+		<entry>Replace</entry>
+		<entry>RGB</entry>
+		<entry>Right</entry>
+		<entry>Rnd</entry>
+		<entry>Round</entry>
+		<entry>RTrim</entry>
+		<entry>ScriptEngine</entry>
+		<entry>ScriptEngineBuildVersion</entry>
+		<entry>ScriptEngineMajorVersion</entry>
+		<entry>ScriptEngineMinorVersion</entry>
+		<entry>Second</entry>
+		<entry>Sgn</entry>
+		<entry>Sin</entry>
+		<entry>Space</entry>
+		<entry>Split</entry>
+		<entry>Sqr</entry>
+		<entry>StrComp</entry>
+		<entry>StrReverse</entry>
+		<entry>Tan</entry>
+		<entry>Time</entry>
+		<entry>TimeSerial</entry>
+		<entry>TimeValue</entry>
+		<entry>Trim</entry>
+		<entry>TypeName</entry>
+		<entry>UCase</entry>
+		<entry>VarType</entry>
+		<entry>Weekday</entry>
+		<entry>WeekdayName</entry>
+		<entry>Year</entry>
+		<entry>Dictionary</entry>
+		<entry>Err</entry>
+		<entry>Add</entry>
+		<entry>AddFolders</entry>
+		<entry>BuildPath</entry>
+		<entry>Clear</entry>
+		<entry>CopyFile</entry>
+		<entry>CopyFolder</entry>
+		<entry>CreateFolder</entry>
+		<entry>CreateTextFile</entry>
+		<entry>Delete</entry>
+		<entry>DeleteFile</entry>
+		<entry>DeleteFolder</entry>
+		<entry>DriveExists</entry>
+		<entry>Exists</entry>
+		<entry>WriteBlankLines</entry>
+		<entry>WriteLine</entry>
+		<entry>AtEndOfLine</entry>
+		<entry>AtEndOfStream</entry>
+		<entry>Attributes</entry>
+		<entry>AvailableSpace</entry>
+		<entry>Column</entry>
+		<entry>CompareMode</entry>
+		<entry>Count</entry>
+		<entry>DateCreated</entry>
+		<entry>DateLastAccessed</entry>
+		<entry>DateLastModified</entry>
+		<entry>Description</entry>
+		<entry>Drive</entry>
+		<entry>DriveLetter</entry>
+		<entry>Drives</entry>
+		<entry>DriveType</entry>
+		<entry>Type</entry>
+		<entry>VolumeName</entry>
+	</pattern>
+</language>

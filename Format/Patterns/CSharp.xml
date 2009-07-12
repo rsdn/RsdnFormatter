@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<language xmlns="http://rsdn.ru/coloring" name="CSharp" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m://.*?$)</entry>
+		<entry>(?s:/\*.*?\*/)</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry>'([^'\\]|\\['"\\0abfnrtv]|\\x[0-9aAbBcCdDeEfF]{1,4})'</entry>
+		<entry><![CDATA[(?<!@)"((?<!\\)\\"|[^"])*"]]></entry>
+		<entry>(?s)@"(""|[^"])*"</entry>
+	</pattern>
+	<!-- preprocessor definitions -->
+	<pattern name="kw" prefix="#\s*" postfix="\b">
+		<entry>if</entry>
+		<entry>elif</entry>
+		<entry>else</entry>
+		<entry>endif</entry>
+		<entry>define</entry>
+		<entry>undef</entry>
+		<entry>warning</entry>
+		<entry>error</entry>
+		<entry>line</entry>
+		<entry>region</entry>
+		<entry>endregion</entry>
+		<entry>pragma</entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+		<entry>abstract</entry>
+		<entry>as</entry>
+		<entry>base</entry>
+		<entry>bool</entry>
+		<entry>break</entry>
+		<entry>byte</entry>
+		<entry>case</entry>
+		<entry>catch</entry>
+		<entry>char</entry>
+		<entry>checked</entry>
+		<entry>class</entry>
+		<entry>const</entry>
+		<entry>continue</entry>
+		<entry>decimal</entry>
+		<entry>default</entry>
+		<entry>delegate</entry>
+		<entry>do</entry>
+		<entry>double</entry>
+		<entry>else</entry>
+		<entry>enum</entry>
+		<entry>event</entry>
+		<entry>explicit</entry>
+		<entry>extern</entry>
+		<entry>false</entry>
+		<entry>finally</entry>
+		<entry>fixed</entry>
+		<entry>float</entry>
+		<entry>for</entry>
+		<entry>foreach</entry>
+		<entry>goto</entry>
+		<entry>if</entry>
+		<entry>implicit</entry>
+		<entry>in</entry>
+		<entry>int</entry>
+		<entry>interface</entry>
+		<entry>internal</entry>
+		<entry>is</entry>
+		<entry>lock</entry>
+		<entry>long</entry>
+		<entry>namespace</entry>
+		<entry>new</entry>
+		<entry>null</entry>
+		<entry>object</entry>
+		<entry>operator</entry>
+		<entry>out</entry>
+		<entry>override</entry>
+		<entry>params</entry>
+		<entry>private</entry>
+		<entry>protected</entry>
+		<entry>public</entry>
+		<entry>readonly</entry>
+		<entry>ref</entry>
+		<entry>return</entry>
+		<entry>sbyte</entry>
+		<entry>sealed</entry>
+		<entry>short</entry>
+		<entry>sizeof</entry>
+		<entry>stackalloc</entry>
+		<entry>static</entry>
+		<entry>string</entry>
+		<entry>struct</entry>
+		<entry>switch</entry>
+		<entry>this</entry>
+		<entry>throw</entry>
+		<entry>true</entry>
+		<entry>try</entry>
+		<entry>typeof</entry>
+		<entry>uint</entry>
+		<entry>ulong</entry>
+		<entry>unchecked</entry>
+		<entry>unsafe</entry>
+		<entry>ushort</entry>
+		<entry>using</entry>
+		<entry>virtual</entry>
+		<entry>void</entry>
+		<entry>while</entry>
+		<entry>volatile</entry>
+
+		<entry>__arglist</entry>
+		<entry>__makeref</entry>
+		<entry>__reftype</entry>
+		<entry>__refvalue</entry>
+
+		<!-- contextual keywords -->
+		<entry>add</entry>
+		<entry>alias</entry>
+		<entry>dynamic</entry>
+		<entry>get</entry>
+		<entry>global</entry>
+		<entry>partial</entry>
+		<entry>property</entry>
+		<entry>remove</entry>
+		<entry>set</entry>
+		<entry>var</entry>
+		<entry>value</entry>
+		<entry>yield</entry>
+
+		<!-- attribte targets -->
+		<entry>assembly</entry>
+		<entry>field</entry>
+		<entry>method</entry>
+		<entry>module</entry>
+		<entry>param</entry>
+		<entry>type</entry>
+		<entry>typevar</entry>
+
+		<!-- query keywords -->
+        <entry>ascending</entry>
+        <entry>by</entry>
+        <entry>descending</entry>
+        <entry>equals</entry>
+        <entry>from</entry>
+        <entry>group</entry>
+        <entry>into</entry>
+        <entry>join</entry>
+        <entry>let</entry>
+        <entry>on</entry>
+        <entry>orderby</entry>
+        <entry>select</entry>
+        <entry>where</entry>
+
+	</pattern>
+</language>

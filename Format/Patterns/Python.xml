@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<language xmlns="http://rsdn.ru/coloring" name="Python" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m:\#.*?$)</entry>
+		<entry>(?s:[uUrR]?""".*?""")</entry>
+		<entry>(?s:[uUrR]?'''.*?''')</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry><![CDATA[[uUrR]?"((?<!\\)\\"|[^"])*"]]></entry>
+		<entry><![CDATA[[uUrR]?'((?<!\\)\\'|[^'])*']]></entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+            <entry>and</entry>
+            <entry>assert</entry>
+            <entry>break</entry>
+            <entry>class</entry>
+            <entry>continue</entry>
+            <entry>def</entry>
+            <entry>del</entry>
+            <entry>elif</entry>
+            <entry>else</entry>
+            <entry>except</entry>
+            <entry>exec</entry>
+            <entry>finally</entry>
+            <entry>for</entry>
+            <entry>from</entry>
+            <entry>global</entry>
+            <entry>if</entry>
+            <entry>import</entry>
+            <entry>in</entry>
+            <entry>is</entry>
+            <entry>not</entry>
+            <entry>or</entry>
+            <entry>pass</entry>
+            <entry>print</entry>
+            <entry>raise</entry>
+            <entry>return</entry>
+            <entry>try</entry>
+            <entry>while</entry>
+            <entry>yield</entry>
+	</pattern>
+</language>

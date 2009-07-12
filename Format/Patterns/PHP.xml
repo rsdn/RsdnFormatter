@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<language xmlns="http://rsdn.ru/coloring" name="PHP" options="(?in)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m:#.*?$)</entry>
+		<entry>(?s:/\*.*?\*/)</entry>
+		<entry>(?m://.*?$)</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry><![CDATA["((?<!\\)\\"|[^"])*"]]></entry>
+		<entry><![CDATA['((?<!\\)\\'|[^'])*']]></entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+		<entry>and</entry>
+		<entry>or</entry>
+		<entry>xor</entry>
+		<entry>__FILE__</entry>
+		<entry>__LINE__</entry>
+		<entry>array</entry>
+		<entry>as</entry>
+		<entry>break</entry>
+		<entry>case</entry>
+		<entry>cfunction</entry>
+		<entry>class</entry>
+		<entry>const</entry>
+		<entry>continue</entry>
+		<entry>declare</entry>
+		<entry>default</entry>
+		<entry>die</entry>
+		<entry>do</entry>
+		<entry>echo</entry>
+		<entry>else</entry>
+		<entry>elseif</entry>
+		<entry>empty</entry>
+		<entry>enddeclare</entry>
+		<entry>endfor</entry>
+		<entry>endif</entry>
+		<entry>endforeach</entry>
+		<entry>endswitch</entry>
+		<entry>endwhile</entry>
+		<entry>eval</entry>
+		<entry>exit</entry>
+		<entry>extends</entry>
+		<entry>for</entry>
+		<entry>foreach</entry>
+		<entry>function</entry>
+		<entry>global</entry>
+		<entry>if</entry>
+		<entry>include</entry>
+		<entry>include_once</entry>
+		<entry>isset</entry>
+		<entry>list</entry>
+		<entry>new</entry>
+		<entry>old_function</entry>
+		<entry>print</entry>
+		<entry>require</entry>
+		<entry>require_once</entry>
+		<entry>return</entry>
+		<entry>static</entry>
+		<entry>switch</entry>
+		<entry>unset</entry>
+		<entry>use</entry>
+		<entry>var</entry>
+		<entry>while</entry>
+		<entry>__FUNCTION__</entry>
+		<entry>__CLASS__</entry>
+		<entry>boolean</entry>
+		<entry>integer</entry>
+		<entry>float</entry>
+		<entry>string</entry>
+		<entry>object</entry>
+		<entry>resource</entry>
+		<entry>NULL</entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw">
+		<entry>this</entry>
+	</pattern>
+</language>
