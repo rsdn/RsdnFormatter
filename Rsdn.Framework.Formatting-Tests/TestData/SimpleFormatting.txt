@@ -1,0 +1,3 @@
+﻿Normal text
+[b]Bold text[/b]
+[i]Italic text[/i]
