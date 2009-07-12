@@ -8,8 +8,8 @@ namespace Rsdn.Framework.Formatting
 	/// </summary>
 	public class Matcher
 	{
-		private readonly ArrayList matches = new ArrayList();
-		private readonly string pattern;
+		private readonly ArrayList _matches = new ArrayList();
+		private readonly string _pattern;
 
 		/// <summary>
 		/// Class constructor
@@ -17,7 +17,7 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="pattern">Match replacement pattern</param>
 		public Matcher(string pattern)
 		{
-			this.pattern = pattern;
+			_pattern = pattern;
 		}
 
 		/// <summary>
@@ -27,7 +27,7 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Replacement string</returns>
 		public string Match(Match match)
 		{
-			return string.Format(pattern, matches.Add(match));
+			return string.Format(_pattern, _matches.Add(match));
 		}
 
 		/// <summary>
@@ -35,7 +35,7 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		public void Reset()
 		{
-			matches.Clear();
+			_matches.Clear();
 		}
 
 		/// <summary>
@@ -43,7 +43,7 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		public int Count
 		{
-			get { return matches.Count; }
+			get { return _matches.Count; }
 		}
 
 		/// <summary>
@@ -51,7 +51,7 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		public Match this[int index]
 		{
-			get {	return (Match)matches[index]; }
+			get {	return (Match)_matches[index]; }
 		}
 	}
 }

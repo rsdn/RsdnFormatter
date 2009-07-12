@@ -116,6 +116,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Format.Forum.cs" />
+    <Compile Include="FormatterException.cs" />
     <Compile Include="Matcher.cs">
       <SubType>Code</SubType>
     </Compile>

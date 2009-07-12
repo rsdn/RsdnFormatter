@@ -9,8 +9,9 @@ namespace Rsdn.Framework.Formatting
 	/// </summary>
 	public static partial class Format
 	{
-		private static readonly Regex ampersandDetector =
-			new Regex(@"&(?!#([0-9]+|x[0-9a-f]+);)",
+		private static readonly Regex _ampersandDetector =
+			new Regex(
+				@"&(?!#([0-9]+|x[0-9a-f]+);)",
 				RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		/// <summary>
@@ -20,8 +21,10 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Результат.</returns>
 		public static string ReplaceTags(this string str)
 		{
-			return string.IsNullOrEmpty(str) ? str :
-				ReplaceTagsWQ(str).Replace("\"", "&quot;");
+			return
+				string.IsNullOrEmpty(str)
+					? str
+					: ReplaceTagsWQ(str).Replace("\"", "&quot;");
 		}
 
 		/// <summary>
@@ -31,10 +34,12 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Результат.</returns>
 		public static string ReplaceTagsWQ(this string str)
 		{
-			return string.IsNullOrEmpty(str) ? str :
-				ampersandDetector.Replace(str, "&amp;")
-				.Replace(">", "&gt;")
-				.Replace("<", "&lt;");
+			return
+				string.IsNullOrEmpty(str)
+					? str
+					: _ampersandDetector.Replace(str, "&amp;")
+						.Replace(">", "&gt;")
+						.Replace("<", "&lt;");
 		}
 
 		/// <summary>
@@ -55,9 +60,15 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Преобразованная строка.</returns>
 		public static string EncodeJScriptText(this string str)
 		{
-			return string.IsNullOrEmpty(str) ? str :
-				str.Replace("\"", ":quotes:").Replace("'", ":apostroph:").
-					Replace(@"\", @"\\").Replace(":quotes:", @"\""").Replace(":apostroph:", @"\'");
+			return
+				string.IsNullOrEmpty(str)
+				? str
+				: str
+					.Replace("\"", ":quotes:")
+					.Replace("'", ":apostroph:")
+					.Replace(@"\", @"\\")
+					.Replace(":quotes:", @"\""")
+					.Replace(":apostroph:", @"\'");
 		}
 
 		/// <summary>
@@ -68,8 +79,13 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Преобразованный текст.</returns>
 		public static string EncodeAgainstXSS(this string value)
 		{
-			return string.IsNullOrEmpty(value) ? value :
-				value.Replace(" ", "%20").Replace("\t", "%09").Replace("\'", "%27");
+			return
+				string.IsNullOrEmpty(value)
+					? value
+					: value
+						.Replace(" ", "%20")
+						.Replace("\t", "%09")
+						.Replace("\'", "%27");
 		}
 
 		/// <summary>
@@ -96,10 +112,10 @@ namespace Rsdn.Framework.Formatting
 				return errorValue;
 
 			if (o is int)
-				return (int)o;
+				return (int) o;
 
 			int value;
-			return int.TryParse(o.ToString(), out value)? value: errorValue;
+			return int.TryParse(o.ToString(), out value) ? value : errorValue;
 		}
 
 		/// <summary>
@@ -114,10 +130,10 @@ namespace Rsdn.Framework.Formatting
 				return 0;
 
 			if (o is double)
-				return (double)o;
+				return (double) o;
 
 			double value;
-			return double.TryParse(o.ToString(), out value)? value: 0;
+			return double.TryParse(o.ToString(), out value) ? value : 0;
 		}
 
 
@@ -137,7 +153,7 @@ namespace Rsdn.Framework.Formatting
 			if (string.IsNullOrEmpty(tags))
 				return new string[0];
 
-			var mc     = _tagsExtractor.Matches(tags);
+			var mc = _tagsExtractor.Matches(tags);
 			var exTags = new string[mc.Count];
 
 			for (int i = 0; i < mc.Count; i++)
@@ -160,35 +176,35 @@ namespace Rsdn.Framework.Formatting
 		}
 
 
-        ///<summary>
-        /// Убирает цитирование из текста сообщения.
-        ///</summary>
-        /// <param name="msg">Сообщение.</param>
-        /// <returns>Обработанное сообщение</returns>
-        public static string RemoveQuotations(string msg)
-        {
-            msg = TextFormatter.RemoveTaglineTag(msg);
-            msg = TextFormatter.RemoveModeratorTag(msg);
-            msg = Regex.Replace(msg, "Здравствуйте.*ы писали:", "");
-            msg = msg.ReplaceTags();
-            msg = Regex.Replace(msg, TextFormatter.StartCitation + ".*$", "", RegexOptions.Multiline);
+		///<summary>
+		/// Убирает цитирование из текста сообщения.
+		///</summary>
+		/// <param name="msg">Сообщение.</param>
+		/// <returns>Обработанное сообщение</returns>
+		public static string RemoveQuotations(string msg)
+		{
+			msg = TextFormatter.RemoveTaglineTag(msg);
+			msg = TextFormatter.RemoveModeratorTag(msg);
+			msg = Regex.Replace(msg, "Здравствуйте.*ы писали:", "");
+			msg = msg.ReplaceTags();
+			msg = Regex.Replace(msg, TextFormatter.StartCitation + ".*$", "", RegexOptions.Multiline);
 
-            return msg;
-        }
+			return msg;
+		}
 
 		/// <summary>
 		/// Инкапсулирует функции форматирования даты.
 		/// </summary>
 		public class Date
 		{
-			private readonly DateTime dateTimeValue;
+			private readonly DateTime _dateTimeValue;
 
 			/// <summary>
 			/// Контсруктор объекта.
 			/// </summary>
 			public Date()
 			{
-				dateTimeValue = DateTime.Now;
+				_dateTimeValue = DateTime.Now;
 			}
 
 			/// <summary>
@@ -197,7 +213,7 @@ namespace Rsdn.Framework.Formatting
 			/// <param name="dateTime">Дата.</param>
 			public Date(DateTime dateTime)
 			{
-				dateTimeValue = dateTime;
+				_dateTimeValue = dateTime;
 			}
 
 			/// <summary>
@@ -210,12 +226,12 @@ namespace Rsdn.Framework.Formatting
 				double timezoneOffsetMinutes = 0;
 				if (HttpContext.Current != null)
 				{
-					try
-					{
-						timezoneOffsetMinutes = (HttpContext.Current.Request.Cookies["tz"] != null) ?
-							double.Parse(HttpContext.Current.Request.Cookies["tz"].Value) : 0;
-					}
-					catch (Exception) { }
+					var tzCookie = HttpContext.Current.Request.Cookies["tz"];
+					double val;
+					timezoneOffsetMinutes = 
+						tzCookie != null && double.TryParse(tzCookie.Value, out val)
+							? val
+							: 0;
 				}
 				return timezoneOffsetMinutes;
 			}
@@ -259,9 +275,11 @@ namespace Rsdn.Framework.Formatting
 			/// <returns></returns>
 			public static DateTime Correct(object serverTime, double clientTimezoneOffsetMinutes)
 			{
-				return (serverTime is DateTime) ?
-					((DateTime)serverTime).ToUniversalTime().AddMinutes(clientTimezoneOffsetMinutes) :
-					new DateTime(0);
+				return (serverTime is DateTime)
+				       	?
+				       		((DateTime) serverTime).ToUniversalTime().AddMinutes(clientTimezoneOffsetMinutes)
+				       	:
+				       		new DateTime(0);
 			}
 
 			/// <summary>
@@ -270,7 +288,7 @@ namespace Rsdn.Framework.Formatting
 			/// <returns>Результирующая строка.</returns>
 			public string ToYearString()
 			{
-				return ToYearString(dateTimeValue);
+				return ToYearString(_dateTimeValue);
 			}
 
 			/// <summary>
@@ -289,7 +307,7 @@ namespace Rsdn.Framework.Formatting
 			/// <returns>Результирующая строка.</returns>
 			public string ToLongString()
 			{
-				return ToLongString(dateTimeValue);
+				return ToLongString(_dateTimeValue);
 			}
 
 			/// <summary>
@@ -308,7 +326,7 @@ namespace Rsdn.Framework.Formatting
 			/// <returns>Результирующая строка.</returns>
 			public string ToShortString()
 			{
-				return ToShortString(dateTimeValue);
+				return ToShortString(_dateTimeValue);
 			}
 
 			/// <summary>
@@ -328,7 +346,7 @@ namespace Rsdn.Framework.Formatting
 			/// <returns>Результирующая строка.</returns>
 			public string ToDependString()
 			{
-				return ToDependString(dateTimeValue);
+				return ToDependString(_dateTimeValue);
 			}
 
 			/// <summary>
@@ -339,8 +357,10 @@ namespace Rsdn.Framework.Formatting
 			/// <returns>Результирующая строка.</returns>
 			public static string ToDependString(DateTime dateTime)
 			{
-				return (dateTime > DateTime.Now.AddMonths(-6)) ?
-					ToShortString(dateTime) : ToLongString(dateTime);
+				return (dateTime > DateTime.Now.AddMonths(-6))
+				       	?
+				       		ToShortString(dateTime)
+				       	: ToLongString(dateTime);
 			}
 
 			/// <summary>
@@ -380,12 +400,11 @@ namespace Rsdn.Framework.Formatting
 			{
 				return new DateTime(dateTime.Year, dateTime.Month, 1);
 			}
-
 		}
 
 		/// <summary>
 		/// Top level RSDN domain name
 		/// </summary>
 		public static string RsdnDomainName = "rsdn.ru";
-	} 
+	}
 }

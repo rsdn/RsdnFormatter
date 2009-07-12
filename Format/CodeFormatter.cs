@@ -1,10 +1,9 @@
+using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Schema;
-using Rsdn.Framework.Common;
 
 namespace Rsdn.Framework.Formatting
 {
@@ -18,18 +17,23 @@ namespace Rsdn.Framework.Formatting
 		/// Source XML validating schemas (XSD)
 		/// </summary>
 		#pragma warning disable 618
-		protected static XmlSchemaCollection xmlSchemas;
+		private static readonly XmlSchemaCollection _xmlSchemas;
 		#pragma warning restore 618
 
 		static CodeFormatter()
 		{
 			//Load the schema collection.
+			var resource =
+				typeof (CodeFormatter)
+					.Assembly
+					.GetManifestResourceStream("Rsdn.Framework.Formatting.Patterns.PatternSchema.xsd");
+			Debug.Assert(resource != null);
 			#pragma warning disable 618
-			xmlSchemas = new XmlSchemaCollection
-     	{
-     		XmlSchema.Read(Assembly.GetExecutingAssembly().GetManifestResourceStream(
-     		               	"Rsdn.Framework.Formatting.Patterns.PatternSchema.xsd"), null)
-     	};
+			_xmlSchemas =
+				new XmlSchemaCollection
+				{
+					XmlSchema.Read(resource, null)
+				};
 			#pragma warning restore 618
 		}
 
@@ -37,19 +41,19 @@ namespace Rsdn.Framework.Formatting
 		/// Регулярное выражение, используемое при расераске.
 		/// Получается после преобразования исходных данных.
 		/// </summary>
-		protected Regex colorerRegex;
-		
+		protected Regex ColorerRegex;
+
 		/// <summary>
 		/// Массив имен именованых групп в регулярном выражении
 		/// Используется при поиске имени группы по ее номеру
 		/// </summary>
-		protected string[] groupNames;
-		
+		protected string[] GroupNames;
+
 		/// <summary>
 		/// Число групп в регулярном выражении
 		/// </summary>
-		protected int countGroups;
-	
+		protected int CountGroups;
+
 		/// <summary>
 		/// Создание экземпляра раскрасивальщика.
 		/// </summary>
@@ -68,11 +72,14 @@ namespace Rsdn.Framework.Formatting
 				var regexString = new StringBuilder();
 
 				#pragma warning disable 618
-				var validatingReader = new XmlValidatingReader(new XmlTextReader(xmlSource));
+				var validatingReader =
+					new XmlValidatingReader(new XmlTextReader(xmlSource))
+					{
+						ValidationType = ValidationType.Schema
+					};
 				#pragma warning restore 618
 
-				validatingReader.ValidationType = ValidationType.Schema;
-				validatingReader.Schemas.Add(xmlSchemas);
+				validatingReader.Schemas.Add(_xmlSchemas);
 
 				var doc = new XmlDocument();
 				doc.Load(validatingReader);
@@ -89,6 +96,7 @@ namespace Rsdn.Framework.Formatting
 
 				// Выборка шаблонов
 				var syntaxis = root.SelectNodes("cc:pattern", namespaceManager);
+				Debug.Assert(syntaxis != null);
 				for (var i = 0; i < syntaxis.Count; i++)
 				{
 					if (i > 0)
@@ -100,6 +108,7 @@ namespace Rsdn.Framework.Formatting
 
 					// Выборка элементов шаблона
 					var items = syntaxis[i].SelectNodes("cc:entry", namespaceManager);
+					Debug.Assert(items != null);
 					for (var j = 0; j < items.Count; j++)
 					{
 						if (j > 0)
@@ -111,22 +120,22 @@ namespace Rsdn.Framework.Formatting
 				}			
 
 				// Создание регулярного выражения
-				colorerRegex = new Regex(regexString.ToString(), options);
+				ColorerRegex = new Regex(regexString.ToString(), options);
 				// Чтение параметров регулярного выражения
-				countGroups = colorerRegex.GetGroupNumbers().Length;
-				var numbers = colorerRegex.GetGroupNumbers();
-				var names = colorerRegex.GetGroupNames();
-				groupNames = new string[numbers.Length];
+				CountGroups = ColorerRegex.GetGroupNumbers().Length;
+				var numbers = ColorerRegex.GetGroupNumbers();
+				var names = ColorerRegex.GetGroupNames();
+				GroupNames = new string[numbers.Length];
 				for (var i = 0; i < numbers.Length; i++)
-					groupNames[numbers[i]] = names[i];
+					GroupNames[numbers[i]] = names[i];
 			}
 			catch (XmlException xmlException)
 			{
-				throw new RsdnException("Language color pattern source xml stream is not valid", xmlException);
+				throw new FormatterException("Language color pattern source xml stream is not valid", xmlException);
 			}
 			catch (XmlSchemaException schemaException)
 			{
-				throw new RsdnException("Language color pattern source xml stream is not valid", schemaException);
+				throw new FormatterException("Language color pattern source xml stream is not valid", schemaException);
 			}
 		}
 
@@ -137,7 +146,7 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Преобразованный текст</returns>
 		public string Transform(string sourceText)
 		{
-			return colorerRegex.Replace(sourceText, new MatchEvaluator(ReplaceEvaluator));
+			return ColorerRegex.Replace(sourceText, new MatchEvaluator(ReplaceEvaluator));
 		}
 
 		/// <summary>
@@ -150,10 +159,10 @@ namespace Rsdn.Framework.Formatting
 			var capturedGroup = "";
 			// get captured group's name
 			// 0 is all matched expression, start from 1
-			for (var i = 1; i < countGroups; i++)
+			for (var i = 1; i < CountGroups; i++)
 				if (match.Groups[i].Success)
 				{
-					capturedGroup = groupNames[i];
+					capturedGroup = GroupNames[i];
 					break;
 				}
 
