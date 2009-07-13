@@ -1,0 +1,16 @@
+<html>
+	<body>
+<h1 class='formatter'>Header 1</h1><br />
+Normal Text<br />
+<h2 class='formatter'>Header 2</h2><br />
+Normal Text<br />
+<h3 class='formatter'>Header 3</h3><br />
+Normal Text<br />
+<h4 class='formatter'>Header 4</h4><br />
+Normal Text<br />
+<h5 class='formatter'>Header 5</h5><br />
+Normal Text<br />
+<h6 class='formatter'>Header 6</h6><br />
+Normal Text
+	</body>
+</html>

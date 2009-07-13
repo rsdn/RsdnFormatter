@@ -62,10 +62,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestData\Heading.txt" />
+    <Content Include="TestData\Quotation.txt" />
+    <Content Include="TestData\RsdnLink.txt" />
     <Content Include="TestData\SimpleFormatting.txt" />
+    <Content Include="TestData\Smiles.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="TestData\Heading.gold" />
+    <None Include="TestData\Quotation.gold" />
+    <None Include="TestData\RsdnLink.gold" />
     <None Include="TestData\SimpleFormatting.gold" />
+    <None Include="TestData\Smiles.gold" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

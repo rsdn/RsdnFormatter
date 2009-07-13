@@ -1,7 +1,5 @@
 using System.Text.RegularExpressions;
 
-using Rsdn.Framework.Common;
-
 namespace Rsdn.Framework.Formatting
 {
 	public static partial class Format
@@ -9,12 +7,12 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Инкапсулирует функции форматирования сообщений форума.
 		/// </summary>
-		public class Forum : RsdnMbrObject
+		public class Forum
 		{
 			/// <summary>
 			/// Regex for detecting Re: and Re[number]: prefixes in subject at the start of the line
 			/// </summary>
-			private static readonly Regex reDetecter =
+			private static readonly Regex _reDetector =
 				new Regex(@"(?in)^((Re|На)(\[(?<number>\d+)\])?:\s*)+", RegexOptions.Compiled);
 
 			/// <summary>
@@ -28,7 +26,7 @@ namespace Rsdn.Framework.Formatting
 					return subj;
 
 				// Удаляем элемент Re[..]
-				return reDetecter.Replace(subj, "");
+				return _reDetector.Replace(subj, "");
 			}
 
 			/// <summary>
@@ -55,7 +53,7 @@ namespace Rsdn.Framework.Formatting
 			public static int GetSubjectDeep(string subject)
 			{
 				var level = 0;
-				var reMatch = reDetecter.Match(subject);
+				var reMatch = _reDetector.Match(subject);
 				if (reMatch.Success)
 				{
 					level = !reMatch.Groups["number"].Success ? 1 :
@@ -90,7 +88,7 @@ namespace Rsdn.Framework.Formatting
 			/// <returns>Откорректированная тема сообщения.</returns>
 			public static string AdjustSubject(int level, string subject)
 			{
-				return reDetecter.Replace(subject, new MatchEvaluator(
+				return _reDetector.Replace(subject, new MatchEvaluator(
 					match =>
 						GetRePrefix(match.Groups["number"].Success ?
 							int.Parse(match.Groups["number"].Captures[0].Value) - level : 1)

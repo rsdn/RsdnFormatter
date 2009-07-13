@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsdn.Framework.Common", "Common\Rsdn.Framework.Common.csproj", "{DF742233-47DC-46D8-8343-2F0C65E91FD1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsdn.Framework.Formatting", "Format\Rsdn.Framework.Formatting.csproj", "{5D93361E-3F17-4553-91F0-B6C24DEBB4CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsdn.Framework.Formatting-Tests", "Rsdn.Framework.Formatting-Tests\Rsdn.Framework.Formatting-Tests.csproj", "{4445C5D6-9879-4CF6-99D1-F2B6A13867E0}"
@@ -14,12 +12,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF742233-47DC-46D8-8343-2F0C65E91FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF742233-47DC-46D8-8343-2F0C65E91FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF742233-47DC-46D8-8343-2F0C65E91FD1}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
-		{DF742233-47DC-46D8-8343-2F0C65E91FD1}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
-		{DF742233-47DC-46D8-8343-2F0C65E91FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF742233-47DC-46D8-8343-2F0C65E91FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D93361E-3F17-4553-91F0-B6C24DEBB4CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D93361E-3F17-4553-91F0-B6C24DEBB4CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D93361E-3F17-4553-91F0-B6C24DEBB4CC}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU

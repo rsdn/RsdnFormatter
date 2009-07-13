@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 
 using NUnit.Framework;
 
@@ -11,10 +12,11 @@ namespace Rsdn.Framework.Formatting.Tests
 			var formatter = new TextFormatter();
 			string result;
 			using (var reader = new StreamReader(srcPath))
-				result = formatter.Format(reader.ReadToEnd());
+				result = string.Format("<html>\r\n\t<body>\r\n{0}\r\n\t</body>\r\n</html>", formatter.Format(reader.ReadToEnd()));
 
 			var fail = false;
 			string resLine = "", goldLine = "";
+			var lineNumber = 0;
 			if (!File.Exists(goldPath))
 				fail = true;
 			else
@@ -22,6 +24,7 @@ namespace Rsdn.Framework.Formatting.Tests
 				using (var goldReader = new StreamReader(goldPath))
 					while ((resLine = resReader.ReadLine()) != null)
 					{
+						lineNumber++;
 						goldLine = goldReader.ReadLine();
 						if (resLine != goldLine)
 						{
@@ -30,15 +33,18 @@ namespace Rsdn.Framework.Formatting.Tests
 						}
 					}
 
-			if (fail)
-			{
-				File.WriteAllText(goldPath + ".actual", result);
-				Assert.Fail(
-					string.Format(
-						"Gold data differs from result.\r\n\tActualLine = '{0}'\r\n\tGoldLine = '{1}'",
-						resLine,
-						goldLine));
-			}
+			if (!fail)
+				return;
+
+			File.WriteAllText(goldPath + ".actual", result);
+			var sb = new StringBuilder("Gold data differs from result.\r\n");
+			if (lineNumber > 0)
+				sb.AppendFormat("LineNumber = {0}\r\n", lineNumber);
+			if (resLine != "")
+				sb.AppendFormat("ActualLine = '{0}'\r\n", resLine);
+			if (goldLine != "")
+				sb.AppendFormat("GoldLine = '{0}'\r\n", goldLine);
+			Assert.Fail(sb.ToString());
 		}
 	}
 }

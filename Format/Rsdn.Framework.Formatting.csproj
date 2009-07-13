@@ -147,12 +147,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Rsdn.Framework.Common.csproj">
-      <Project>{DF742233-47DC-46D8-8343-2F0C65E91FD1}</Project>
-      <Name>Rsdn.Framework.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Patterns\Erlang.xml" />
     <EmbeddedResource Include="Patterns\Haskell.xml" />
     <EmbeddedResource Include="Patterns\Lisp.xml" />

@@ -9,8 +9,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
-using Rsdn.Framework.Common;
-
 namespace Rsdn.Framework.Formatting
 {
 	/// <summary>
@@ -19,52 +17,21 @@ namespace Rsdn.Framework.Formatting
 	public class TextFormatter
 	{
 		/// <summary>
-		/// Default image path.
-		/// </summary>
-		protected const string DefaultImagePath = "~/Forum/Images/";
-
-		/// <summary>
 		/// Создаёт экземпляр класса <b>TextFormatter</b>.
 		/// </summary>
-		public TextFormatter() : this(DefaultImagePath)
-		{
-		}
+		public TextFormatter() : this(null)
+		{}
 
 		/// <summary>
 		/// Создаёт экземпляр класса <b>TextFormatter</b>
-		/// с указанным префиксом для картинок.
-		/// </summary>
-		/// <param name="imagePrefix">Префикс картинок.</param>
-		public TextFormatter(string imagePrefix) : this(imagePrefix, null)
-		{
-		}
-
-		/// <summary>
-		/// Создаёт экземпляр класса <b>TextFormatter</b>
-		/// с указанным префиксом для картинок.
 		/// </summary>
 		/// <param name="imagesDelegate">Делегат для обработки картинок.
 		/// Если null - используется делегат по умолчанию <see cref="DefaultProcessImagesDelegate"/>.
 		/// </param>
 		public TextFormatter(ProcessImagesDelegate imagesDelegate)
-			: this(DefaultImagePath, imagesDelegate)
-		{
-		}
-
-		/// <summary>
-		/// Создаёт экземпляр класса <b>TextFormatter</b>
-		/// с указанным префиксом для картинок.
-		/// </summary>
-		/// <param name="imagePrefix">Префикс картинок.</param>
-		/// <param name="imagesDelegate">Делегат для обработки картинок.
-		/// Если null - используется делегат по умолчанию <see cref="DefaultProcessImagesDelegate"/>.
-		/// </param>
-		public TextFormatter(string imagePrefix, ProcessImagesDelegate imagesDelegate)
 		{
 			// initialize image handlers
-			_imagePrefix = Utils.ResolvePath(imagePrefix);
-			ImagesDelegate =
-				imagesDelegate ?? new ProcessImagesDelegate(DefaultProcessImagesDelegate);
+			ImagesDelegate = imagesDelegate ?? new ProcessImagesDelegate(DefaultProcessImagesDelegate);
 
 			// initialize URLs formatting handlers
 			SchemeFormatting["ms-help"] = ProcessMsHelpLink;
@@ -93,6 +60,11 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		protected static IDictionary<string, CodeFormatter> CodeFormatters =
 			new Dictionary<string, CodeFormatter>(StringComparer.OrdinalIgnoreCase);
+
+		protected virtual string GetPathToRoot()
+		{
+			return "";
+		}
 
 		#region code color initializing
 		private const string _resPrefix = "Rsdn.Framework.Formatting.Patterns.";
@@ -886,15 +858,13 @@ namespace Rsdn.Framework.Formatting
 		}
 		#endregion
 
-		private readonly string _imagePrefix;
-
 		/// <summary>
 		/// Возвращает префикс для картинок.
 		/// </summary>
 		/// <returns>Строка префикса.</returns>
 		protected virtual string GetImagePrefix()
 		{
-			return _imagePrefix;
+			return "";
 		}
 
 		/// <summary>
@@ -1006,7 +976,7 @@ namespace Rsdn.Framework.Formatting
 					HRef =
 						string.Format(
 							"{0}/Forum/Info/{1}.aspx",
-							Utils.ApplicationRoot,
+							GetPathToRoot(),
 							name.Groups[1].Value),
 					InnerText = name.Groups[1].Value
 				};
@@ -1145,9 +1115,12 @@ namespace Rsdn.Framework.Formatting
 			// http://www.rsdn.ru/forum/?mid=111506
 			//
 			for (var i = 0; i < quoteMatcher.Count; i++)
-				txt = txt.Replace(string.Format(quoteExpression, i),
-				                  string.Format("<blockquote class='q'><p>{0}</p></blockquote>",
-				                                quoteMatcher[i].Groups[1]));
+				txt =
+					txt.Replace(
+						string.Format(quoteExpression, i),
+						string.Format(
+							"<blockquote class='q'><p>{0}</p></blockquote>",
+							quoteMatcher[i].Groups[1]));
 
 			// Обработка смайликов с учетом отмены и http://www.rsdn.ru/forum/?mid=184751
 			if (smile)
@@ -1231,8 +1204,9 @@ namespace Rsdn.Framework.Formatting
 
 			// restore & transform [img] tags
 			for (var i = 0; i < imgMatcher.Count; i++)
-				txt = txt.Replace(string.Format(imgExpression, i),
-				                  ImagesDelegate(this, imgMatcher[i]));
+				txt = txt.Replace(
+					string.Format(imgExpression, i),
+					ImagesDelegate(this, imgMatcher[i]));
 
 			// RSDN links
 			txt = _rsdnLinkDetector.Replace(txt, ProcessRsdnLink);

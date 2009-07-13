@@ -25,5 +25,29 @@ namespace Rsdn.Framework.Formatting.Tests
 		{
 			TestFormat("SimpleFormatting");
 		}
+
+		[Test]
+		public void Heading()
+		{
+			TestFormat("Heading");
+		}
+
+		[Test]
+		public void Quotation()
+		{
+			TestFormat("Quotation");
+		}
+
+		[Test]
+		public void RsdnLink()
+		{
+			TestFormat("RsdnLink");
+		}
+
+		[Test]
+		public void Smiles()
+		{
+			TestFormat("Smiles");
+		}
 	}
 }
