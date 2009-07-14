@@ -14,7 +14,7 @@ namespace Rsdn.Framework.Formatting.Tests
 				Path.Combine(
 					Path.GetDirectoryName(
 						new Uri(GetType().Assembly.CodeBase).AbsolutePath),
-					"../../TestData");
+						"../../TestData");
 			TestHelper.TestFormat(
 				Path.Combine(asmPath, fileName + ".txt"),
 				Path.Combine(asmPath, fileName + ".gold"));
@@ -48,6 +48,12 @@ namespace Rsdn.Framework.Formatting.Tests
 		public void Smiles()
 		{
 			TestFormat("Smiles");
+		}
+
+		[Test]
+		public void Urls()
+		{
+			TestFormat("Urls");
 		}
 	}
 }

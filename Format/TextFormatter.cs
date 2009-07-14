@@ -340,41 +340,13 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Process RSDN URL tag
 		/// </summary>
-		/// <param name="urlMatch">Regexp match with RSDN url tag</param>
 		/// <returns>Formatted url value</returns>
-		protected virtual string ProcessURLs(Match urlMatch)
+		protected virtual string ProcessURLs(string url, string tag)
 		{
-			var urlGroupValue = urlMatch.Groups["url"].Value;
-			var tagGroupValue = urlMatch.Groups["tag"].Value;
-
-			var url =
-				urlGroupValue != ""
-					? urlGroupValue
-					: tagGroupValue;
-
-			// если url и tag перепутаны:
-			//
-			if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
-			{
-				// если tag не пустой
-				//
-				if (!String.IsNullOrEmpty(tagGroupValue))
-				{
-					// если tag правильный Uri
-					//
-					if (Uri.IsWellFormedUriString(tagGroupValue, UriKind.RelativeOrAbsolute))
-					{
-						// 
-						//
-						var temp = tagGroupValue;
-						tagGroupValue = url;
-						url = temp;
-					}
-				}
-			}
-
-			return FormatURLs(_urlOnlyRegex.Match(url), url,
-			                  Format(tagGroupValue, false, true, true));
+			return FormatURLs(
+				_urlOnlyRegex.Match(url),
+				url,
+				Format(tag, false, true, true));
 		}
 
 		/// <summary>
@@ -1044,6 +1016,7 @@ namespace Rsdn.Framework.Formatting
 			return Format(txt, smile, false, false);
 		}
 
+		// TODO: Заменить string на StringBuilder!
 		/// <summary>
 		/// Форматирование текста.
 		/// <b>НЕПОТОКОБЕЗОПАСНЫЙ!</b>
@@ -1053,8 +1026,11 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="doNotReplaceTags">Не заменять служебные символы HTML.</param>
 		/// <param name="doNotFormatImplicitLinks">Не форматировать явно не указанные ссылки.</param>
 		/// <returns>Сформатированный текст.</returns>
-		public virtual string Format(string txt, bool smile, bool doNotReplaceTags,
-		                             bool doNotFormatImplicitLinks)
+		public virtual string Format(
+			string txt,
+			bool smile,
+			bool doNotReplaceTags,
+			bool doNotFormatImplicitLinks)
 		{
 			if (string.IsNullOrEmpty(txt))
 				return txt;
@@ -1191,8 +1167,29 @@ namespace Rsdn.Framework.Formatting
 			// restore & transform [url] and [purl] tags
 			for (var i = 0; i < urlMatcher.Count; i++)
 			{
-				txt = txt.Replace(string.Format(urlExpression, i),
-				                  ProcessURLs(urlMatcher[i]));
+				var url = urlMatcher[i].Groups["url"].Value;
+				var tag = urlMatcher[i].Groups["tag"].Value;
+
+				// если url и tag перепутаны:
+				//
+				if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
+					// если tag не пустой
+					//
+					if (!String.IsNullOrEmpty(tag))
+						// если tag правильный Uri
+						//
+						if (Uri.IsWellFormedUriString(tag, UriKind.RelativeOrAbsolute))
+						{
+							// 
+							//
+							var temp = tag;
+							tag = url;
+							url = temp;
+						}
+
+				txt = txt.Replace(
+					string.Format(urlExpression, i),
+					ProcessURLs(url, tag));
 			}
 
 			// restore & transform implicit links
