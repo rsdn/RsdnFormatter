@@ -56,8 +56,10 @@ namespace Rsdn.Framework.Formatting
 				var reMatch = _reDetector.Match(subject);
 				if (reMatch.Success)
 				{
-					level = !reMatch.Groups["number"].Success ? 1 :
-						ToInt(reMatch.Groups["number"].Captures[0].Value);
+					level =
+						!reMatch.Groups["number"].Success
+						? 1
+						: reMatch.Groups["number"].Captures[0].Value.ToInt();
 				}
 				return level;
 			}

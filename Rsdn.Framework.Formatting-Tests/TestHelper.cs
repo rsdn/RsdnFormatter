@@ -43,7 +43,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			if (resLine != "")
 				sb.AppendFormat("ActualLine = '{0}'\r\n", resLine);
 			if (goldLine != "")
-				sb.AppendFormat("GoldLine = '{0}'\r\n", goldLine);
+				sb.AppendFormat("GoldLine   = '{0}'\r\n", goldLine);
 			Assert.Fail(sb.ToString());
 		}
 	}

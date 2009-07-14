@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -36,22 +37,24 @@ namespace Rsdn.Framework.Formatting
 			// initialize URLs formatting handlers
 			SchemeFormatting["ms-help"] = ProcessMsHelpLink;
 
-			HostFormatting["rsdn.ru"] =
-				HostFormatting["www.rsdn.ru"] =
-				HostFormatting["rsdn.rsdn.ru"] =
-				HostFormatting["rsdn3.rsdn.ru"] =
-				HostFormatting["gzip.rsdn.ru"] =
-				FormatRsdnURLs;
+			HostFormatting["rsdn.ru"]
+				= HostFormatting["www.rsdn.ru"]
+				= HostFormatting["rsdn.rsdn.ru"]
+				= HostFormatting["rsdn3.rsdn.ru"]
+				= HostFormatting["gzip.rsdn.ru"]
+				= FormatRsdnURLs;
 
-			HostFormatting["amazon.com"] =
-				HostFormatting["www.amazon.com"] =
-				ProcessAmazonLink;
+			HostFormatting["amazon.com"]
+				= HostFormatting["www.amazon.com"]
+				= ProcessAmazonLink;
 
 			foreach (var partnerHost in _partnresIDs.Keys)
 				HostFormatting[partnerHost] = ProcessPartnerLink;
 
-			HostFormatting["www.piter.com"] = HostFormatting["piter.com"] =
-			                                  HostFormatting["shop.piter.com"] = ProcessPiterLink;
+			HostFormatting["www.piter.com"]
+				= HostFormatting["piter.com"]
+				= HostFormatting["shop.piter.com"]
+				= ProcessPiterLink;
 		}
 
 		/// <summary>
@@ -68,6 +71,9 @@ namespace Rsdn.Framework.Formatting
 
 		#region code color initializing
 		private const string _resPrefix = "Rsdn.Framework.Formatting.Patterns.";
+
+		private static readonly Regex _rxNewLineUnifier =
+			new Regex("\r\n|\r");
 
 		/// <summary>
 		/// Выражения для обработки кодов.
@@ -89,8 +95,10 @@ namespace Rsdn.Framework.Formatting
 			}
 		}
 
-		private static void AppendCodeFormatter(Assembly assembly, string resource,
-		                                        params string[] tags)
+		private static void AppendCodeFormatter(
+			Assembly assembly,
+			string resource,
+			params string[] tags)
 		{
 			foreach (var tag in tags)
 			{
@@ -261,30 +269,48 @@ namespace Rsdn.Framework.Formatting
 		#endregion
 
 		#region smiles
-		/// <summary>
-		/// Выражения для обработки смайликов.
-		/// </summary>
-		private static readonly Regex _rxSmile08 = new Regex(@":up:", RegexOptions.IgnoreCase);
+		// Выражения для обработки смайликов.
+		private class SmileReplacer
+		{
+			private readonly Regex _regex;
+			private readonly string _replacer;
 
-		private static readonly Regex _rxSmile09 = new Regex(@":down:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile10 = new Regex(@":super:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile11 = new Regex(@":shuffle:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile12 = new Regex(@":crash:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile13 = new Regex(@":maniac:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile14 = new Regex(@":user:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile15 = new Regex(@":wow:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile16 = new Regex(@":beer:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile17 = new Regex(@":team:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile18 = new Regex(@":no:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile19 = new Regex(@":nopont:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile20 = new Regex(@":xz:", RegexOptions.IgnoreCase);
-		private static readonly Regex _rxSmile01 = new Regex(@"(?<!:):-?\)\)\)");
-		private static readonly Regex _rxSmile02 = new Regex(@"(?<!:):-?\)\)");
-		private static readonly Regex _rxSmile03 = new Regex(@"(?<!:):-?\)");
-		private static readonly Regex _rxSmile04 = new Regex(@"(?<!;|amp|gt|lt|quot);[-oO]?\)");
-		private static readonly Regex _rxSmile05 = new Regex(@"(?<!:):-?\(");
-		private static readonly Regex _rxSmile06 = new Regex(@"(?<!:):-[\\/]");
-		private static readonly Regex _rxSmile07 = new Regex(@":\?\?\?:");
+			public SmileReplacer(string pattern, string replacer)
+			{
+				_replacer = replacer;
+				_regex = new Regex(pattern, RegexOptions.IgnoreCase);
+			}
+
+			public StringBuilder Replace(StringBuilder input, string imagePrefix)
+			{
+				return _regex.Replace(input, string.Format(_replacer, imagePrefix));
+			}
+		}
+
+		private static readonly SmileReplacer[] _smileReplacers =
+			new[]
+			{
+				new SmileReplacer(@":up:", "<img border='0' width='15' height='15' src='{0}sup.gif' />"),
+				new SmileReplacer(@":down:", "<img border='0' width='15' height='15' src='{0}down.gif' />"),
+				new SmileReplacer(@":super:", "<img border='0' width='26' height='28' src='{0}super.gif' />"),
+				new SmileReplacer(@":shuffle:", "<img border='0' width='15' height='20' src='{0}shuffle.gif' />"),
+				new SmileReplacer(@":crash:", "<img border='0' width='30' height='30' src='{0}crash.gif'/ >"),
+				new SmileReplacer(@":maniac:", "<img border='0' width='70' height='25' src='{0}maniac.gif' />"),
+				new SmileReplacer(@":user:", "<img border='0' width='40' height='20' src='{0}user.gif' />"),
+				new SmileReplacer(@":wow:", "<img border='0' width='19' height='19' src='{0}wow.gif' />"),
+				new SmileReplacer(@":beer:", "<img border='0' width='57' height='16' src='{0}beer.gif' />"),
+				new SmileReplacer(@":team:", "<img border='0' width='110' height='107' src='{0}invasion.gif' />"),
+				new SmileReplacer(@":no:", "<img border='0' width='15' height='15' src='{0}no.gif' />"),
+				new SmileReplacer(@":nopont:", "<img border='0' width='35' height='35' src='{0}nopont.gif' />"),
+				new SmileReplacer(@":xz:", "<img border='0' width='37' height='15' src='{0}xz.gif' />"),
+				new SmileReplacer(@"(?<!:):-?\)\)\)", "<img border='0' width='15' height='15' src='{0}lol.gif' />"),
+				new SmileReplacer(@"(?<!:):-?\)\)", "<img border='0' width='15' height='15' src='{0}biggrin.gif' />"),
+				new SmileReplacer(@"(?<!:):-?\)", "<img border='0' width='15' height='15' src='{0}smile.gif' />"),
+				new SmileReplacer(@"(?<!;|amp|gt|lt|quot);[-oO]?\)", "<img border='0' width='15' height='15' src='{0}wink.gif' />"),
+				new SmileReplacer(@"(?<!:):-?\(", "<img border='0' width='15' height='15' src='{0}frown.gif' />"),
+				new SmileReplacer(@"(?<!:):-[\\/]", "<img border='0' width='15' height='15' src='{0}smirk.gif' />"),
+				new SmileReplacer(@":\?\?\?:", "<img border='0' width='15' height='22' src='{0}confused.gif' />"),
+			};
 		#endregion
 
 		#region IMG processing
@@ -863,7 +889,7 @@ namespace Rsdn.Framework.Formatting
 
 		// Цитирование.
 		private static readonly Regex _rxTextUrl09 =
-			new Regex(string.Format("(?mn)({0}.*?$)+", StartCitation));
+			new Regex(string.Format("(?mn)({0}.*?$)+", StartCitation), RegexOptions.Multiline | RegexOptions.ExplicitCapture);
 
 		// [q] цитирование
 		// (с учетом лишнего NAME> цитирования).
@@ -915,6 +941,9 @@ namespace Rsdn.Framework.Formatting
 		// [hx]
 		private static readonly Regex _rxHeaders =
 			new Regex(@"(?is)(?<!\[)\[h(?<num>[1-6])\](.*?)\[[\\/]h\k<num>\]");
+
+		private static readonly Regex _rxNewLines =
+			new Regex(@"(?imn)(?<!</(ul|ol|div|blockquote)>(</span>)?)$(?<!\Z)");
 
 		/// <summary>
 		/// Detect [moderator] tag.
@@ -1032,24 +1061,23 @@ namespace Rsdn.Framework.Formatting
 			bool doNotReplaceTags,
 			bool doNotFormatImplicitLinks)
 		{
-			if (string.IsNullOrEmpty(txt))
-				return txt;
+			var sb = new StringBuilder(txt);
 
-			txt = txt.Trim(TrimArray);
+			sb.Trim(TrimArray);
 
-			if (txt.Length == 0)
-				return txt;
+			if (sb.IsEmpty())
+				return "";
 
 			// Внимание! Порядок преобразования ВАЖЕН.
 			//
 
 			// Замена  небезопасных символов
 			if (!doNotReplaceTags)
-				txt = txt.ReplaceTagsWQ();
+				sb = sb.ReplaceTagsWQ();
 
 			// Приведение всех типов концов строк к \n
 			//
-			txt = Regex.Replace(txt, "\r\n|\r", "\n");
+			sb = _rxNewLineUnifier.Replace(sb, "\n");
 
 			// Обработка исходных кодов и тегов, 
 			// которые не могут быть внутри исходников.
@@ -1058,41 +1086,41 @@ namespace Rsdn.Framework.Formatting
 			// temporary remove [code...] tags
 			const string codeExpression = "$$code{0}$$";
 			var codeMatcher = new Matcher(codeExpression);
-			txt = _rxCodeFormatting.Replace(txt, new MatchEvaluator(codeMatcher.Match));
+			sb = _rxCodeFormatting.Replace(sb, codeMatcher.Match);
 
 			// temporary remove [img] tags
 			const string imgExpression = "$$img{0}$$";
 			var imgMatcher = new Matcher(imgExpression);
-			txt = _imgTagRegex.Replace(txt, new MatchEvaluator(imgMatcher.Match));
+			sb = _imgTagRegex.Replace(sb, imgMatcher.Match);
 
 			// temporary remove [url] & [purl] tags
 			const string urlExpression = "$$url{0}$$";
 			var urlMatcher = new Matcher(urlExpression);
-			txt = _urlTagRegex.Replace(txt, new MatchEvaluator(urlMatcher.Match));
+			sb = _urlTagRegex.Replace(sb, urlMatcher.Match);
 
 			// temporary remove implicit links
 			const string implicitUrlExpression = "$$iurl{0}$$";
 			var implicitUrlMatcher = new Matcher(implicitUrlExpression);
 			if (!doNotFormatImplicitLinks)
-				txt = _urlRegex.Replace(txt, new MatchEvaluator(implicitUrlMatcher.Match));
+				sb = _urlRegex.Replace(sb, implicitUrlMatcher.Match);
 
 			// temporary remove [q] tags
 			//
 			const string quoteExpression = "$$quote{0}$$";
 			var quoteMatcher = new Matcher(quoteExpression);
-			txt = _rxPrep12.Replace(txt, new MatchEvaluator(quoteMatcher.Match));
+			sb = _rxPrep12.Replace(sb, quoteMatcher.Match);
 
 			// Цитирование.
 			//
-			txt = _rxTextUrl09.Replace(txt, "<span class='lineQuote'>$&</span>");
+			sb = _rxTextUrl09.Replace(sb, "<span class='lineQuote'>$&</span>");
 
 			// restore & transform [q] tags
 			// Цитирование [q].
 			// http://www.rsdn.ru/forum/?mid=111506
 			//
 			for (var i = 0; i < quoteMatcher.Count; i++)
-				txt =
-					txt.Replace(
+				sb =
+					sb.Replace(
 						string.Format(quoteExpression, i),
 						string.Format(
 							"<blockquote class='q'><p>{0}</p></blockquote>",
@@ -1101,68 +1129,27 @@ namespace Rsdn.Framework.Formatting
 			// Обработка смайликов с учетом отмены и http://www.rsdn.ru/forum/?mid=184751
 			if (smile)
 			{
-				var pref = GetImagePrefix();
-
-				txt = _rxSmile08.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref + "sup.gif' />");
-				txt = _rxSmile09.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref + "down.gif' />");
-				txt = _rxSmile10.Replace(txt,
-				                         "<img border='0' width='26' height='28' src='" + pref + "super.gif' />");
-				txt = _rxSmile11.Replace(txt,
-				                         "<img border='0' width='15' height='20' src='" + pref +
-				                         "shuffle.gif' />");
-				txt = _rxSmile12.Replace(txt,
-				                         "<img border='0' width='30' height='30' src='" + pref + "crash.gif'/ >");
-				txt = _rxSmile13.Replace(txt,
-				                         "<img border='0' width='70' height='25' src='" + pref +
-				                         "maniac.gif' />");
-				txt = _rxSmile14.Replace(txt,
-				                         "<img border='0' width='40' height='20' src='" + pref + "user.gif' />");
-				txt = _rxSmile15.Replace(txt,
-				                         "<img border='0' width='19' height='19' src='" + pref + "wow.gif' />");
-				txt = _rxSmile16.Replace(txt,
-				                         "<img border='0' width='57' height='16' src='" + pref + "beer.gif' />");
-				txt = _rxSmile17.Replace(txt,
-				                         "<img border='0' width='110' height='107' src='" + pref +
-				                         "invasion.gif' />");
-				txt = _rxSmile18.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref + "no.gif' />");
-				txt = _rxSmile19.Replace(txt,
-				                         "<img border='0' width='35' height='35' src='" + pref +
-				                         "nopont.gif' />");
-				txt = _rxSmile20.Replace(txt,
-				                         "<img border='0' width='37' height='15' src='" + pref + "xz.gif' />");
-				txt = _rxSmile01.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref + "lol.gif' />");
-				txt = _rxSmile02.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref +
-				                         "biggrin.gif' />");
-				txt = _rxSmile03.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref + "smile.gif' />");
-				txt = _rxSmile04.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref + "wink.gif' />");
-				txt = _rxSmile05.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref + "frown.gif' />");
-				txt = _rxSmile06.Replace(txt,
-				                         "<img border='0' width='15' height='15' src='" + pref + "smirk.gif' />");
-				txt = _rxSmile07.Replace(txt,
-				                         "<img border='0' width='15' height='22' src='" + pref +
-				                         "confused.gif' />");
+				var prefix = GetImagePrefix();
+				sb = _smileReplacers.Aggregate(
+					sb,
+					(current, replacer) => replacer.Replace(current, prefix));
 			}
 
 			// ISBN
-			txt = _isbnDetector.Replace(txt, match =>
-			                                 	{
-			                                 		var isbn = new StringBuilder(match.Length);
-			                                 		foreach (Capture capture in match.Groups["isbn"].Captures)
-			                                 		{
-			                                 			isbn.Append(capture.Value).Append('-');
-			                                 		}
-			                                 		if (isbn.Length > 0)
-			                                 			isbn.Length--;
-			                                 		return ProcessISBN(match, isbn.ToString());
-			                                 	});
+			sb = 
+				_isbnDetector.Replace(
+					sb,
+					match =>
+					{
+						var isbn = new StringBuilder(match.Length);
+						foreach (Capture capture in match.Groups["isbn"].Captures)
+						{
+							isbn.Append(capture.Value).Append('-');
+						}
+						if (isbn.Length > 0)
+							isbn.Length--;
+						return ProcessISBN(match, isbn.ToString());
+					});
 
 			// restore & transform [url] and [purl] tags
 			for (var i = 0; i < urlMatcher.Count; i++)
@@ -1187,83 +1174,84 @@ namespace Rsdn.Framework.Formatting
 							url = temp;
 						}
 
-				txt = txt.Replace(
+				sb = sb.Replace(
 					string.Format(urlExpression, i),
 					ProcessURLs(url, tag));
 			}
 
 			// restore & transform implicit links
 			for (var i = 0; i < implicitUrlMatcher.Count; i++)
-			{
-				txt = txt.Replace(string.Format(implicitUrlExpression, i),
-				                  ProcessImplicitURLs(implicitUrlMatcher[i]));
-			}
+				sb = sb.Replace(
+					string.Format(implicitUrlExpression, i),
+					ProcessImplicitURLs(implicitUrlMatcher[i]));
 
 			// restore & transform [img] tags
 			for (var i = 0; i < imgMatcher.Count; i++)
-				txt = txt.Replace(
+				sb = sb.Replace(
 					string.Format(imgExpression, i),
 					ImagesDelegate(this, imgMatcher[i]));
 
 			// RSDN links
-			txt = _rsdnLinkDetector.Replace(txt, ProcessRsdnLink);
+			sb = _rsdnLinkDetector.Replace(sb, ProcessRsdnLink);
 
 			// [email]
-			txt = _emailTagRegex.Replace(txt, ProcessEmailLink);
+			sb = _emailTagRegex.Replace(sb, ProcessEmailLink);
 
 			// Replace hyphen to dash
-			txt = _dashDetector.Replace(txt, "&mdash;");
+			sb = _dashDetector.Replace(sb, "&mdash;");
 
 			// [tagline]
-			txt = _taglineDetector.Replace(txt, "<div class='tagline'>$1</div>");
+			sb = _taglineDetector.Replace(sb, "<div class='tagline'>$1</div>");
 
 			// [list]
-			txt = _rxPrep06.Replace(txt, @"<ul style='margin-top:0; margin-bottom:0;'>$1</ul>");
+			sb = _rxPrep06.Replace(sb, @"<ul style='margin-top:0; margin-bottom:0;'>$1</ul>");
 
 			// [list=..]
-			txt = _rxPrep07.Replace(txt, new MatchEvaluator(ListEvaluator));
+			sb = _rxPrep07.Replace(sb, ListEvaluator);
 
 			// [*]
-			txt = _rxPrep08.Replace(txt, "<li />");
+			sb = _rxPrep08.Replace(sb, "<li />");
 
 			// [hr]
-			txt = _rxPrep09.Replace(txt, "<hr />");
+			sb = _rxPrep09.Replace(sb, "<hr />");
 
 			// Q12345(6)
-			txt = _rxPrep10.Replace(txt,
-			                        @"<a target='_blank' class='m' href='http://support.microsoft.com/default.aspx?scid=kb;EN-US;$1'>$1</a>");
+			sb = _rxPrep10.Replace(
+				sb,
+				@"<a target='_blank' class='m' href='http://support.microsoft.com/default.aspx?scid=kb;EN-US;$1'>$1</a>");
 
 			// Сообщение модератора.
-			txt = _moderatorDetector.Replace(txt, "<div class='mod'>$1</div>");
+			sb = _moderatorDetector.Replace(sb, "<div class='mod'>$1</div>");
 
 			// Table
-			txt = _rxTable.Replace(txt,
-			                       "<table class='formatter' border='0' cellspacing='2' cellpadding='5'>$1</table>");
-			txt = _rxTableRow.Replace(txt, "<tr class='formatter'>$1</tr>");
-			txt = _rxTableHeader.Replace(txt, "<th class='formatter'>$1</th>");
-			txt = _rxTableColumn.Replace(txt, "<td class='formatter'>$1</td>");
+			sb = _rxTable.Replace(
+				sb,
+				"<table class='formatter' border='0' cellspacing='2' cellpadding='5'>$1</table>");
+			sb = _rxTableRow.Replace(sb, "<tr class='formatter'>$1</tr>");
+			sb = _rxTableHeader.Replace(sb, "<th class='formatter'>$1</th>");
+			sb = _rxTableColumn.Replace(sb, "<td class='formatter'>$1</td>");
 
 			// Headers
-			txt = _rxHeaders.Replace(txt, "<h$2 class='formatter'>$1</h$2>");
+			sb = _rxHeaders.Replace(sb, "<h$2 class='formatter'>$1</h$2>");
 
 			// Добавляем в конец каждой строки <br />,
 			// но не после </table>, </div>, </ol>, </ul>, <blockquote> (возможно внутри <span>)
 			// и не в самом конце текста
-			txt = Regex.Replace(txt, @"(?imn)(?<!</(ul|ol|div|blockquote)>(</span>)?)$(?<!\Z)", "<br />$0");
+			sb = _rxNewLines.Replace(sb, "<br />$0");
 
 			// [b]
-			txt = _rxBold.Replace(txt, "<b>$1</b>");
+			sb = _rxBold.Replace(sb, "<b>$1</b>");
 
 			// [i]
-			txt = _rxItalic.Replace(txt, "<i>$1</i>");
+			sb = _rxItalic.Replace(sb, "<i>$1</i>");
 
 			// Ссылки на MSDN.
-			txt = _rxMsdn.Replace(txt, new MatchEvaluator(DoMSDNRef));
+			sb = _rxMsdn.Replace(sb, new MatchEvaluator(DoMSDNRef));
 
 			// Нужно для отмены тэгов и отмены смайликов.
-			txt = _rxPrep01.Replace(txt, "");
-			txt = _rxPrep02.Replace(txt, "");
-			txt = _rxPrep03.Replace(txt, "");
+			sb = _rxPrep01.Replace(sb, "");
+			sb = _rxPrep02.Replace(sb, "");
+			sb = _rxPrep03.Replace(sb, "");
 
 			// restore & transform [code] tags
 			for (var i = 0; i < codeMatcher.Count; i++)
@@ -1276,10 +1264,10 @@ namespace Rsdn.Framework.Formatting
 				code = _rxBoldWithoutChecking.Replace(code, "<b>$1</b>");
 				code = _rxItalicWithoutChecking.Replace(code, "<i>$1</i>");
 
-				txt = txt.Replace(string.Format(codeExpression, i), code);
+				sb = sb.Replace(string.Format(codeExpression, i), code);
 			}
 
-			return txt;
+			return "" + sb.ToString();
 		}
 
 		/// <summary>

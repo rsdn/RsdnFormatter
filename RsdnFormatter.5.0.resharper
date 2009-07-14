@@ -96,4 +96,9 @@
       <Abbreviation Text="XSS" />
     </Naming2>
   </CodeStyleSettings>
+  <CodeAnnotations>
+    <Namespace>JetBrains.Annotations</Namespace>
+    <Namespace>Rsdn.Framework.Formatting.JetBrains.Annotations</Namespace>
+    <DefaultNamespace>JetBrains.Annotations</DefaultNamespace>
+  </CodeAnnotations>
 </Configuration>
