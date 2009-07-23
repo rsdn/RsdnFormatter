@@ -1,0 +1,2 @@
+﻿[img]vbscript:msgbox(document.title)[/img]
+[img]msgbox(document.title)[/img]

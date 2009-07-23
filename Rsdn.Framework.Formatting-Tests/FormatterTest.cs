@@ -55,5 +55,11 @@ namespace Rsdn.Framework.Formatting.Tests
 		{
 			TestFormat("Urls");
 		}
-	}
+
+    [Test]
+    public void XSS()
+    {
+      TestFormat("XSS");
+    }
+  }
 }

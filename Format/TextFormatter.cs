@@ -339,7 +339,7 @@ namespace Rsdn.Framework.Formatting
 		/// [img] тэг. С защитой от javascript.
 		/// </summary>
 		private static readonly Regex _imgTagRegex =
-			new Regex(@"(?i)(?<!\[)\[img\]\s*(?!javascript:)(?<url>.*?)\s*\[[\\/]img\]",
+			new Regex(@"(?i)(?<!\[)\[img\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
 			          RegexOptions.Compiled);
 
 		/// <summary>
