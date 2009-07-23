@@ -64,6 +64,9 @@ namespace Rsdn.Framework.Formatting
 		protected static IDictionary<string, CodeFormatter> CodeFormatters =
 			new Dictionary<string, CodeFormatter>(StringComparer.OrdinalIgnoreCase);
 
+		/// <summary>
+		/// Returns path to root of the site.
+		/// </summary>
 		protected virtual string GetPathToRoot()
 		{
 			return "";
@@ -1045,7 +1048,6 @@ namespace Rsdn.Framework.Formatting
 			return Format(txt, smile, false, false);
 		}
 
-		// TODO: Заменить string на StringBuilder!
 		/// <summary>
 		/// Форматирование текста.
 		/// <b>НЕПОТОКОБЕЗОПАСНЫЙ!</b>
@@ -1267,7 +1269,7 @@ namespace Rsdn.Framework.Formatting
 				sb = sb.Replace(string.Format(codeExpression, i), code);
 			}
 
-			return "" + sb.ToString();
+			return sb.ToString();
 		}
 
 		/// <summary>

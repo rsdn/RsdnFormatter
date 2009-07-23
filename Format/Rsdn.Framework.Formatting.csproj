@@ -107,6 +107,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotations.cs" />
+    <None Include="AppConstants.cs.template" />
+    <Compile Include="AppConstants.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -176,8 +178,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>SET SWCRTool=$(SolutionDir)tools\SubWCRev.exe
+SET WCRoot=$(SolutionDir)
+SET Target=$(ProjectDir)AppConstants.cs
+SET Template=%25Target%25.template
+
+"%25SWCRTool%25" %25WCRoot%25 %25Template%25 %25Target%25</PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
