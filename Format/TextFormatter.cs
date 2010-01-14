@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -58,13 +57,6 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Ассоциативная таблица для раскраски кода.
-		/// Ключ - имя тэга, значение - раскрасивальщик.
-		/// </summary>
-		protected static IDictionary<string, CodeFormatter> CodeFormatters =
-			new Dictionary<string, CodeFormatter>(StringComparer.OrdinalIgnoreCase);
-
-		/// <summary>
 		/// Returns path to root of the site.
 		/// </summary>
 		protected virtual string GetPathToRoot()
@@ -73,8 +65,6 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		#region code color initializing
-		private const string _resPrefix = "Rsdn.Framework.Formatting.Patterns.";
-
 		private static readonly Regex _rxNewLineUnifier =
 			new Regex("\r\n|\r");
 
@@ -95,19 +85,6 @@ namespace Rsdn.Framework.Formatting
 			{
 				QueryParameter = quertParameter;
 				PartnerID = partnerID;
-			}
-		}
-
-		private static void AppendCodeFormatter(
-			Assembly assembly,
-			string resource,
-			params string[] tags)
-		{
-			foreach (var tag in tags)
-			{
-				var formatter = new CodeFormatter(
-					assembly.GetManifestResourceStream(resource));
-				CodeFormatters.Add(tag, formatter);
 			}
 		}
 
@@ -133,73 +110,7 @@ namespace Rsdn.Framework.Formatting
 			                                new PartnerRecord("Partner", "248");
 
 
-			// initializing code colorers
-			var assembly = Assembly.GetExecutingAssembly();
-
-			// C#
-			AppendCodeFormatter(assembly, _resPrefix + "CSharp.xml", "csharp", "cs", "c#");
-
-			// Assembler
-			AppendCodeFormatter(assembly, _resPrefix + "Assembler.xml", "asm");
-
-			// C/C++
-			AppendCodeFormatter(assembly, _resPrefix + "C.xml", "ccode", "c", "cpp");
-
-			// IDL
-			AppendCodeFormatter(assembly, _resPrefix + "IDL.xml", "idl", "midl");
-
-			// Java
-			AppendCodeFormatter(assembly, _resPrefix + "Java.xml", "java");
-
-			// MSIL
-			AppendCodeFormatter(assembly, _resPrefix + "MSIL.xml", "il", "msil");
-
-			// Pascal
-			AppendCodeFormatter(assembly, _resPrefix + "Pascal.xml", "pascal", "delphi");
-
-			// Visual Basic
-			AppendCodeFormatter(assembly, _resPrefix + "VisualBasic.xml", "vb");
-
-			// SQL
-			AppendCodeFormatter(assembly, _resPrefix + "SQL.xml", "sql");
-
-			// Perl
-			AppendCodeFormatter(assembly, _resPrefix + "Perl.xml", "perl");
-
-			// PHP
-			AppendCodeFormatter(assembly, _resPrefix + "PHP.xml", "php");
-
-			// XML/XSL
-			AppendCodeFormatter(assembly, _resPrefix + "XSL.xml", "xml", "xsl");
-
-			// Functional and logic languages
-			// Erlang
-			AppendCodeFormatter(assembly, _resPrefix + "Erlang.xml", "erlang", "erl");
-
-			// Haskell
-			AppendCodeFormatter(assembly, _resPrefix + "Haskell.xml", "haskell", "hs");
-
-			// Lisp
-			AppendCodeFormatter(assembly, _resPrefix + "Lisp.xml", "lisp");
-
-			// O'Caml
-			AppendCodeFormatter(assembly, _resPrefix + "OCaml.xml", "ocaml", "ml");
-
-			// Prolog
-			AppendCodeFormatter(assembly, _resPrefix + "Prolog.xml", "prolog");
-
-			// Python
-			AppendCodeFormatter(assembly, _resPrefix + "Python.xml", "python", "py");
-
-			// Ruby
-			AppendCodeFormatter(assembly, _resPrefix + "Ruby.xml", "ruby", "rb");
-
-			// General language
-			CodeFormatters.Add("code", null);
-			CodeFormatters.Add("pre", null);
-
-			var codeTags = new List<string>(CodeFormatters.Keys).ToArray();
-
+			var codeTags = FormatterHelper.GetCodeTagNames().ToArray();
 			// Построение регулярного выражения для обнаружения кода
 			// (с учетом лишнего NAME> цитирования).
 			_rxCodeFormatting =
@@ -221,9 +132,8 @@ namespace Rsdn.Framework.Formatting
 		/// <returns></returns>
 		protected static string PaintCode(Match codeMatch)
 		{
-			CodeFormatter formatter;
-
-			CodeFormatters.TryGetValue(codeMatch.Groups["tag"].Value, out formatter);
+			var tagName = codeMatch.Groups["tag"].Value;
+			var formatter = FormatterHelper.GetCodeFormatterByTag(tagName);
 
 			// Заменяем табуляцию на 4 пробела.
 			var text = codeMatch.Groups["body"].Value.Replace("\t", "    ");
@@ -238,8 +148,10 @@ namespace Rsdn.Framework.Formatting
 			}
 
 			// обрамляем html
-			text = "<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>" + text +
-			       "</pre></td></tr></table>";
+			text =
+				"<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>"
+				+ text
+				+ "</pre></td></tr></table>";
 
 			return text;
 		}

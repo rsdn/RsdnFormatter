@@ -104,6 +104,9 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotations.cs" />
@@ -112,9 +115,11 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CodeFormatter.cs">
+    <Compile Include="CodeFormat\CodeFormatter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CodeFormat\CodeLangInfo.cs" />
+    <Compile Include="CodeFormat\FormatterHelper.CodeFormat.cs" />
     <Compile Include="Format.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,34 +135,34 @@
     <Compile Include="TextFormatter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="Patterns\Assembler.xml" />
-    <EmbeddedResource Include="Patterns\C.xml" />
-    <EmbeddedResource Include="Patterns\CSharp.xml" />
-    <EmbeddedResource Include="Patterns\IDL.xml" />
-    <EmbeddedResource Include="Patterns\Java.xml" />
-    <EmbeddedResource Include="Patterns\MSIL.xml" />
-    <EmbeddedResource Include="Patterns\Pascal.xml" />
-    <EmbeddedResource Include="Patterns\PatternSchema.xsd">
+    <EmbeddedResource Include="CodeFormat\Patterns\Assembler.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\C.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\CSharp.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\IDL.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Java.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\MSIL.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Pascal.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\PatternSchema.xsd">
       <SubType>
       </SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Patterns\Perl.xml" />
-    <EmbeddedResource Include="Patterns\PHP.xml" />
-    <EmbeddedResource Include="Patterns\SQL.xml" />
-    <EmbeddedResource Include="Patterns\VisualBasic.xml" />
-    <EmbeddedResource Include="Patterns\XSL.xml" />
-    <None Include="Patterns\PatternSchema.xsx">
+    <EmbeddedResource Include="CodeFormat\Patterns\Perl.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\PHP.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\SQL.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\VisualBasic.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\XSL.xml" />
+    <None Include="CodeFormat\Patterns\PatternSchema.xsx">
       <DependentUpon>PatternSchema.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Patterns\Erlang.xml" />
-    <EmbeddedResource Include="Patterns\Haskell.xml" />
-    <EmbeddedResource Include="Patterns\Lisp.xml" />
-    <EmbeddedResource Include="Patterns\OCaml.xml" />
-    <EmbeddedResource Include="Patterns\Prolog.xml" />
-    <EmbeddedResource Include="Patterns\Python.xml" />
-    <EmbeddedResource Include="Patterns\Ruby.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Erlang.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Haskell.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Lisp.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\OCaml.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Prolog.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Python.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Ruby.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

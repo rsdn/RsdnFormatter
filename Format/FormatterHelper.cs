@@ -9,7 +9,7 @@ namespace Rsdn.Framework.Formatting
 	/// <summary>
 	/// Helper methods for use with formatter.
 	/// </summary>
-	public static class FormatterHelper
+	public static partial class FormatterHelper
 	{
 		private static StringBuilder TrimLeft(
 			[NotNull] this StringBuilder sb,

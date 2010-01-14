@@ -13,10 +13,10 @@ namespace Rsdn.Framework.Formatting
 	/// </summary>
 	public class CodeFormatter
 	{
+		#pragma warning disable 618
 		/// <summary>
 		/// Source XML validating schemas (XSD)
 		/// </summary>
-		#pragma warning disable 618
 		private static readonly XmlSchemaCollection _xmlSchemas;
 		#pragma warning restore 618
 
@@ -26,7 +26,7 @@ namespace Rsdn.Framework.Formatting
 			var resource =
 				typeof (CodeFormatter)
 					.Assembly
-					.GetManifestResourceStream("Rsdn.Framework.Formatting.Patterns.PatternSchema.xsd");
+					.GetManifestResourceStream("Rsdn.Framework.Formatting.CodeFormat.Patterns.PatternSchema.xsd");
 			Debug.Assert(resource != null);
 			#pragma warning disable 618
 			_xmlSchemas =

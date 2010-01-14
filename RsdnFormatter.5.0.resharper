@@ -1,5 +1,4 @@
 <Configuration>
-  <Asp.CustomReferences enabled="True" />
   <CodeStyleSettings>
     <ExternalPath IsNull="False">
     </ExternalPath>
@@ -17,7 +16,6 @@
         <ALIGN_MULTLINE_TYPE_PARAMETER_LIST>False</ALIGN_MULTLINE_TYPE_PARAMETER_LIST>
         <BLANK_LINES_BETWEEN_USING_GROUPS>1</BLANK_LINES_BETWEEN_USING_GROUPS>
         <BLANK_LINES_INSIDE_REGION>0</BLANK_LINES_INSIDE_REGION>
-        <INSERT_TABS>True</INSERT_TABS>
         <MODIFIERS_ORDER IsNull="False">
           <Item>public</Item>
           <Item>protected</Item>
@@ -38,6 +36,8 @@
       </FormatSettings>
       <UsingsSettings />
       <Naming2>
+        <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+        <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
         <ExceptionName IsNull="False">
         </ExceptionName>
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
@@ -59,13 +59,22 @@
       </Naming2>
     </CSharp>
     <VB>
-      <FormatSettings>
-        <INSERT_TABS>True</INSERT_TABS>
-      </FormatSettings>
+      <FormatSettings />
       <ImportsSettings />
-      <Naming2 />
+      <Naming2>
+        <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+        <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
+      </Naming2>
     </VB>
-    <XML />
+    <Web>
+      <Naming2 />
+    </Web>
+    <Xaml>
+      <Naming2 />
+    </Xaml>
+    <XML>
+      <FormatSettings />
+    </XML>
     <GeneratedCodeRegions IsNull="False">
       <Item>Windows Form Designer generated code</Item>
       <Item>Component Designer generated code</Item>
@@ -75,6 +84,8 @@
     </GeneratedCodeRegions>
     <GenerateMemberBody />
     <Naming2>
+      <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+      <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
       <ExceptionName IsNull="False">
       </ExceptionName>
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />

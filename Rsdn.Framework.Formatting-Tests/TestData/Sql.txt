@@ -1,0 +1,9 @@
+﻿[sql]
+select x
+	from y
+		inner join z on z.f = y.f
+		left outer join z on z.f = y.f
+	where a = b
+	group by c
+	order by d asc, e desc
+[/sql]
