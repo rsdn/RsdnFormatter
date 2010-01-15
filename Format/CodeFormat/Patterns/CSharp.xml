@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?> 
-<language xmlns="http://rsdn.ru/coloring" name="CSharp" options="(?n)">
+<language xmlns="http://rsdn.ru/coloring" name="CSharp" display-name="C#" options="(?n)">
 	<!-- comments -->
 	<pattern name="com">
 		<entry>(?m://.*?$)</entry>
