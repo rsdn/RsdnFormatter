@@ -7,6 +7,7 @@
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:string" use="required" />
 			<xs:attribute name="options" type="xs:string" use="optional" />
+			<xs:attribute name="display-name" type="xs:string" use="optional" />
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="patternType">
