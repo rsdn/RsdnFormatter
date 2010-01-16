@@ -1,0 +1,9 @@
+<html>
+	<body>
+<span><a href='#' title='Развернуть' onclick="obj=this.parentNode.childNodes[1].style; tmp=(obj.display!='block') ? 'block' : 'none'; obj.display=tmp; return false;">Скрытый текст</a><div class='q' style='display: none'>Text text text<br />
+Text text text<br />
+<blockquote class='q'><p>sub quota</p></blockquote>
+<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>
+<span class='kw'>private class</span> A {}</pre></td></tr></table></div></span>
+	</body>
+</html>

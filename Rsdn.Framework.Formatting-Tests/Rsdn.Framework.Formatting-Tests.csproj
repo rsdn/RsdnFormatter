@@ -63,6 +63,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestData\Cut.txt" />
     <Content Include="TestData\Sql.txt" />
     <Content Include="TestData\XSS.txt" />
     <Content Include="TestData\Heading.txt" />
@@ -73,6 +74,7 @@
     <Content Include="TestData\Urls.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="TestData\Cut.gold" />
     <None Include="TestData\Heading.gold" />
     <None Include="TestData\Quotation.gold" />
     <None Include="TestData\RsdnLink.gold" />

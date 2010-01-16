@@ -67,5 +67,11 @@ namespace Rsdn.Framework.Formatting.Tests
 		{
 			TestFormat("Sql");
 		}
+
+		[Test]
+		public void Cut()
+		{
+			TestFormat("Cut");
+		}
 	}
 }

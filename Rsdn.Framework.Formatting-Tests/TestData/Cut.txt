@@ -1,0 +1,10 @@
+﻿[cut]
+Text text text
+Text text text
+[q]
+sub quota
+[/q]
+[c#]
+private class A {}
+[/c#]
+[/cut]

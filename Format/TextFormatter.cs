@@ -810,6 +810,11 @@ namespace Rsdn.Framework.Formatting
 		// (с учетом лишнего NAME> цитирования).
 		private static readonly Regex _rxPrep12 =
 			new Regex(string.Format(@"(?is)(?<!\[)\[q\]\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]q\]", StartCitation));
+
+		// [q] цитирование
+		// (с учетом лишнего NAME> цитирования).
+		private static readonly Regex _rxPrep13 =
+			new Regex(string.Format(@"(?is)(?<!\[)\[cut\]\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]cut\]", StartCitation));
 		#endregion
 
 		/// <summary>
@@ -1019,19 +1024,40 @@ namespace Rsdn.Framework.Formatting
 				sb = _urlRegex.Replace(sb, implicitUrlMatcher.Match);
 
 			// temporary remove [q] tags
-			//
 			const string quoteExpression = "$$quote{0}$$";
 			var quoteMatcher = new Matcher(quoteExpression);
 			sb = _rxPrep12.Replace(sb, quoteMatcher.Match);
+
+			// temporary remove [cut] tags
+			const string cutExpression = "$$cut{0}$$";
+			var cutMatcher = new Matcher(cutExpression);
+			sb = _rxPrep13.Replace(sb, cutMatcher.Match);
 
 			// Цитирование.
 			//
 			sb = _rxTextUrl09.Replace(sb, "<span class='lineQuote'>$&</span>");
 
+			// restore & transform [cut] tags
+			for (var i = 0; i < cutMatcher.Count; i++)
+				sb =
+					sb.Replace(
+						string.Format(cutExpression, i),
+						string.Format(
+							"<span>"
+							+ "<a href='#'"
+							+ " title='Развернуть'"
+							+ " onclick=\"obj=this.parentNode.childNodes[1].style; tmp=(obj.display!='block') ? 'block' : 'none'; obj.display=tmp; return false;\">"
+							+ "Скрытый текст"
+							+ "</a>"
+							+ "<div class='q' style='display: none'>"
+							+ "{0}"
+							+ "</div>"
+							+ "</span>",
+							cutMatcher[i].Groups[1]));
+
 			// restore & transform [q] tags
 			// Цитирование [q].
 			// http://www.rsdn.ru/forum/?mid=111506
-			//
 			for (var i = 0; i < quoteMatcher.Count; i++)
 				sb =
 					sb.Replace(
