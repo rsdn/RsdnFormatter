@@ -831,6 +831,12 @@ namespace Rsdn.Framework.Formatting
 		// [i]
 		private static readonly Regex _rxItalic = new Regex(@"(?is)(?<!\[)\[i\](.*?)\[[\\/]i\]");
 		private static readonly Regex _rxItalicWithoutChecking = new Regex(@"(?is)\[i\](.*?)\[[\\/]i\]");
+		// [u]
+		private static readonly Regex _rxUnder = new Regex(@"(?is)(?<!\[)\[u\](.*?)\[[\\/]u\]");
+		private static readonly Regex _rxUnderWithoutChecking = new Regex(@"(?is)\[u\](.*?)\[[\\/]u\]");
+		// [s]
+		private static readonly Regex _rxStrike = new Regex(@"(?is)(?<!\[)\[s\](.*?)\[[\\/]s\]");
+		private static readonly Regex _rxStrikeWithoutChecking = new Regex(@"(?is)\[s\](.*?)\[[\\/]s\]");
 		// [list]
 		private static readonly Regex _rxPrep06 =
 			new Regex(@"(?is)(?<!\[)\[list\]\s*(.*?)\s*\[[\\/]list\]");
@@ -1185,6 +1191,12 @@ namespace Rsdn.Framework.Formatting
 			// [i]
 			sb = _rxItalic.Replace(sb, "<i>$1</i>");
 
+			// [s]
+			sb = _rxStrike.Replace(sb, "<s>$1</s>");
+
+			// [s]
+			sb = _rxUnder.Replace(sb, "<u>$1</u>");
+
 			// —сылки на MSDN.
 			sb = _rxMsdn.Replace(sb, new MatchEvaluator(DoMSDNRef));
 
@@ -1203,6 +1215,8 @@ namespace Rsdn.Framework.Formatting
 				// without checking canceling tag syntax
 				code = _rxBoldWithoutChecking.Replace(code, "<b>$1</b>");
 				code = _rxItalicWithoutChecking.Replace(code, "<i>$1</i>");
+				code = _rxStrikeWithoutChecking.Replace(code, "<s>$1</s>");
+				code = _rxUnderWithoutChecking.Replace(code, "<u>$1</u>");
 
 				sb = sb.Replace(string.Format(codeExpression, i), code);
 			}
