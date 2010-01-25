@@ -1,4 +1,4 @@
-﻿[cut]
+﻿[cut=Some hidden text]
 Text text text
 Text text text
 [q]
@@ -8,3 +8,4 @@ sub quota
 private class A {}
 [/c#]
 [/cut]
+[cut]Some text to test[/cut]

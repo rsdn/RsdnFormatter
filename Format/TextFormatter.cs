@@ -16,6 +16,8 @@ namespace Rsdn.Framework.Formatting
 	/// </summary>
 	public class TextFormatter
 	{
+		private readonly string hiddenTextSnippet;
+
 		/// <summary>
 		/// Создаёт экземпляр класса <b>TextFormatter</b>.
 		/// </summary>
@@ -30,6 +32,10 @@ namespace Rsdn.Framework.Formatting
 		/// </param>
 		public TextFormatter(ProcessImagesDelegate imagesDelegate)
 		{
+			using (var sr = new StreamReader(typeof(TextFormatter).Assembly.
+				GetManifestResourceStream("Rsdn.Framework.Formatting.Resources.HiddenText.htm")))
+				hiddenTextSnippet = sr.ReadToEnd().Replace("\r\n", String.Empty);
+
 			// initialize image handlers
 			ImagesDelegate = imagesDelegate ?? new ProcessImagesDelegate(DefaultProcessImagesDelegate);
 
@@ -813,8 +819,14 @@ namespace Rsdn.Framework.Formatting
 
 		// [q] цитирование
 		// (с учетом лишнего NAME> цитирования).
+		//private static readonly Regex _rxPrep13 =
+		//	new Regex(string.Format(@"(?is)(?<!\[)\[cut\]\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]cut\]", StartCitation));
+
+
+		// [cut=caption] with optional caption block
 		private static readonly Regex _rxPrep13 =
-			new Regex(string.Format(@"(?is)(?<!\[)\[cut\]\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]cut\]", StartCitation));
+			new Regex(string.Format(@"(?is)(?<!\[)(\[cut\]|\[cut(\=([^\]]*))\])\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]cut\]", StartCitation));
+	
 		#endregion
 
 		/// <summary>
@@ -1045,21 +1057,12 @@ namespace Rsdn.Framework.Formatting
 
 			// restore & transform [cut] tags
 			for (var i = 0; i < cutMatcher.Count; i++)
-				sb =
-					sb.Replace(
-						string.Format(cutExpression, i),
-						string.Format(
-							"<span>"
-							+ "<a style='display:block' href='#'"
-							+ " title='Развернуть'"
-							+ " onclick=\"obj=this.parentNode.childNodes[1].style; tmp=(obj.display!='block') ? 'block' : 'none'; obj.display=tmp; return false;\">"
-							+ "Скрытый текст"
-							+ "</a>"
-							+ "<div class='q' style='display: none'>"
-							+ "{0}"
-							+ "</div>"
-							+ "</span>",
-							cutMatcher[i].Groups[1]));
+			{
+				var m = cutMatcher[i];
+				var capt = String.IsNullOrEmpty(m.Groups[3].Value) ? "Скрытый текст" : m.Groups[3].Value;
+				sb = sb.Replace(String.Format(cutExpression, i),
+					hiddenTextSnippet.Replace("%CAPT%", capt).Replace("%TEXT%", m.Groups[4].Value));
+			}
 
 			// restore & transform [q] tags
 			// Цитирование [q].
