@@ -1061,7 +1061,8 @@ namespace Rsdn.Framework.Formatting
 				var m = cutMatcher[i];
 				var capt = String.IsNullOrEmpty(m.Groups[3].Value) ? "Скрытый текст" : m.Groups[3].Value;
 				sb = sb.Replace(String.Format(cutExpression, i),
-					hiddenTextSnippet.Replace("%CAPT%", capt).Replace("%TEXT%", m.Groups[4].Value));
+					hiddenTextSnippet.Replace("%CAPT%", capt).Replace("%TEXT%", m.Groups[4].Value).
+					Replace("%URL%", GetImagePrefix()));
 			}
 
 			// restore & transform [q] tags
