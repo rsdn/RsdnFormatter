@@ -1050,7 +1050,7 @@ namespace Rsdn.Framework.Formatting
 						string.Format(cutExpression, i),
 						string.Format(
 							"<span>"
-							+ "<a href='#'"
+							+ "<a style='display:block' href='#'"
 							+ " title='Развернуть'"
 							+ " onclick=\"obj=this.parentNode.childNodes[1].style; tmp=(obj.display!='block') ? 'block' : 'none'; obj.display=tmp; return false;\">"
 							+ "Скрытый текст"
