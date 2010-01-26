@@ -47,7 +47,7 @@ namespace Rsdn.Framework.Formatting.Resources
 		}
 
 
-		public string HandlerName
+		public static string HandlerName
 		{
 			get
 			{
