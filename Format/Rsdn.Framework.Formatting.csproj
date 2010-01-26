@@ -221,6 +221,13 @@
     <EmbeddedResource Include="Resources\Binary\xz.gif" />
     <EmbeddedResource Include="Resources\Text\Formatter.js" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Binary\corner.gif" />
+    <EmbeddedResource Include="Resources\Binary\line.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Text\Formatter.css" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>SET SWCRTool=$(SolutionDir)tools\SubWCRev.exe

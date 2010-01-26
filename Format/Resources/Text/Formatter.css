@@ -1,0 +1,11 @@
+﻿.hidden_Plus {
+	background-image:url(%URL%plus.gif);
+	background-repeat:no-repeat;
+	background-position:center;
+}
+
+.hidden_Minus {
+	background-image:url(%URL%minus.gif);
+	background-repeat:no-repeat;
+	background-position:center;
+}
