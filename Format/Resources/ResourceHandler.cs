@@ -11,7 +11,7 @@ namespace Rsdn.Framework.Formatting.Resources
 		private const string PARAM_FILE = "file";
 		private const string PARAM_V = "v";
 		private const string MACRO_URL = "%URL%";
-		private const string LINK_FORMAT = "{0}?v={1}&file={2}";
+		private const string LINK_FORMAT = "{0}?v={1}.{2}.{3}&file={4}";
 		private const string DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
 		private const string US_CULTURE = "en-US";
 		private const string CFG_HANDLER = "Formatter.HandlerName";
@@ -27,25 +27,28 @@ namespace Rsdn.Framework.Formatting.Resources
 		#region Methods
 		public static string FormatLink(string fileName)
 		{
-			return String.Format(LINK_FORMAT, HandlerName, AppConstants.BuildDate, fileName);
+			return String.Format(LINK_FORMAT, HandlerName, AppConstants.MajorVersion, 
+				AppConstants.MinorVersion, AppConstants.Build, fileName);
 		}
 
 
 		public void ProcessRequest(HttpContext context)
 		{
 			SetCache(context.Response.Cache);
-			var res = ResourceProvider.ReadResource(context.Request[PARAM_FILE]);
 
-			if (res != null)
+			using (var res = ResourceProvider.ReadResource(context.Request[PARAM_FILE]))
 			{
-				context.Response.ContentType = res.GetContentType();
-
-				if (res.Binary)
-					context.Response.BinaryWrite((byte[])res.Read());
-				else
+				if (res != null)
 				{
-					var src = ((String)res.Read()).Replace(MACRO_URL, HandlerName);
-					context.Response.Write(src);
+					context.Response.ContentType = res.GetContentType();
+
+					if (res.Binary)
+						context.Response.BinaryWrite((byte[])res.Read());
+					else
+					{
+						var src = ((String)res.Read()).Replace(MACRO_URL, HandlerName);
+						context.Response.Write(src);
+					}
 				}
 			}
 		}
