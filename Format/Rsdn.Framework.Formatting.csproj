@@ -92,6 +92,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -132,9 +133,20 @@
     <Compile Include="QueryBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Resources\BinaryResource.cs" />
+    <Compile Include="Resources\Binary\_Dummy.cs" />
+    <Compile Include="Resources\ContentTypeAttribute.cs" />
+    <Compile Include="Resources\EnumExtensions.cs" />
+    <Compile Include="Resources\Resource.cs" />
+    <Compile Include="Resources\ResourceKind.cs" />
+    <Compile Include="Resources\ResourceNameAttribute.cs" />
+    <Compile Include="Resources\ResourceProvider.cs" />
+    <Compile Include="Resources\TextResource.cs" />
+    <Compile Include="Resources\Text\_Dummy.cs" />
     <Compile Include="TextFormatter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Resources\ResourceHandler.cs" />
     <EmbeddedResource Include="CodeFormat\Patterns\Assembler.xml" />
     <EmbeddedResource Include="CodeFormat\Patterns\C.xml" />
     <EmbeddedResource Include="CodeFormat\Patterns\CSharp.xml" />
@@ -182,7 +194,32 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\HiddenText.htm" />
+    <EmbeddedResource Include="Resources\Text\HiddenText.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Binary\beer.gif" />
+    <EmbeddedResource Include="Resources\Binary\biggrin.gif" />
+    <EmbeddedResource Include="Resources\Binary\confused.gif" />
+    <EmbeddedResource Include="Resources\Binary\crash.gif" />
+    <EmbeddedResource Include="Resources\Binary\down.gif" />
+    <EmbeddedResource Include="Resources\Binary\frown.gif" />
+    <EmbeddedResource Include="Resources\Binary\invasion.gif" />
+    <EmbeddedResource Include="Resources\Binary\lol.gif" />
+    <EmbeddedResource Include="Resources\Binary\maniac.gif" />
+    <EmbeddedResource Include="Resources\Binary\minus.gif" />
+    <EmbeddedResource Include="Resources\Binary\no.gif" />
+    <EmbeddedResource Include="Resources\Binary\nopont.gif" />
+    <EmbeddedResource Include="Resources\Binary\plus.gif" />
+    <EmbeddedResource Include="Resources\Binary\shuffle.gif" />
+    <EmbeddedResource Include="Resources\Binary\smile.gif" />
+    <EmbeddedResource Include="Resources\Binary\smirk.gif" />
+    <EmbeddedResource Include="Resources\Binary\sup.gif" />
+    <EmbeddedResource Include="Resources\Binary\super.gif" />
+    <EmbeddedResource Include="Resources\Binary\user.gif" />
+    <EmbeddedResource Include="Resources\Binary\wink.gif" />
+    <EmbeddedResource Include="Resources\Binary\wow.gif" />
+    <EmbeddedResource Include="Resources\Binary\xz.gif" />
+    <EmbeddedResource Include="Resources\Text\Formatter.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

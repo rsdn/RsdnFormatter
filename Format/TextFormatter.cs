@@ -8,6 +8,7 @@ using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Rsdn.Framework.Formatting.Resources;
 
 namespace Rsdn.Framework.Formatting
 {
@@ -32,9 +33,8 @@ namespace Rsdn.Framework.Formatting
 		/// </param>
 		public TextFormatter(ProcessImagesDelegate imagesDelegate)
 		{
-			using (var sr = new StreamReader(typeof(TextFormatter).Assembly.
-				GetManifestResourceStream("Rsdn.Framework.Formatting.Resources.HiddenText.htm")))
-				hiddenTextSnippet = sr.ReadToEnd().Replace("\r\n", String.Empty);
+			using (var r = ResourceProvider.ReadResource("hiddentext.htm"))
+				hiddenTextSnippet = ((String)r.Read()).Replace("\r\n", String.Empty);
 
 			// initialize image handlers
 			ImagesDelegate = imagesDelegate ?? new ProcessImagesDelegate(DefaultProcessImagesDelegate);
