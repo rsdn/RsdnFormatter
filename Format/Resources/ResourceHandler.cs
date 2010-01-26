@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Web;
+using System.Globalization;
 
 namespace Rsdn.Framework.Formatting.Resources
 {
@@ -11,6 +12,8 @@ namespace Rsdn.Framework.Formatting.Resources
 		private const string PARAM_V = "v";
 		private const string MACRO_URL = "%URL%";
 		private const string LINK_FORMAT = "{0}?v={1}&file={2}";
+		private const string DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
+		private const string US_CULTURE = "en-US";
 		private const string CFG_HANDLER = "Formatter.HandlerName";
 		private const string CFG_DEFAULT_HANDLER = "formatter.aspx";
 
@@ -56,6 +59,8 @@ namespace Rsdn.Framework.Formatting.Resources
 			cache.SetOmitVaryStar(true);
 			cache.SetValidUntilExpires(true);
 			cache.SetExpires(DateTime.Now.AddYears(2));
+			cache.SetLastModified(DateTime.ParseExact(AppConstants.BuildDate,
+				DATE_FORMAT, CultureInfo.GetCultureInfo(US_CULTURE).DateTimeFormat));
 		}
 		#endregion
 
