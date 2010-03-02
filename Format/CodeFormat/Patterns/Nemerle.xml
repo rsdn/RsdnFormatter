@@ -10,7 +10,8 @@
 		<entry>'([^'\\]|\\['"\\0abfnrtv]|\\x[0-9aAbBcCdDeEfF]{1,4})'</entry>
 		<entry><![CDATA[(?<!@)"((?<!\\)\\"|[^"])*"]]></entry>
 		<entry>(?s)@"(""|[^"])*"</entry>
-	</pattern>
+    <!--entry>(?s)\&lt;#(#\&gt;)*#\&gt;</entry-->
+  </pattern>
 	<!-- preprocessor definitions -->
 	<pattern name="kw" prefix="#\s*" postfix="\b">
 		<entry>if</entry>
