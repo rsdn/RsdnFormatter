@@ -22,6 +22,8 @@ namespace Rsdn.Framework.Formatting
 					{"cs", "CSharp"},
 					{"c#", "CSharp"},
 
+					{"Nemerle", "Nemerle"},
+
 					{"asm", "Assembler"},
 
 					{"ccode", "C"},

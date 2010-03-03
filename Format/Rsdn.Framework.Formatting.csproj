@@ -229,7 +229,7 @@
     <EmbeddedResource Include="Resources\Text\Formatter.css" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeFormat\Patterns\Nemerle.xml" />
+    <EmbeddedResource Include="CodeFormat\Patterns\Nemerle.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
