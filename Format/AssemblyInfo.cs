@@ -1,5 +1,5 @@
 using System.Reflection;
-
+using System.Security;
 using Rsdn.Framework.Formatting;
 
 //
@@ -61,4 +61,6 @@ using Rsdn.Framework.Formatting;
 //       documentation for more information on this.
 //
 [assembly: AssemblyDelaySign(false)]
+
+[assembly: AllowPartiallyTrustedCallers]
 
