@@ -1198,7 +1198,7 @@ namespace Rsdn.Framework.Formatting
 			// [s]
 			sb = _rxStrike.Replace(sb, "<s>$1</s>");
 
-			// [s]
+			// [u]
 			sb = _rxUnder.Replace(sb, "<u>$1</u>");
 
 			// —сылки на MSDN.
