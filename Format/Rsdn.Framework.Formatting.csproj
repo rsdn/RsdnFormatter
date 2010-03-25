@@ -233,8 +233,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>SET SWCRTool=$(SolutionDir)tools\SubWCRev.exe
-SET WCRoot=$(SolutionDir)
+    <PreBuildEvent>SET SWCRTool=$(ProjectDir)..\tools\SubWCRev.exe
+SET WCRoot=$(ProjectDir)..\
 SET Target=$(ProjectDir)AppConstants.cs
 SET Template=%25Target%25.template
 
