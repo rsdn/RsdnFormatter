@@ -19,7 +19,6 @@ namespace Rsdn.Framework.Formatting.Resources
 		private static readonly string[] resNames = typeof(ResourceProvider).Assembly.GetManifestResourceNames();
 		#endregion
 
-
 		#region Methods
 		public static Resource ReadResource(string res)
 		{
@@ -31,19 +30,16 @@ namespace Rsdn.Framework.Formatting.Resources
 			if (!String.IsNullOrEmpty(fullName))
 			{
 				var stream = typeof(ResourceProvider).Assembly.GetManifestResourceStream(fullName);
-				ret = bin ? (Resource)new BinaryResource(fullName, rk, stream) :
+				ret = bin ? new BinaryResource(fullName, rk, stream) :
 					(Resource)new TextResource(fullName, rk, stream);
 			}
 
 			return ret;
 		}
 
-
 		private static ResourceKind DetermineResourceKind(string res)
 		{
-			var fi = new FileInfo(res);
-
-			switch (fi.Extension)
+			switch (Path.GetExtension(res))
 			{
 				case GIF : return ResourceKind.Gif;
 				case PNG : return ResourceKind.Png;
@@ -55,7 +51,6 @@ namespace Rsdn.Framework.Formatting.Resources
 				default : return ResourceKind.None;
 			}
 		}
-
 
 		private static string GetFullName(string res, bool binary)
 		{

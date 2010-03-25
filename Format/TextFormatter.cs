@@ -17,7 +17,7 @@ namespace Rsdn.Framework.Formatting
 	/// </summary>
 	public class TextFormatter
 	{
-		private readonly string hiddenTextSnippet;
+		private readonly string _hiddenTextSnippet;
 
 		/// <summary>
 		/// —оздаЄт экземпл€р класса <b>TextFormatter</b>.
@@ -34,7 +34,7 @@ namespace Rsdn.Framework.Formatting
 		public TextFormatter(ProcessImagesDelegate imagesDelegate)
 		{
 			using (var r = ResourceProvider.ReadResource("hiddentext.htm"))
-				hiddenTextSnippet = ((String)r.Read()).Replace("\r\n", String.Empty);
+				_hiddenTextSnippet = ((String)r.Read()).Replace("\r\n", String.Empty);
 
 			// initialize image handlers
 			ImagesDelegate = imagesDelegate ?? new ProcessImagesDelegate(DefaultProcessImagesDelegate);
@@ -1061,7 +1061,7 @@ namespace Rsdn.Framework.Formatting
 				var m = cutMatcher[i];
 				var capt = String.IsNullOrEmpty(m.Groups[3].Value) ? "—крытый текст" : m.Groups[3].Value;
 				sb = sb.Replace(String.Format(cutExpression, i),
-					hiddenTextSnippet.Replace("%CAPT%", capt).Replace("%TEXT%", m.Groups[4].Value).
+					_hiddenTextSnippet.Replace("%CAPT%", capt).Replace("%TEXT%", m.Groups[4].Value).
 					Replace("%URL%", GetImagePrefix()));
 			}
 
