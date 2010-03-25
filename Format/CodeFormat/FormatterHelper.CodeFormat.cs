@@ -85,7 +85,7 @@ namespace Rsdn.Framework.Formatting
 						name =>
 							name.StartsWith("Rsdn.Framework.Formatting.CodeFormat.Patterns")
 							&& name.EndsWith(".xml"))
-					.Select(name => asm.GetManifestResourceStream(name));
+					.Select(asm.GetManifestResourceStream);
 			foreach (var stream in resources)
 			{
 				var xDoc = XDocument.Load(new StreamReader(stream));
@@ -195,9 +195,7 @@ namespace Rsdn.Framework.Formatting
 		public static string MarkupCodeByTag([NotNull] string tagName, [NotNull] string source)
 		{
 			var cf = GetCodeFormatterByTag(tagName);
-			if (cf == null)
-				return source;
-			return cf.Transform(source);
+			return cf == null ? source : cf.Transform(source);
 		}
 	}
 }

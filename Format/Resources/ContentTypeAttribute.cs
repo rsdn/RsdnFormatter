@@ -12,14 +12,12 @@ namespace Rsdn.Framework.Formatting.Resources
 		}
 		#endregion
 
-
 		#region Methods
 		public override string ToString()
 		{
 			return ContentType;
 		}
 		#endregion
-
 
 		#region Properties
 		public string ContentType { get; private set; }

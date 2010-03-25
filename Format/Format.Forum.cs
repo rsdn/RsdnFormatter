@@ -184,7 +184,7 @@ namespace Rsdn.Framework.Formatting
 			{
 				// ѕолучаем сокращени€ дл€ ника.
 				//
-				string shortname = GetShortNick(nick);
+				var shortname = GetShortNick(nick);
 
 				// ≈сли пользователь не модератор. тег [moderator] удал€етс€.
 				// ƒополнительна€ проверка производитьс€ при сохранении сообщени€.

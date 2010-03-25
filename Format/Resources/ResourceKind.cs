@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Rsdn.Framework.Formatting.Resources
+﻿namespace Rsdn.Framework.Formatting.Resources
 {
 	public enum ResourceKind
 	{

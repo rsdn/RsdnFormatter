@@ -6,7 +6,7 @@ namespace Rsdn.Framework.Formatting.Resources
 	public abstract class Resource : IDisposable
 	{
 		#region Construction
-		private object cachedData;
+		private object _cachedData;
 
 		internal Resource(string fullName, ResourceKind kind, Stream stream)
 		{
@@ -48,7 +48,7 @@ namespace Rsdn.Framework.Formatting.Resources
 			if (Stream == null)
 				throw new ObjectDisposedException(typeof(Resource).Name);
 
-			return Stream.Position > 0 ? cachedData : cachedData = ObtainResource();
+			return Stream.Position > 0 ? _cachedData : _cachedData = ObtainResource();
 		}
 
 

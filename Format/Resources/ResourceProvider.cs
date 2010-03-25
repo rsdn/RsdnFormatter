@@ -7,16 +7,16 @@ namespace Rsdn.Framework.Formatting.Resources
 	public static class ResourceProvider
 	{
 		#region Construction
-		private const string DOT = ".";
-		private const string GIF = ".gif";
-		private const string JPG = ".jpg";
-		private const string PNG = ".png";
-		private const string JS = ".js";
-		private const string VBS = ".vbs";
-		private const string HTM = ".htm";
-		private const string CSS = ".css";
+		private const string _dot = ".";
+		private const string _gif = ".gif";
+		private const string _jpg = ".jpg";
+		private const string _png = ".png";
+		private const string _js = ".js";
+		private const string _vbs = ".vbs";
+		private const string _htm = ".htm";
+		private const string _css = ".css";
 		
-		private static readonly string[] resNames = typeof(ResourceProvider).Assembly.GetManifestResourceNames();
+		private static readonly string[] _resNames = typeof(ResourceProvider).Assembly.GetManifestResourceNames();
 		#endregion
 
 		#region Methods
@@ -41,21 +41,21 @@ namespace Rsdn.Framework.Formatting.Resources
 		{
 			switch (Path.GetExtension(res))
 			{
-				case GIF : return ResourceKind.Gif;
-				case PNG : return ResourceKind.Png;
-				case JPG : return ResourceKind.Jpeg;
-				case JS : return ResourceKind.JavaScript;
-				case VBS : return ResourceKind.VBScript;
-				case HTM : return ResourceKind.Html;
-				case CSS : return ResourceKind.Css;
+				case _gif : return ResourceKind.Gif;
+				case _png : return ResourceKind.Png;
+				case _jpg : return ResourceKind.Jpeg;
+				case _js : return ResourceKind.JavaScript;
+				case _vbs : return ResourceKind.VBScript;
+				case _htm : return ResourceKind.Html;
+				case _css : return ResourceKind.Css;
 				default : return ResourceKind.None;
 			}
 		}
 
 		private static string GetFullName(string res, bool binary)
 		{
-			var name = String.Concat((binary ? typeof(Binary._Dummy) : typeof(Text._Dummy)).Namespace, DOT, res);
-			return (from f in resNames
+			var name = String.Concat((binary ? typeof(Binary._Dummy) : typeof(Text._Dummy)).Namespace, _dot, res);
+			return (from f in _resNames
 					where StringComparer.OrdinalIgnoreCase.Equals(name, f)
 					select f).FirstOrDefault();
 		}

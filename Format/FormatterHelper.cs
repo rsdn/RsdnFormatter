@@ -296,12 +296,12 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="tags"></param>
 		/// <param name="eval">Tag transformer</param>
-		/// <returns></returns>
 		public static string ExtractTags(this string tags, MatchEvaluator eval)
 		{
-			if (string.IsNullOrEmpty(tags))
-				return tags;
-			return _tagsExtractor.Replace(tags, eval);
+			return
+				string.IsNullOrEmpty(tags)
+					? tags
+					: _tagsExtractor.Replace(tags, eval);
 		}
 
 		///<summary>
