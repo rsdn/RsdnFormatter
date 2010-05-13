@@ -85,7 +85,7 @@ namespace Rsdn.Framework.Formatting
 						name =>
 							name.StartsWith("Rsdn.Framework.Formatting.CodeFormat.Patterns")
 							&& name.EndsWith(".xml"))
-					.Select(asm.GetManifestResourceStream);
+					.Select(x => asm.GetManifestResourceStream(x));
 			foreach (var stream in resources)
 			{
 				var xDoc = XDocument.Load(new StreamReader(stream));
