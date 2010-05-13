@@ -29,20 +29,20 @@
 	</pattern>
 	<!-- keywords -->
 	<pattern name="kw" prefix="\b" postfix="\b">
+		<entry>_</entry>
 		<entry>abstract</entry>
 		<entry>as</entry>
 		<entry>base</entry>
 		<entry>bool</entry>
 		<entry>break</entry>
 		<entry>byte</entry>
-		<entry>case</entry>
 		<entry>catch</entry>
 		<entry>char</entry>
 		<entry>checked</entry>
 		<entry>class</entry>
-		<entry>const</entry>
 		<entry>continue</entry>
 		<entry>decimal</entry>
+		<entry>def</entry>
 		<entry>default</entry>
 		<entry>delegate</entry>
 		<entry>do</entry>
@@ -50,17 +50,13 @@
 		<entry>else</entry>
 		<entry>enum</entry>
 		<entry>event</entry>
-		<entry>explicit</entry>
 		<entry>extern</entry>
 		<entry>false</entry>
 		<entry>finally</entry>
-		<entry>fixed</entry>
 		<entry>float</entry>
 		<entry>for</entry>
 		<entry>foreach</entry>
-		<entry>goto</entry>
 		<entry>if</entry>
-		<entry>implicit</entry>
 		<entry>in</entry>
 		<entry>int</entry>
 		<entry>interface</entry>
@@ -68,13 +64,12 @@
 		<entry>is</entry>
 		<entry>lock</entry>
 		<entry>long</entry>
+		<entry>macro</entry>
+		<entry>match</entry>
 		<entry>namespace</entry>
 		<entry>new</entry>
-		<entry>macro</entry>
-		<entry>syntax</entry>
 		<entry>null</entry>
 		<entry>object</entry>
-		<entry>operator</entry>
 		<entry>out</entry>
 		<entry>override</entry>
 		<entry>params</entry>
@@ -86,11 +81,10 @@
 		<entry>sbyte</entry>
 		<entry>sealed</entry>
 		<entry>short</entry>
-		<entry>sizeof</entry>
-		<entry>stackalloc</entry>
 		<entry>static</entry>
 		<entry>string</entry>
 		<entry>struct</entry>
+		<entry>syntax</entry>
 		<entry>this</entry>
 		<entry>throw</entry>
 		<entry>true</entry>
@@ -99,53 +93,37 @@
 		<entry>uint</entry>
 		<entry>ulong</entry>
 		<entry>unchecked</entry>
+		<entry>unless</entry>
 		<entry>ushort</entry>
 		<entry>using</entry>
+		<entry>variant</entry>
 		<entry>virtual</entry>
 		<entry>void</entry>
-    <entry>where</entry>
-    <entry>when</entry>
-    <entry>while</entry>
-    <entry>match</entry>
-    <entry>volatile</entry>
+		<entry>volatile</entry>
+		<entry>when</entry>
+		<entry>where</entry>
+		<entry>while</entry>
+		<entry>with</entry>
+
 
 		<!-- contextual keywords -->
 		<entry>add</entry>
-		<entry>dynamic</entry>
 		<entry>get</entry>
-		<entry>global</entry>
 		<entry>partial</entry>
-		<entry>property</entry>
 		<entry>remove</entry>
 		<entry>set</entry>
-    <entry>def</entry>
     <entry>mutable</entry>
 		<entry>value</entry>
 		<entry>yield</entry>
 
 		<!-- attribte targets -->
-		<entry>assembly</entry>
+    <entry>assembly</entry>
 		<entry>field</entry>
 		<entry>method</entry>
 		<entry>module</entry>
 		<entry>param</entry>
 		<entry>type</entry>
 		<entry>typevar</entry>
-
-		<!-- query keywords -->
-    <entry>ascending</entry>
-    <entry>by</entry>
-    <entry>descending</entry>
-    <entry>equals</entry>
-    <entry>from</entry>
-    <entry>group</entry>
-    <entry>into</entry>
-    <entry>join</entry>
-    <entry>let</entry>
-    <entry>on</entry>
-    <entry>orderby</entry>
-    <entry>select</entry>
-    <entry>where</entry>
 
 	</pattern>
 </language>
