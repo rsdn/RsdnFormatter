@@ -12,8 +12,8 @@ namespace Rsdn.Framework.Formatting
 	{
 		private static readonly Dictionary<string, CodeLangInfo> _langInfos =
 			new Dictionary<string, CodeLangInfo>();
-		private static readonly Dictionary<string, CodeFormatter> _codeFormatters =
-			new Dictionary<string, CodeFormatter>(StringComparer.OrdinalIgnoreCase);
+		private static readonly Dictionary<string, Lazy<CodeFormatter>> _codeFormatters =
+			new Dictionary<string, Lazy<CodeFormatter>>(StringComparer.OrdinalIgnoreCase);
 
 		private static readonly Dictionary<string, string> _codeTags =
 			new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -22,7 +22,7 @@ namespace Rsdn.Framework.Formatting
 					{"cs", "CSharp"},
 					{"c#", "CSharp"},
 
-					{"Nemerle", "Nemerle"},
+					{"nemerle", "Nemerle"},
 
 					{"asm", "Assembler"},
 
@@ -95,7 +95,8 @@ namespace Rsdn.Framework.Formatting
 				_langInfos.Add(info.Name, info);
 
 				stream.Seek(0, SeekOrigin.Begin);
-				_codeFormatters.Add(info.Name, new CodeFormatter(stream));
+				var localStream = stream;
+				_codeFormatters.Add(info.Name, Lazy.Create(() => new CodeFormatter(localStream)));
 			}
 		}
 
@@ -129,10 +130,10 @@ namespace Rsdn.Framework.Formatting
 		{
 			if (name == null) throw new ArgumentNullException("name");
 
-			CodeFormatter cf;
+			Lazy<CodeFormatter> cf;
 			if (!_codeFormatters.TryGetValue(name, out cf))
 				throw new ArgumentException("Unsupported language");
-			return cf;
+			return cf.Value;
 		}
 
 		/// <summary>
