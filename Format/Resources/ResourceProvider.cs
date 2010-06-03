@@ -54,7 +54,7 @@ namespace Rsdn.Framework.Formatting.Resources
 
 		private static string GetFullName(string res, bool binary)
 		{
-			var name = String.Concat((binary ? typeof(Binary._Dummy) : typeof(Text._Dummy)).Namespace, _dot, res);
+			var name = String.Concat((binary ? typeof(Binary.Dummy) : typeof(Text.Dummy)).Namespace, _dot, res);
 			return (from f in _resNames
 					where StringComparer.OrdinalIgnoreCase.Equals(name, f)
 					select f).FirstOrDefault();

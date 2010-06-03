@@ -17,7 +17,6 @@ namespace Rsdn.Framework.Formatting.Resources
 		}
 		#endregion
 
-
 		#region Methods
 		~Resource()
 		{
@@ -54,7 +53,6 @@ namespace Rsdn.Framework.Formatting.Resources
 
 		protected abstract object ObtainResource();
 		#endregion
-
 
 		#region Properties
 		public ResourceKind Kind { get; private set; }

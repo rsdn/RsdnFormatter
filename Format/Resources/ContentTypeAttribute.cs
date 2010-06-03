@@ -3,7 +3,7 @@
 namespace Rsdn.Framework.Formatting.Resources
 {
 	[AttributeUsage(AttributeTargets.Field)]
-	public sealed class ContentTypeAttribute : Attribute
+	internal sealed class ContentTypeAttribute : Attribute
 	{
 		#region Construction
 		public ContentTypeAttribute(string contentType)

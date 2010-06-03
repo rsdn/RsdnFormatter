@@ -9,3 +9,11 @@ private class A {}
 [/c#]
 [/cut]
 [cut]Some text to test[/cut]
+
+[cut=Level1]
+Text
+[cut=Level2]
+Text
+[/cut]
+Text
+[/cut]

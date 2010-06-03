@@ -464,11 +464,12 @@ namespace Rsdn.Framework.Formatting
 		protected virtual string FormatURLs(Match urlMatch, string urlAdsress, string urlName)
 		{
 			// by default pass url directly (just antiXSS processing)
-			var link = new HtmlAnchor
-			           	{
-			           		HRef = urlAdsress.EncodeAgainstXSS(),
-			           		InnerHtml = urlName
-			           	};
+			var link =
+				new HtmlAnchor
+				{
+					HRef = urlAdsress.EncodeAgainstXSS(),
+					InnerHtml = urlName
+				};
 
 			var processesedItself = false;
 
@@ -477,18 +478,13 @@ namespace Rsdn.Framework.Formatting
 			{
 				// if no scheme detected - use default http
 				if (!urlMatch.Groups["scheme"].Success)
-				{
 					link.HRef = Uri.UriSchemeHttp + "://" + link.HRef;
-				}
 				else
 				{
 					// process custom scheme formatting, if exists
 					ProcessUrl schemeFormatter;
-					if (SchemeFormatting.TryGetValue(
-						urlMatch.Groups["scheme"].Value, out schemeFormatter))
-					{
+					if (SchemeFormatting.TryGetValue(urlMatch.Groups["scheme"].Value, out schemeFormatter))
 						processesedItself = schemeFormatter(urlMatch, link);
-					}
 				}
 
 				if (!processesedItself)
@@ -496,9 +492,7 @@ namespace Rsdn.Framework.Formatting
 					var matchedHostname = urlMatch.Groups["hostname"];
 					ProcessUrl hostFormatter;
 					if (HostFormatting.TryGetValue(matchedHostname.Value, out hostFormatter))
-					{
 						processesedItself = hostFormatter(urlMatch, link);
-					}
 				}
 			}
 
@@ -1048,22 +1042,25 @@ namespace Rsdn.Framework.Formatting
 
 			// temporary remove [cut] tags
 			const string cutExpression = "$$cut{0}$$";
-			var cutMatcher = new Matcher(cutExpression);
-			sb = _rxPrep13.Replace(sb, cutMatcher.Match);
-
-			// Цитирование.
-			//
-			sb = _rxTextUrl09.Replace(sb, "<span class='lineQuote'>$&</span>");
-
-			// restore & transform [cut] tags
-			for (var i = 0; i < cutMatcher.Count; i++)
+			Matcher cutMatcher;
+			do
 			{
-				var m = cutMatcher[i];
-				var capt = String.IsNullOrEmpty(m.Groups[3].Value) ? "Скрытый текст" : m.Groups[3].Value;
-				sb = sb.Replace(String.Format(cutExpression, i),
-					_hiddenTextSnippet.Replace("%CAPT%", capt).Replace("%TEXT%", m.Groups[4].Value).
-					Replace("%URL%", GetImagePrefix()));
-			}
+				cutMatcher = new Matcher(cutExpression);
+				sb = _rxPrep13.Replace(sb, cutMatcher.Match);
+
+				// Цитирование.
+				sb = _rxTextUrl09.Replace(sb, "<span class='lineQuote'>$&</span>");
+
+				// restore & transform [cut] tags
+				for (var i = 0; i < cutMatcher.Count; i++)
+				{
+					var m = cutMatcher[i];
+					var capt = String.IsNullOrEmpty(m.Groups[3].Value) ? "Скрытый текст" : m.Groups[3].Value;
+					sb = sb.Replace(String.Format(cutExpression, i),
+						_hiddenTextSnippet.Replace("%CAPT%", capt).Replace("%TEXT%", m.Groups[4].Value).
+						Replace("%URL%", GetImagePrefix()));
+				}
+			} while (cutMatcher.Count > 0);
 
 			// restore & transform [q] tags
 			// Цитирование [q].
@@ -1273,9 +1270,6 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Обработка ISBN
 		/// </summary>
-		/// <param name="match"></param>
-		/// <param name="isbn"></param>
-		/// <returns></returns>
 		public virtual string ProcessISBN(Match match, string isbn)
 		{
 			return

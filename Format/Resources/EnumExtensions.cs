@@ -2,7 +2,7 @@
 
 namespace Rsdn.Framework.Formatting.Resources
 {
-	public static class EnumExtensions
+	internal static class EnumExtensions
 	{
 		public static T GetCustomAttribute<T>(this Enum @this) where T : Attribute
 		{

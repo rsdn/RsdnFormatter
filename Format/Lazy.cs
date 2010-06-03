@@ -6,7 +6,7 @@ namespace Rsdn.Framework.Formatting
 	/// Lazy&lt;T&gt; from FW4
 	/// </summary>
 	/// <remarks>Not thread safe</remarks>
-	public class Lazy<T>
+	internal class Lazy<T>
 	{
 		private readonly Func<T> _valueFactory;
 		private T _value;
@@ -33,7 +33,7 @@ namespace Rsdn.Framework.Formatting
 		}
 	}
 
-	public static class Lazy
+	internal static class Lazy
 	{
 		public static Lazy<T> Create<T>(Func<T> valueFactory)
 		{

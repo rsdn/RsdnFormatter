@@ -3,7 +3,7 @@
 namespace Rsdn.Framework.Formatting.Resources
 {
 	[AttributeUsage(AttributeTargets.Field)]
-	public sealed class ResourceNameAttribute : Attribute
+	internal sealed class ResourceNameAttribute : Attribute
 	{
 		#region Construction
 		public ResourceNameAttribute(string resName)
