@@ -8,6 +8,7 @@ using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+
 using Rsdn.Framework.Formatting.Resources;
 
 namespace Rsdn.Framework.Formatting
@@ -195,42 +196,54 @@ namespace Rsdn.Framework.Formatting
 		{
 			private readonly Regex _regex;
 			private readonly string _replacer;
+			private readonly string _fileName;
 
-			public SmileReplacer(string pattern, string replacer)
+			public SmileReplacer(string pattern, string replacer, string fileName)
 			{
 				_replacer = replacer;
-				_regex = new Regex(pattern, RegexOptions.IgnoreCase);
+				_fileName = fileName;
+				_regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+			}
+
+			public string FileName
+			{
+				get { return _fileName; }
 			}
 
 			public StringBuilder Replace(StringBuilder input, string imagePrefix)
 			{
 				return _regex.Replace(input, string.Format(_replacer, imagePrefix));
 			}
+
+			public int GetSmileCount(string input)
+			{
+				return _regex.Matches(input).Count;
+			}
 		}
 
 		private static readonly SmileReplacer[] _smileReplacers =
 			new[]
 			{
-				new SmileReplacer(@":up:", "<img border='0' width='15' height='15' src='{0}sup.gif' />"),
-				new SmileReplacer(@":down:", "<img border='0' width='15' height='15' src='{0}down.gif' />"),
-				new SmileReplacer(@":super:", "<img border='0' width='26' height='28' src='{0}super.gif' />"),
-				new SmileReplacer(@":shuffle:", "<img border='0' width='15' height='20' src='{0}shuffle.gif' />"),
-				new SmileReplacer(@":crash:", "<img border='0' width='30' height='30' src='{0}crash.gif'/ >"),
-				new SmileReplacer(@":maniac:", "<img border='0' width='70' height='25' src='{0}maniac.gif' />"),
-				new SmileReplacer(@":user:", "<img border='0' width='40' height='20' src='{0}user.gif' />"),
-				new SmileReplacer(@":wow:", "<img border='0' width='19' height='19' src='{0}wow.gif' />"),
-				new SmileReplacer(@":beer:", "<img border='0' width='57' height='16' src='{0}beer.gif' />"),
-				new SmileReplacer(@":team:", "<img border='0' width='110' height='107' src='{0}invasion.gif' />"),
-				new SmileReplacer(@":no:", "<img border='0' width='15' height='15' src='{0}no.gif' />"),
-				new SmileReplacer(@":nopont:", "<img border='0' width='35' height='35' src='{0}nopont.gif' />"),
-				new SmileReplacer(@":xz:", "<img border='0' width='37' height='15' src='{0}xz.gif' />"),
-				new SmileReplacer(@"(?<!:):-?\)\)\)", "<img border='0' width='15' height='15' src='{0}lol.gif' />"),
-				new SmileReplacer(@"(?<!:):-?\)\)", "<img border='0' width='15' height='15' src='{0}biggrin.gif' />"),
-				new SmileReplacer(@"(?<!:):-?\)", "<img border='0' width='15' height='15' src='{0}smile.gif' />"),
-				new SmileReplacer(@"(?<!;|amp|gt|lt|quot);[-oO]?\)", "<img border='0' width='15' height='15' src='{0}wink.gif' />"),
-				new SmileReplacer(@"(?<!:):-?\(", "<img border='0' width='15' height='15' src='{0}frown.gif' />"),
-				new SmileReplacer(@"(?<!:):-[\\/]", "<img border='0' width='15' height='15' src='{0}smirk.gif' />"),
-				new SmileReplacer(@":\?\?\?:", "<img border='0' width='15' height='22' src='{0}confused.gif' />"),
+				new SmileReplacer(@":up:", "<img border='0' width='15' height='15' src='{0}sup.gif' />", "sup"),
+				new SmileReplacer(@":down:", "<img border='0' width='15' height='15' src='{0}down.gif' />", "down"),
+				new SmileReplacer(@":super:", "<img border='0' width='26' height='28' src='{0}super.gif' />", "super"),
+				new SmileReplacer(@":shuffle:", "<img border='0' width='15' height='20' src='{0}shuffle.gif' />", "shuffle"),
+				new SmileReplacer(@":crash:", "<img border='0' width='30' height='30' src='{0}crash.gif'/ >", "crash"),
+				new SmileReplacer(@":maniac:", "<img border='0' width='70' height='25' src='{0}maniac.gif' />", "maniac"),
+				new SmileReplacer(@":user:", "<img border='0' width='40' height='20' src='{0}user.gif' />", "user"),
+				new SmileReplacer(@":wow:", "<img border='0' width='19' height='19' src='{0}wow.gif' />", "wow"),
+				new SmileReplacer(@":beer:", "<img border='0' width='57' height='16' src='{0}beer.gif' />", "beer"),
+				new SmileReplacer(@":team:", "<img border='0' width='110' height='107' src='{0}invasion.gif' />", "invasion"),
+				new SmileReplacer(@":no:", "<img border='0' width='15' height='15' src='{0}no.gif' />", "no"),
+				new SmileReplacer(@":nopont:", "<img border='0' width='35' height='35' src='{0}nopont.gif' />", "nopont"),
+				new SmileReplacer(@":xz:", "<img border='0' width='37' height='15' src='{0}xz.gif' />", "xz"),
+				new SmileReplacer(@"(?<!:):-?\)\)\)", "<img border='0' width='15' height='15' src='{0}lol.gif' />", "lol"),
+				new SmileReplacer(@"(?<!:):-?\)\)", "<img border='0' width='15' height='15' src='{0}biggrin.gif' />", "biggrin"),
+				new SmileReplacer(@"(?<!:):-?\)", "<img border='0' width='15' height='15' src='{0}smile.gif' />", "smile"),
+				new SmileReplacer(@"(?<!;|amp|gt|lt|quot);[-oO]?\)", "<img border='0' width='15' height='15' src='{0}wink.gif' />", "wink"),
+				new SmileReplacer(@"(?<!:):-?\(", "<img border='0' width='15' height='15' src='{0}frown.gif' />", "frown"),
+				new SmileReplacer(@"(?<!:):-[\\/]", "<img border='0' width='15' height='15' src='{0}smirk.gif' />", "smirk"),
+				new SmileReplacer(@":\?\?\?:", "<img border='0' width='15' height='22' src='{0}confused.gif' />", "confused")
 			};
 		#endregion
 
@@ -1248,11 +1261,22 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Проверяет на наличие модераторского текста в сообщении
 		/// </summary>
-		/// <param name="text"></param>
-		/// <returns></returns>
 		public static bool IsThereModeratorTag(string text)
 		{
 			return _moderatorDetector.IsMatch(text);
+		}
+
+		/// <summary>
+		/// Возвращает список имен файлов смайликов, задействованных в сообщении.
+		/// </summary>
+		public static string[] GetSmileFiles(string text)
+		{
+			return
+				_smileReplacers
+					.Where(repl => repl.GetSmileCount(text) > 0)
+					.Select(repl => repl.FileName)
+					.Distinct()
+					.ToArray();
 		}
 
 		/// <summary>
