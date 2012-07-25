@@ -762,7 +762,7 @@ namespace Rsdn.Framework.Formatting
 		public virtual string GetMSDNRef(string keyword)
 		{
 			return string.Format(
-				@"http://search.microsoft.com/search/results.aspx?q={0}",
+				@"http://search.microsoft.com/ru-RU/results.aspx?q={0}",
 				HttpUtility.UrlEncode(keyword));
 		}
 
