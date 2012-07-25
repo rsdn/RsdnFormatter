@@ -383,12 +383,12 @@ namespace Rsdn.Framework.Formatting
 			var guidMatch = _msdnGuidDetector.Match(urlMatch.Value);
 			if (guidMatch.Success)
 			{
-				link.HRef = string.Format(guidMatch.Groups["section"].Success
-				                          	?
-				                          		"http://msdn.microsoft.com/library/en-us/{1}/html/{0}.asp"
-				                          	:
-				                          		"http://msdn2.microsoft.com/{0}.aspx",
-				                          guidMatch.Value, guidMatch.Groups["section"].Value);
+				link.HRef = string.Format(
+					guidMatch.Groups["section"].Success
+						? "http://msdn.microsoft.com/library/en-us/{1}/html/{0}.asp"
+						: "http://msdn2.microsoft.com/{0}.aspx",
+					guidMatch.Value,
+					guidMatch.Groups["section"].Value);
 			}
 			return false;
 		}
@@ -762,7 +762,7 @@ namespace Rsdn.Framework.Formatting
 		public virtual string GetMSDNRef(string keyword)
 		{
 			return string.Format(
-				@"http://search.microsoft.com/search/results.aspx?View=msdn&amp;c=4&amp;qu={0}",
+				@"http://search.microsoft.com/search/results.aspx?q={0}",
 				HttpUtility.UrlEncode(keyword));
 		}
 
