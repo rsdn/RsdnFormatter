@@ -847,7 +847,7 @@ namespace Rsdn.Framework.Formatting
 		private static readonly Regex _rxPrep02 = new Regex(@":(?=:-?[\)\(\\/])");
 		private static readonly Regex _rxPrep03 = new Regex(@";(?=;[-oO]?\))");
 
-		private static readonly string[] _inlineTags = new[] {"b", "i", "u", "s", "sub", "sup"};
+		private static readonly string[] _inlineTags = new[] {"b", "i", "u", "s", "sub", "sup", "tt"};
 
 		private static readonly IList<Func<StringBuilder, StringBuilder>> _inlineTagReplacers =
 			CreateInlineTagReplacers(_inlineTags, true);
