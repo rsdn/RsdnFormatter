@@ -96,7 +96,7 @@ namespace Rsdn.Framework.Formatting
 
 				stream.Seek(0, SeekOrigin.Begin);
 				var localStream = stream;
-				_codeFormatters.Add(info.Name, Lazy.Create(() => new CodeFormatter(localStream)));
+				_codeFormatters.Add(info.Name, Lazy.Create(() => new CodeFormatter(info.Name, localStream)));
 			}
 		}
 

@@ -1,0 +1,4 @@
+﻿[ccode]
+typedef void *(*some_func)(void);
+((some_func)data)();
+[/ccode]

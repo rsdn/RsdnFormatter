@@ -58,14 +58,14 @@ namespace Rsdn.Framework.Formatting
 		/// —оздание экземпл€ра раскрасивальщика.
 		/// </summary>
 		/// <param name="xmlSource">»сходный xml-поток</param>
-		public CodeFormatter(Stream xmlSource) : this(xmlSource, RegexOptions.None) {}
+		public CodeFormatter(string name, Stream xmlSource) : this(name, xmlSource, RegexOptions.None) {}
 
 		/// <summary>
 		/// —оздание экземпл€ра раскрасивальщика с дополнительными опци€ми дл€ регул€рного выражени€.
 		/// </summary>
 		/// <param name="xmlSource">»сходный xml-поток</param>
 		/// <param name="options">Regex опции</param>
-		public CodeFormatter(Stream xmlSource, RegexOptions options)
+		public CodeFormatter(string name, Stream xmlSource, RegexOptions options)
 		{
 			try
 			{
@@ -117,7 +117,7 @@ namespace Rsdn.Framework.Formatting
 					}
 
 					regexString.Append(')');
-				}			
+				}
 
 				// —оздание регул€рного выражени€
 				ColorerRegex = new Regex(regexString.ToString(), options);
@@ -131,11 +131,15 @@ namespace Rsdn.Framework.Formatting
 			}
 			catch (XmlException xmlException)
 			{
-				throw new FormatterException("Language color pattern source xml stream is not valid", xmlException);
+				throw new FormatterException(
+					string.Format("Language color pattern source xml stream is not valid:{0} - {1}", name, xmlException.Message),
+					xmlException);
 			}
 			catch (XmlSchemaException schemaException)
 			{
-				throw new FormatterException("Language color pattern source xml stream is not valid", schemaException);
+				throw new FormatterException(
+					string.Format("Language color pattern source xml stream is not valid:{0} - {1}", name, schemaException.Message),
+					schemaException);
 			}
 		}
 
