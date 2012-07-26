@@ -66,6 +66,7 @@
     <Content Include="TestData\Cpp.txt" />
     <Content Include="TestData\Cut.txt" />
     <Content Include="TestData\Sql.txt" />
+    <Content Include="TestData\SubSup.txt" />
     <Content Include="TestData\XSS.txt" />
     <Content Include="TestData\Heading.txt" />
     <Content Include="TestData\Quotation.txt" />
@@ -83,6 +84,7 @@
     <None Include="TestData\SimpleFormatting.gold" />
     <None Include="TestData\Smiles.gold" />
     <None Include="TestData\Sql.gold" />
+    <None Include="TestData\SubSup.gold" />
     <None Include="TestData\Urls.gold" />
     <None Include="TestData\XSS.gold" />
   </ItemGroup>

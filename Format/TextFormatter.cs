@@ -38,7 +38,7 @@ namespace Rsdn.Framework.Formatting
 				_hiddenTextSnippet = ((String)r.Read()).Replace("\r\n", String.Empty);
 
 			// initialize image handlers
-			ImagesDelegate = imagesDelegate ?? new ProcessImagesDelegate(DefaultProcessImagesDelegate);
+			ImagesDelegate = imagesDelegate ?? DefaultProcessImagesDelegate;
 
 			// initialize URLs formatting handlers
 			SchemeFormatting["ms-help"] = ProcessMsHelpLink;
@@ -779,8 +779,10 @@ namespace Rsdn.Framework.Formatting
 		protected string DoMSDNRef(Match match)
 		{
 			var msdnKeyword = match.Groups[1].Value;
-			return string.Format(@"<a target='_blank' class='m' href='{0}'>{1}</a>",
-			                     GetMSDNRef(msdnKeyword), msdnKeyword);
+			return
+				string.Format(
+					@"<a target='_blank' class='m' href='{0}'>{1}</a>",
+					GetMSDNRef(msdnKeyword), msdnKeyword);
 		}
 		#endregion
 
@@ -844,18 +846,14 @@ namespace Rsdn.Framework.Formatting
 
 		private static readonly Regex _rxPrep02 = new Regex(@":(?=:-?[\)\(\\/])");
 		private static readonly Regex _rxPrep03 = new Regex(@";(?=;[-oO]?\))");
-		// [b]
-		private static readonly Regex _rxBold = new Regex(@"(?is)(?<!\[)\[b\](.*?)\[[\\/]b\]");
-		private static readonly Regex _rxBoldWithoutChecking = new Regex(@"(?is)\[b\](.*?)\[[\\/]b\]");
-		// [i]
-		private static readonly Regex _rxItalic = new Regex(@"(?is)(?<!\[)\[i\](.*?)\[[\\/]i\]");
-		private static readonly Regex _rxItalicWithoutChecking = new Regex(@"(?is)\[i\](.*?)\[[\\/]i\]");
-		// [u]
-		private static readonly Regex _rxUnder = new Regex(@"(?is)(?<!\[)\[u\](.*?)\[[\\/]u\]");
-		private static readonly Regex _rxUnderWithoutChecking = new Regex(@"(?is)\[u\](.*?)\[[\\/]u\]");
-		// [s]
-		private static readonly Regex _rxStrike = new Regex(@"(?is)(?<!\[)\[s\](.*?)\[[\\/]s\]");
-		private static readonly Regex _rxStrikeWithoutChecking = new Regex(@"(?is)\[s\](.*?)\[[\\/]s\]");
+
+		private static readonly string[] _inlineTags = new[] {"b", "i", "u", "s", "sub", "sup"};
+
+		private static readonly IList<Func<StringBuilder, StringBuilder>> _inlineTagReplacers =
+			CreateInlineTagReplacers(_inlineTags, true);
+		private static readonly IList<Func<StringBuilder, StringBuilder>> _inlineTagReplacersNoChecks =
+			CreateInlineTagReplacers(_inlineTags, false);
+
 		// [list]
 		private static readonly Regex _rxPrep06 =
 			new Regex(@"(?is)(?<!\[)\[list\]\s*(.*?)\s*\[[\\/]list\]");
@@ -907,6 +905,27 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		private static readonly Regex _dashDetector =
 			new Regex(@"(?<=[\n\s])-(?=[\n\s])", RegexOptions.Compiled);
+
+		private static IList<Func<StringBuilder, StringBuilder>> CreateInlineTagReplacers(
+			IEnumerable<string> names,
+			bool checking)
+		{
+			return
+				names
+					.Select(
+						n =>
+						new
+						{
+							Name = n,
+							Rx =
+								checking
+									? new Regex(string.Format(@"(?is)(?<!\[)\[{0}\](.*?)\[[\\/]{0}\]", n))
+									: new Regex(string.Format(@"(?is)\[{0}\](.*?)\[[\\/]{0}\]", n)),
+							ReplaceMask = string.Format("<{0}>$1</{0}>", n)
+						})
+					.Select(p => (Func<StringBuilder, StringBuilder>)(sb => p.Rx.Replace(sb, p.ReplaceMask)))
+					.ToList();
+		}
 
 		/// <summary>
 		/// Process RSDN link tag
@@ -1199,20 +1218,10 @@ namespace Rsdn.Framework.Formatting
 			// и не в самом конце текста
 			sb = _rxNewLines.Replace(sb, "<br />$0");
 
-			// [b]
-			sb = _rxBold.Replace(sb, "<b>$1</b>");
-
-			// [i]
-			sb = _rxItalic.Replace(sb, "<i>$1</i>");
-
-			// [s]
-			sb = _rxStrike.Replace(sb, "<s>$1</s>");
-
-			// [u]
-			sb = _rxUnder.Replace(sb, "<u>$1</u>");
+			sb = _inlineTagReplacers.Aggregate(sb, (cur, replacer) => replacer(cur));
 
 			// Ссылки на MSDN.
-			sb = _rxMsdn.Replace(sb, new MatchEvaluator(DoMSDNRef));
+			sb = _rxMsdn.Replace(sb, DoMSDNRef);
 
 			// Нужно для отмены тэгов и отмены смайликов.
 			sb = _rxPrep01.Replace(sb, "");
@@ -1227,10 +1236,7 @@ namespace Rsdn.Framework.Formatting
 
 				// bold & italic formatting inside code
 				// without checking canceling tag syntax
-				code = _rxBoldWithoutChecking.Replace(code, "<b>$1</b>");
-				code = _rxItalicWithoutChecking.Replace(code, "<i>$1</i>");
-				code = _rxStrikeWithoutChecking.Replace(code, "<s>$1</s>");
-				code = _rxUnderWithoutChecking.Replace(code, "<u>$1</u>");
+				sb = _inlineTagReplacersNoChecks.Aggregate(sb, (cur, replacer) => replacer(cur));
 
 				sb = sb.Replace(string.Format(codeExpression, i), code);
 			}
