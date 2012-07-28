@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
+using System.Xml;
 
 using Rsdn.Framework.Formatting.JetBrains.Annotations;
 
@@ -12,8 +12,8 @@ namespace Rsdn.Framework.Formatting
 	{
 		private static readonly Dictionary<string, CodeLangInfo> _langInfos =
 			new Dictionary<string, CodeLangInfo>();
-		private static readonly Dictionary<string, Lazy<CodeFormatter>> _codeFormatters =
-			new Dictionary<string, Lazy<CodeFormatter>>(StringComparer.OrdinalIgnoreCase);
+		private static readonly Dictionary<string, System.Lazy<CodeFormatter>> _codeFormatters =
+			new Dictionary<string, System.Lazy<CodeFormatter>>(StringComparer.OrdinalIgnoreCase);
 
 		private static readonly Dictionary<string, string> _codeTags =
 			new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -88,30 +88,39 @@ namespace Rsdn.Framework.Formatting
 					.Select(x => asm.GetManifestResourceStream(x));
 			foreach (var stream in resources)
 			{
-				var xDoc = XDocument.Load(new StreamReader(stream));
-				var info = RetrieveLangInfo(xDoc.Root);
+				var ms = new MemoryStream();
+				var buf = new byte[65536];
+				int readed;
+				while ((readed = stream.Read(buf, 0, buf.Length)) > 0)
+					ms.Write(buf, 0, readed);
+				ms.Seek(0, SeekOrigin.Begin);
+
+				var info = RetrieveLangInfo(ms);
 				if (_langInfos.ContainsKey(info.Name))
 					throw new ApplicationException("Duplicate language definition");
 				_langInfos.Add(info.Name, info);
 
-				stream.Seek(0, SeekOrigin.Begin);
-				var localStream = stream;
-				_codeFormatters.Add(info.Name, Lazy.Create(() => new CodeFormatter(info.Name, localStream)));
+				ms.Seek(0, SeekOrigin.Begin);
+				_codeFormatters.Add(
+					info.Name,
+					new System.Lazy<CodeFormatter>(() => new CodeFormatter(info.Name, ms)));
 			}
 		}
 
-		private static CodeLangInfo RetrieveLangInfo(XElement element)
+		private static CodeLangInfo RetrieveLangInfo(Stream stream)
 		{
-			if (element.Name.LocalName != "language")
+			var reader = XmlReader.Create(stream);
+			reader.MoveToContent();
+			if (!reader.IsStartElement("language"))
 				throw new ApplicationException("invalid format");
-			var name = element.Attribute(XName.Get("name"));
-			if (name == null)
+			var name = reader["name"];
+			if (string.IsNullOrEmpty(name))
 				throw new ApplicationException("name not specified");
-			var displayName = element.Attribute(XName.Get("display-name"));
+			var displayName = reader["display-name"];
 			return
 				new CodeLangInfo(
-					name.Value,
-					displayName != null ? displayName.Value : name.Value);
+					name,
+					!string.IsNullOrEmpty(displayName) ? displayName : name);
 		}
 
 		/// <summary>
@@ -130,7 +139,7 @@ namespace Rsdn.Framework.Formatting
 		{
 			if (name == null) throw new ArgumentNullException("name");
 
-			Lazy<CodeFormatter> cf;
+			System.Lazy<CodeFormatter> cf;
 			if (!_codeFormatters.TryGetValue(name, out cf))
 				throw new ArgumentException("Unsupported language");
 			return cf.Value;

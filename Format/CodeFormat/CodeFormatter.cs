@@ -57,12 +57,14 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Создание экземпляра раскрасивальщика.
 		/// </summary>
+		/// <param name="name">Имя схемы</param>
 		/// <param name="xmlSource">Исходный xml-поток</param>
 		public CodeFormatter(string name, Stream xmlSource) : this(name, xmlSource, RegexOptions.None) {}
 
 		/// <summary>
 		/// Создание экземпляра раскрасивальщика с дополнительными опциями для регулярного выражения.
 		/// </summary>
+		/// <param name="name">Имя схемы</param>
 		/// <param name="xmlSource">Исходный xml-поток</param>
 		/// <param name="options">Regex опции</param>
 		public CodeFormatter(string name, Stream xmlSource, RegexOptions options)
@@ -91,23 +93,25 @@ namespace Rsdn.Framework.Formatting
 				var root = doc.SelectSingleNode("cc:language", namespaceManager);
 
 				// Установка regex опций, если есть
-				if (root.Attributes["options"] != null)
+				Debug.Assert(root != null, "root != null");
+				if (root.Attributes != null && root.Attributes["options"] != null)
 					regexString.Append(root.Attributes["options"].Value);
 
 				// Выборка шаблонов
-				var syntaxis = root.SelectNodes("cc:pattern", namespaceManager);
-				Debug.Assert(syntaxis != null);
-				for (var i = 0; i < syntaxis.Count; i++)
+				var syntax = root.SelectNodes("cc:pattern", namespaceManager);
+				Debug.Assert(syntax != null);
+				for (var i = 0; i < syntax.Count; i++)
 				{
 					if (i > 0)
 						regexString.Append('|');
-					regexString.AppendFormat("(?<{0}>", syntaxis[i].Attributes["name"].Value);
+					Debug.Assert(syntax[i].Attributes != null, "syntax[i].Attributes");
+					regexString.AppendFormat("(?<{0}>", syntax[i].Attributes["name"].Value);
 
-					var prefix = syntaxis[i].Attributes["prefix"] != null ? syntaxis[i].Attributes["prefix"].Value : null;
-					var postfix = syntaxis[i].Attributes["postfix"] != null ? syntaxis[i].Attributes["postfix"].Value : null;
+					var prefix = syntax[i].Attributes["prefix"] != null ? syntax[i].Attributes["prefix"].Value : null;
+					var postfix = syntax[i].Attributes["postfix"] != null ? syntax[i].Attributes["postfix"].Value : null;
 
 					// Выборка элементов шаблона
-					var items = syntaxis[i].SelectNodes("cc:entry", namespaceManager);
+					var items = syntax[i].SelectNodes("cc:entry", namespaceManager);
 					Debug.Assert(items != null);
 					for (var j = 0; j < items.Count; j++)
 					{
@@ -150,7 +154,7 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Преобразованный текст</returns>
 		public string Transform(string sourceText)
 		{
-			return ColorerRegex.Replace(sourceText, new MatchEvaluator(ReplaceEvaluator));
+			return ColorerRegex.Replace(sourceText, ReplaceEvaluator);
 		}
 
 		/// <summary>

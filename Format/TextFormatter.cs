@@ -136,8 +136,7 @@ namespace Rsdn.Framework.Formatting
 		/// Раскраска кода
 		/// </summary>
 		/// <param name="codeMatch">Вхождение кода (группа tag содержит тип кода)</param>
-		/// <returns></returns>
-		protected static string PaintCode(Match codeMatch)
+		protected static StringBuilder PaintCode(Match codeMatch)
 		{
 			var tagName = codeMatch.Groups["tag"].Value;
 			var formatter = FormatterHelper.GetCodeFormatterByTag(tagName);
@@ -160,7 +159,7 @@ namespace Rsdn.Framework.Formatting
 				+ text
 				+ "</pre></td></tr></table>";
 
-			return text;
+			return new StringBuilder(text);
 		}
 
 
@@ -420,9 +419,7 @@ namespace Rsdn.Framework.Formatting
 		{
 			var asinMatch = _asinDetector.Match(HttpUtility.UrlDecode(link.HRef));
 			if (asinMatch.Success)
-			{
 				link.HRef = string.Format(_directAmazonUrl, asinMatch.Groups["asin"].Value);
-			}
 			else
 			{
 				var originalAmazonUri = new Uri(link.HRef);
@@ -1236,9 +1233,9 @@ namespace Rsdn.Framework.Formatting
 
 				// bold & italic formatting inside code
 				// without checking canceling tag syntax
-				sb = _inlineTagReplacersNoChecks.Aggregate(sb, (cur, replacer) => replacer(cur));
+				code = _inlineTagReplacersNoChecks.Aggregate(code, (cur, replacer) => replacer(cur));
 
-				sb = sb.Replace(string.Format(codeExpression, i), code);
+				sb = sb.Replace(string.Format(codeExpression, i), code.ToString());
 			}
 
 			return sb.ToString();
