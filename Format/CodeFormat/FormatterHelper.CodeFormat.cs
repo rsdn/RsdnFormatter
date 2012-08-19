@@ -50,7 +50,7 @@ namespace Rsdn.Framework.Formatting
 					{"php", "PHP"},
 
 					{"xml", "XSL"},
-					{"xsl", "XML"},
+					{"xsl", "XSL"},
 
 					{"erlang", "Erlang"},
 					{"erl", "Erlang"},

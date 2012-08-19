@@ -35,5 +35,6 @@ namespace Rsdn.Framework.Formatting.Tests
 		[Test] public void Cut() { TestFormat(); }
 		[Test] public void Cpp() { TestFormat(); }
 		[Test] public void SubSup() { TestFormat(); }
+		[Test] public void Msg2408361() { TestFormat(); }
 	}
 }
