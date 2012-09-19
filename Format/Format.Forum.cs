@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 
 namespace Rsdn.Framework.Formatting
@@ -90,11 +91,8 @@ namespace Rsdn.Framework.Formatting
 			/// <returns>Откорректированная тема сообщения.</returns>
 			public static string AdjustSubject(int level, string subject)
 			{
-				return _reDetector.Replace(subject, new MatchEvaluator(
-					match =>
-						GetRePrefix(match.Groups["number"].Success ?
-							int.Parse(match.Groups["number"].Captures[0].Value) - level : 1)
-					));
+				return _reDetector.Replace(subject, match =>
+					GetRePrefix(match.Groups["number"].Success ? int.Parse(match.Groups["number"].Captures[0].Value) - level : 1));
 			}
 
 			/// <summary>
@@ -205,8 +203,6 @@ namespace Rsdn.Framework.Formatting
 
 				return msg;
 			}
-
-
 		}
 	}
 }
