@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<language xmlns="http://rsdn.ru/coloring" name="Ocaml" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<!-- ML comments are nested -->
+		<entry><![CDATA[(?s:\(\*(?>\(\*(?<n>)|\*\)(?<-n>)|(?!\(\*|\*\)).)*(?(n)(?!))\*\))]]></entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry>'([^'\\]|\\['"\\abfnrtv]|\\[0-7]{1,3})'</entry>
+		<entry><![CDATA["((?<!\\)\\"|[^"])*"]]></entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>None</entry>
+        <entry>Some</entry>
+        <entry>and</entry>
+        <entry>as</entry>
+        <entry>asr</entry>
+        <entry>assert</entry>
+        <entry>begin</entry>
+        <entry>class</entry>
+        <entry>closed</entry>
+        <entry>constraint</entry>
+        <entry>do</entry>
+        <entry>done</entry>
+        <entry>downto</entry>
+        <entry>else</entry>
+        <entry>end</entry>
+        <entry>exception</entry>
+        <entry>external</entry>
+        <entry>false</entry>
+        <entry>for</entry>
+        <entry>fun</entry>
+        <entry>function</entry>
+        <entry>functor</entry>
+        <entry>if</entry>
+        <entry>in</entry>
+        <entry>include</entry>
+        <entry>inherit</entry>
+        <entry>land</entry>
+        <entry>lazy</entry>
+        <entry>let</entry>
+        <entry>lor</entry>
+        <entry>lsl</entry>
+        <entry>lsr</entry>
+        <entry>lxor</entry>
+        <entry>match</entry>
+        <entry>method</entry>
+        <entry>mod</entry>
+        <entry>module</entry>
+        <entry>mutable</entry>
+        <entry>new</entry>
+        <entry>of</entry>
+        <entry>open</entry>
+        <entry>or</entry>
+        <entry>parser</entry>
+        <entry>private</entry>
+        <entry>raise</entry>
+        <entry>rec</entry>
+        <entry>ref</entry>
+        <entry>sig</entry>
+        <entry>struct</entry>
+        <entry>then</entry>
+        <entry>to</entry>
+        <entry>true</entry>
+        <entry>try</entry>
+        <entry>type</entry>
+        <entry>virtual</entry>
+        <entry>when</entry>
+        <entry>while</entry>
+        <entry>with</entry>
+	</pattern>
+	<!-- Built-in types -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>array</entry>
+        <entry>bool</entry>
+        <entry>char</entry>
+        <entry>int</entry>
+        <entry>list</entry>
+        <entry>real</entry>
+        <entry>string</entry>
+        <entry>unit</entry>
+        <entry>vector</entry>
+        <entry>word</entry>
+	</pattern>
+</language>

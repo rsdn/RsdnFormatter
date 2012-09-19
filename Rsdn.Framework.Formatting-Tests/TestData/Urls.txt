@@ -1,0 +1,2 @@
+﻿Text [url=http://rsdn.ru]Здесь[/url]
+Text [url=Здесь]http://rsdn.ru[/url]

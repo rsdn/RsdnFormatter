@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<language xmlns="http://rsdn.ru/coloring" name="Haskell" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m:--.*?$)</entry>
+		<entry>(?s:\{-.*?-\})</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry><![CDATA["((?<!\\)\\"|[^"])*"]]></entry>
+		<entry>'\\(NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL)'</entry>
+		<entry><![CDATA['([^'\\]|\\['"\\&abfnrtv]|\\\^[A-Z]|\\o[0-7]{1,3}|\\x[0-9aAbBcCdDeEfF]{1,4})']]></entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>as</entry>
+        <entry>case</entry>
+        <entry>class</entry>
+        <entry>data</entry>
+        <entry>default</entry>
+        <entry>deriving</entry>
+        <entry>do</entry>
+        <entry>else</entry>
+        <entry>hiding</entry>
+        <entry>if</entry>
+        <entry>import</entry>
+        <entry>in</entry>
+        <entry>infix</entry>
+        <entry>infixl</entry>
+        <entry>infixr</entry>
+        <entry>instance</entry>
+        <entry>let</entry>
+        <entry>module</entry>
+        <entry>newtype</entry>
+        <entry>of</entry>
+        <entry>qualified</entry>
+        <entry>then</entry>
+        <entry>type</entry>
+        <entry>where</entry>
+	</pattern>
+	<!-- close to keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>Addr</entry>
+        <entry>Array</entry>
+        <entry>Bool</entry>
+        <entry>Char</entry>
+        <entry>Complex</entry>
+        <entry>Double</entry>
+        <entry>EQ</entry>
+        <entry>Either</entry>
+        <entry>ExitCode</entry>
+        <entry>ExitSuccess</entry>
+        <entry>False</entry>
+        <entry>Float</entry>
+        <entry>GT</entry>
+        <entry>IO</entry>
+        <entry>IOError</entry>
+        <entry>IOResult</entry>
+        <entry>Int</entry>
+        <entry>Integer</entry>
+        <entry>LT</entry>
+        <entry>Maybe</entry>
+        <entry>Nothing</entry>
+        <entry>Ordering</entry>
+        <entry>Ratio</entry>
+        <entry>String</entry>
+        <entry>True</entry>
+        <entry>Void</entry>
+		<entry>undefined</entry>
+		<entry>error</entry>
+		<entry>trace</entry>
+		<entry>endif</entry>
+	</pattern>
+</language>

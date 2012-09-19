@@ -1,0 +1,7 @@
+<Configuration>
+  <Daemon.SolutionSettings>
+    <SkipFilesAndFolders>
+      <Item>5D93361E-3F17-4553-91F0-B6C24DEBB4CC/f:Annotations.cs</Item>
+    </SkipFilesAndFolders>
+  </Daemon.SolutionSettings>
+</Configuration>

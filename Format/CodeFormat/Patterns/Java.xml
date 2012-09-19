@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language xmlns="http://rsdn.ru/coloring" name="Java" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m://.*?$)</entry>
+		<entry>(?s:/\*.*?\*/)</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry><![CDATA["((?<!\\)\\"|[^"])*"]]></entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+		<entry>break</entry>
+		<entry>delete</entry>
+		<entry>function</entry>
+		<entry>return</entry>
+		<entry>typeof</entry>
+		<entry>case</entry>
+		<entry>do</entry>
+		<entry>if</entry>
+		<entry>switch</entry>
+		<entry>var</entry>
+		<entry>catch</entry>
+		<entry>else</entry>
+		<entry>in</entry>
+		<entry>this</entry>
+		<entry>void</entry>
+		<entry>continue</entry>
+		<entry>false</entry>
+		<entry>instanceof</entry>
+		<entry>throw</entry>
+		<entry>while</entry>
+		<entry>debugger</entry>
+		<entry>finally</entry>
+		<entry>new</entry>
+		<entry>true</entry>
+		<entry>with</entry>
+		<entry>default</entry>
+		<entry>for</entry>
+		<entry>null</entry>
+		<entry>try</entry>
+		<entry>abstract</entry>
+		<entry>double</entry>
+		<entry>goto</entry>
+		<entry>native</entry>
+		<entry>static</entry>
+		<entry>boolean</entry>
+		<entry>enum</entry>
+		<entry>implements</entry>
+		<entry>package</entry>
+		<entry>super</entry>
+		<entry>byte</entry>
+		<entry>export</entry>
+		<entry>import</entry>
+		<entry>private</entry>
+		<entry>synchronized</entry>
+		<entry>char</entry>
+		<entry>extends</entry>
+		<entry>int</entry>
+		<entry>protected</entry>
+		<entry>throws</entry>
+		<entry>class</entry>
+		<entry>final</entry>
+		<entry>interface</entry>
+		<entry>public</entry>
+		<entry>transient</entry>
+		<entry>const</entry>
+		<entry>float</entry>
+		<entry>long</entry>
+		<entry>short</entry>
+		<entry>volatile</entry>
+	</pattern>
+</language>

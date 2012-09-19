@@ -1,0 +1,1 @@
+﻿Text[sub]sub[/sub] text[sup]sup[/sup]

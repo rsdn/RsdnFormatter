@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://rsdn.ru/coloring" xmlns="http://rsdn.ru/coloring">
+	<xs:element name="language">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pattern" type="patternType" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required" />
+			<xs:attribute name="options" type="xs:string" use="optional" />
+			<xs:attribute name="display-name" type="xs:string" use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="patternType">
+		<xs:sequence>
+			<xs:element ref="entry" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="postfix" type="xs:string" use="optional" />
+		<xs:attribute name="prefix" type="xs:string" use="optional" />
+	</xs:complexType>
+	<xs:element name="entry" type="xs:string" />
+</xs:schema>

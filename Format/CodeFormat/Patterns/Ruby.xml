@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<language xmlns="http://rsdn.ru/coloring" name="Ruby" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m:\#.*?$)</entry>
+		<entry>(?s:^=begin.*?^=end)</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry><![CDATA["((?<!\\)\\"|[^"])*"]]></entry>
+		<entry><![CDATA['((?<!\\)\\'|[^'])*']]></entry>
+		<entry><![CDATA[%[qQ]?\[((?<!\\)\\\]|[^\]])*\]]]></entry>
+		<entry><![CDATA[%[qQ]?\(((?<!\\)\\\)|[^\)])*\)]]></entry>
+		<entry><![CDATA[%[qQ]?(\W)((?<!\\)\\\1|[^\1])*?\1]]></entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>BEGIN</entry>
+        <entry>END</entry>
+        <entry>alias</entry>
+        <entry>and</entry>
+        <entry>begin</entry>
+        <entry>break</entry>
+        <entry>case</entry>
+        <entry>class</entry>
+        <entry>def</entry>
+        <entry>defined</entry>
+        <entry>do</entry>
+        <entry>each</entry>
+        <entry>else</entry>
+        <entry>elsif</entry>
+        <entry>end</entry>
+        <entry>ensure</entry>
+        <entry>false</entry>
+        <entry>for</entry>
+        <entry>if</entry>
+        <entry>in</entry>
+        <entry>module</entry>
+        <entry>new</entry>
+        <entry>next</entry>
+        <entry>nil</entry>
+        <entry>not</entry>
+        <entry>or</entry>
+        <entry>redo</entry>
+        <entry>rescue</entry>
+        <entry>retry</entry>
+        <entry>return</entry>
+        <entry>self</entry>
+        <entry>super</entry>
+        <entry>then</entry>
+        <entry>true</entry>
+        <entry>undef</entry>
+        <entry>unless</entry>
+        <entry>until</entry>
+        <entry>when</entry>
+        <entry>while</entry>
+        <entry>yield</entry>
+	</pattern>
+</language>

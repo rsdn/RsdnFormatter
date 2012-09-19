@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language xmlns="http://rsdn.ru/coloring" name="XSL" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry><![CDATA[(?s:<!--.*?-->)]]></entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry>"[^"]*"</entry>
+	</pattern>
+	<!-- preprocessor definitions -->
+	<pattern name="kw" postfix="\b">
+		<entry>\?xml</entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>case-order</entry>
+        <entry>current</entry>
+        <entry>data-type</entry>
+        <entry>disable-output-escaping</entry>
+        <entry>document</entry>
+        <entry>elements</entry>
+        <entry>encoding</entry>
+        <entry>format-number</entry>
+        <entry>generate-id</entry>
+        <entry>indent</entry>
+        <entry>key</entry>
+        <entry>lang</entry>
+        <entry>match</entry>
+        <entry>method</entry>
+        <entry>mode</entry>
+        <entry>name</entry>
+        <entry>namespace</entry>
+        <entry>order</entry>
+        <entry>priority</entry>
+        <entry>result-prefix</entry>
+        <entry>select</entry>
+        <entry>stylesheet-prefix</entry>
+        <entry>system-property</entry>
+        <entry>terminate</entry>
+        <entry>test</entry>
+        <entry>unparsed-entity-uri</entry>
+        <entry>use-attribute-sets</entry>
+        <entry>use</entry>
+        <entry>version</entry>
+        <entry>xmlns:xsl</entry>
+        <entry>xsl:analyze-string</entry>
+        <entry>xsl:apply-imports</entry>
+        <entry>xsl:apply-templates</entry>
+        <entry>xsl:attribute</entry>
+        <entry>xsl:attribute-set</entry>
+        <entry>xsl:call-template</entry>
+        <entry>xsl:character-map</entry>
+        <entry>xsl:choose</entry>
+        <entry>xsl:comment</entry>
+        <entry>xsl:copy</entry>
+        <entry>xsl:copy-of</entry>
+        <entry>xsl:decimal-format</entry>
+        <entry>xsl:document</entry>
+        <entry>xsl:element</entry>
+        <entry>xsl:fallback</entry>
+        <entry>xsl:for-each</entry>
+        <entry>xsl:for-each-group</entry>
+        <entry>xsl:function</entry>
+        <entry>xsl:if</entry>
+        <entry>xsl:import</entry>
+        <entry>xsl:import-schema</entry>
+        <entry>xsl:include</entry>
+        <entry>xsl:key</entry>
+        <entry>xsl:matching-substring</entry>
+        <entry>xsl:message</entry>
+        <entry>xsl:namespace</entry>
+        <entry>xsl:namespace-alias</entry>
+        <entry>xsl:next-match</entry>
+        <entry>xsl:non-matching-substring</entry>
+        <entry>xsl:number</entry>
+        <entry>xsl:otherwise</entry>
+        <entry>xsl:output</entry>
+        <entry>xsl:output-character</entry>
+        <entry>xsl:param</entry>
+        <entry>xsl:perform-sort</entry>
+        <entry>xsl:preserve-space</entry>
+        <entry>xsl:processing-instructions</entry>
+        <entry>xsl:result-document</entry>
+        <entry>xsl:sequence</entry>
+        <entry>xsl:script</entry>
+        <entry>xsl:sort</entry>
+        <entry>xsl:strip-space</entry>
+        <entry>xsl:stylesheet</entry>
+        <entry>xsl:template</entry>
+        <entry>xsl:text</entry>
+        <entry>xsl:transform</entry>
+        <entry>xsl:value-of</entry>
+        <entry>xsl:variable</entry>
+        <entry>xsl:when</entry>
+        <entry>xsl:with-param</entry>
+	</pattern>
+</language>

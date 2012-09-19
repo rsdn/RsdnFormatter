@@ -1,0 +1,7 @@
+<Configuration>
+  <SolutionWideInspectionsLevel>InternalsOnly</SolutionWideInspectionsLevel>
+  <NamespaceFolders>
+    <SkipFolder>5D93361E-3F17-4553-91F0-B6C24DEBB4CC/d:CodeFormat</SkipFolder>
+  </NamespaceFolders>
+  <CSharpLanguageLevel>CSharp30</CSharpLanguageLevel>
+</Configuration>
