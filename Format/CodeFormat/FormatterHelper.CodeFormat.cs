@@ -30,6 +30,8 @@ namespace Rsdn.Framework.Formatting
 					{"c", "C"},
 					{"cpp", "C"},
 
+					{"objc", "objc"},
+
 					{"idl", "IDL"},
 					{"midl", "IDL"},
 

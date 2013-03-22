@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<language xmlns="http://rsdn.ru/coloring" name="ObjC" options="(?n)">
+	<!-- comments -->
+	<pattern name="com">
+		<entry>(?m://.*?$)</entry>
+		<entry>(?s:/\*.*?\*/)</entry>
+	</pattern>
+	<!-- literals -->
+	<pattern name="str">
+		<entry>'([^'\\]|\\['"\\0abfnrtv]|\\x[0-9aAbBcCdDeEfF]{1,4})'</entry>
+		<entry><![CDATA[(?<!@)"((?<!\\)\\"|[^"])*"]]></entry>
+		<entry>@"(""|[^"])*"</entry>
+	</pattern>
+	<!-- preprocessor definitions -->
+	<pattern name="kw" prefix="#\s*" postfix="\b">
+        <entry>define</entry>
+        <entry>elif</entry>
+        <entry>else</entry>
+        <entry>endif</entry>
+        <entry>error</entry>
+        <entry>if</entry>
+        <entry>ifdef</entry>
+        <entry>ifndef</entry>
+        <entry>import</entry>
+        <entry>include</entry>
+        <entry>line</entry>
+        <entry>pragma</entry>
+        <entry>undef</entry>
+	</pattern>
+	<pattern name="kw" prefix="@\s*" postfix="\b">
+        <entry>implementation</entry>
+        <entry>end</entry>
+        <entry>interface</entry>
+        <entry>class</entry>
+        <entry>protocol</entry>
+        <entry>try</entry>
+        <entry>throw</entry>
+        <entry>catch</entry>
+        <entry>finally</entry>
+        <entry>encode</entry>
+        <entry>synchronized</entry>
+        <entry>property</entry>
+        <entry>dynamic</entry>
+        <entry>synthesize</entry>
+        <entry>optional</entry>
+        <entry>selector</entry>
+        <entry>private</entry>
+        <entry>protected</entry>
+        <entry>public</entry>
+	</pattern>
+	<!-- keywords -->
+	<pattern name="kw" prefix="\b" postfix="\b">
+        <entry>auto</entry>
+        <entry>break</entry>
+        <entry>case</entry>
+        <entry>char</entry>
+        <entry>const</entry>
+        <entry>continue</entry>
+        <entry>default</entry>
+        <entry>do</entry>
+        <entry>double</entry>
+        <entry>else</entry>
+        <entry>enum</entry>
+        <entry>extern</entry>
+        <entry>float</entry>
+        <entry>for</entry>
+        <entry>goto</entry>
+        <entry>if</entry>
+        <entry>inline</entry>
+        <entry>int</entry>
+        <entry>long</entry>
+        <entry>register</entry>
+        <entry>restrict</entry>
+        <entry>return</entry>
+        <entry>short</entry>
+        <entry>signed</entry>
+        <entry>sizeof</entry>
+        <entry>static</entry>
+        <entry>struct</entry>
+        <entry>switch</entry>
+        <entry>typedef</entry>
+        <entry>union</entry>
+        <entry>unsigned</entry>
+        <entry>void</entry>
+        <entry>volatile</entry>
+        <entry>while</entry>
+        <entry>_Bool</entry>
+        <entry>_Complex</entry>
+        <entry>_Imaginery</entry>
+        <entry>BOOL</entry>
+        <entry>bycopy</entry>
+        <entry>byref</entry>
+        <entry>id</entry>
+        <entry>NO</entry>
+        <entry>NULL</entry>
+        <entry>self</entry>
+        <entry>super</entry>
+        <entry>YES</entry>
+        <entry>atomic</entry>
+        <entry>nonatomic</entry>
+        <entry>retain</entry>
+	</pattern>
+</language>
