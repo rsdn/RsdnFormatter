@@ -1,0 +1,5 @@
+﻿[objc]
+"Str"
+interface
+123
+[/objc]
