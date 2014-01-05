@@ -67,6 +67,7 @@
     <Content Include="TestData\Cpp.txt" />
     <Content Include="TestData\Cut.txt" />
     <Content Include="TestData\Msg2408361.txt" />
+    <Content Include="TestData\ObjC.txt" />
     <Content Include="TestData\Sql.txt" />
     <Content Include="TestData\SubSup.txt" />
     <Content Include="TestData\XSS.txt" />
@@ -82,6 +83,7 @@
     <None Include="TestData\Cut.gold" />
     <None Include="TestData\Heading.gold" />
     <None Include="TestData\Msg2408361.gold" />
+    <None Include="TestData\ObjC.gold" />
     <None Include="TestData\Quotation.gold" />
     <None Include="TestData\RsdnLink.gold" />
     <None Include="TestData\SimpleFormatting.gold" />
