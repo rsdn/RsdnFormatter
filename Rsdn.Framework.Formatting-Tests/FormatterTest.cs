@@ -7,11 +7,13 @@ using NUnit.Framework;
 
 namespace Rsdn.Framework.Formatting.Tests
 {
+	internal delegate void TestDelegate(string srcPath, string goldPath);
+
 	[TestFixture]
 	public class FormatterTest
 	{
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		private void TestFormat()
+		private void CallTest(TestDelegate testFunc)
 		{
 			var name = new StackTrace().GetFrame(1).GetMethod().Name;
 			var asmPath =
@@ -19,9 +21,19 @@ namespace Rsdn.Framework.Formatting.Tests
 					Path.GetDirectoryName(
 						new Uri(GetType().Assembly.CodeBase).AbsolutePath),
 						"../../TestData");
-			TestHelper.TestFormat(
+			testFunc(
 				Path.Combine(asmPath, name + ".txt"),
 				Path.Combine(asmPath, name + ".gold"));
+		}
+
+		private void TestFormat()
+		{
+			CallTest(TestHelper.TestFormat);
+		}
+
+		private void TestQuote()
+		{
+			CallTest(TestHelper.TestQuote);
 		}
 
 		[Test] public void SimpleFormatting() { TestFormat(); }
@@ -37,5 +49,6 @@ namespace Rsdn.Framework.Formatting.Tests
 		[Test] public void SubSup() { TestFormat(); }
 		[Test] public void Msg2408361() { TestFormat(); }
 		[Test] public void ObjC() { TestFormat(); }
+		[Test] public void MakeQuote() { TestQuote(); }
 	}
 }
