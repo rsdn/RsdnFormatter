@@ -7,13 +7,8 @@ namespace Rsdn.Framework.Formatting.Tests
 {
 	public static class TestHelper
 	{
-		public static void TestFormat(string srcPath, string goldPath)
+		private static void CompareSamples(string goldPath, string result)
 		{
-			var formatter = new TextFormatter();
-			string result;
-			using (var reader = new StreamReader(srcPath))
-				result = string.Format("<html>\r\n\t<body>\r\n{0}\r\n\t</body>\r\n</html>", formatter.Format(reader.ReadToEnd()));
-
 			var fail = false;
 			string resLine = "", goldLine = "";
 			var lineNumber = 0;
@@ -45,6 +40,25 @@ namespace Rsdn.Framework.Formatting.Tests
 			if (goldLine != "")
 				sb.AppendFormat("GoldLine   = '{0}'\r\n", goldLine);
 			Assert.Fail(sb.ToString());
+		}
+
+		public static void TestFormat(string srcPath, string goldPath)
+		{
+			var formatter = new TextFormatter();
+			string result;
+			using (var reader = new StreamReader(srcPath))
+				result = string.Format("<html>\r\n\t<body>\r\n{0}\r\n\t</body>\r\n</html>", formatter.Format(reader.ReadToEnd()));
+
+			CompareSamples(goldPath, result);
+		}
+
+		public static void TestQuote(string srcPath, string goldPath)
+		{
+			string result;
+			using (var reader = new StreamReader(srcPath))
+				result = Format.Forum.GetEditMessage(reader.ReadToEnd(), "CaptainFlint");
+
+			CompareSamples(goldPath, result);
 		}
 	}
 }
