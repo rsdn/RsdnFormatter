@@ -1290,6 +1290,14 @@ namespace Rsdn.Framework.Formatting
 			return _urlRegex.Match(url);
 		}
 
+		/// <summary>
+		/// Заменить теги IMG на URL.
+		/// </summary>
+		public static string ReplaceImgWithUrl(string text)
+		{
+			return _imgTagRegex.Replace(text, "[url]$2[/url]");
+		}
+
 		private static readonly Regex _isbnDetector = new Regex(
 			@"(?<prefix>ISBN(?:\s*:)?\s*)?(?:(978|979)(?(prefix)[\s-]?|[\s-]))?(?<isbn>\d{1,5})(?(prefix)[\s-]?|[\s-])(?<isbn>\d{1,7})(?(prefix)[\s-]?|[\s-])(?<isbn>\d{1,6})(?(prefix)[\s-]?|[\s-])(?<isbn>\d|X)(?!\d)",
 			RegexOptions.Compiled | RegexOptions.IgnoreCase);

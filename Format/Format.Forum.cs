@@ -199,6 +199,7 @@ namespace Rsdn.Framework.Formatting
 				//
 				msg = Regex.Replace(msg, @"^\s*[-\w\.]{0,5}>+", "$&>", RegexOptions.Multiline);
 				msg = Regex.Replace(msg, @"(?m)^(?!\s*[-\w\.]{0,5}>|\s*$)", shortname + ">");
+				msg = TextFormatter.ReplaceImgWithUrl(msg);
 				msg = "Здравствуйте, " + nick + ", Вы писали:\n\n" + msg;
 
 				return msg;
