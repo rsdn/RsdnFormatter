@@ -12,10 +12,10 @@ namespace Rsdn.Framework.Formatting.Tests
 	[TestFixture]
 	public class FormatterTest
 	{
-		[MethodImpl(MethodImplOptions.NoInlining)]
+		[MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
 		private void CallTest(TestDelegate testFunc)
 		{
-			var name = new StackTrace().GetFrame(1).GetMethod().Name;
+			var name = new StackTrace().GetFrame(2).GetMethod().Name;
 			var asmPath =
 				Path.Combine(
 					Path.GetDirectoryName(
@@ -50,5 +50,6 @@ namespace Rsdn.Framework.Formatting.Tests
 		[Test] public void Msg2408361() { TestFormat(); }
 		[Test] public void ObjC() { TestFormat(); }
 		[Test] public void MakeQuote() { TestQuote(); }
+		[Test] public void ExcessiveBrs() { TestFormat(); }
 	}
 }
