@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<language xmlns="http://rsdn.ru/coloring" name="Rust" options="(?n)">
+  <!-- comments -->
+  <pattern name="com">
+    <entry>(?m://.*?$)</entry>
+  </pattern>
+  <!-- literals -->
+  <pattern name="str">
+    <entry>'([^'\\]|\\['"\\0abfnrtv]|\\x[0-9aAbBcCdDeEfF]{1,4})'</entry>
+    <entry><![CDATA[(?<!@)"((?<!\\)\\"|[^"])*"]]></entry>
+    <entry>@"(""|[^"])*"</entry>
+  </pattern>
+  <!-- preprocessor definitions -->
+  <pattern name="kw" prefix="\b" postfix="!\b*">
+    <entry>assert</entry>
+    <entry>fail</entry>
+  </pattern>
+  <!-- keywords -->
+  <pattern name="kw" prefix="\b" postfix="\b">
+    <entry>break</entry>
+    <entry>continue</entry>
+    <entry>do</entry>
+    <entry>extern</entry>
+    <entry>for</entry>
+    <entry>in</entry>
+    <entry>if</entry>
+    <entry>impl</entry>
+    <entry>let</entry>
+    <entry>loop</entry>
+    <entry>once</entry>
+    <entry>priv</entry>
+    <entry>pub</entry>
+    <entry>return</entry>
+    <entry>unsafe</entry>
+    <entry>while</entry>
+    <entry>use</entry>
+    <entry>mod</entry>
+    <entry>trait</entry>
+    <entry>struct</entry>
+    <entry>enum</entry>
+    <entry>type</entry>
+    <entry>fn</entry>
+    <entry>proc</entry>
+    <entry>mut</entry>
+    <entry>ref</entry>
+    <entry>static</entry>
+    <entry>const</entry>
+    <entry>true</entry>
+    <entry>false</entry>
+    <entry>as</entry>
+    <!-- data types -->
+    <entry>int</entry>
+    <entry>uint</entry>
+    <entry>float</entry>
+    <entry>char</entry>
+    <entry>bool</entry>
+    <entry>u8</entry>
+    <entry>u16</entry>
+    <entry>u32</entry>
+    <entry>u64</entry>
+    <entry>f32</entry>
+    <entry>f64</entry>
+    <entry>i8</entry>
+    <entry>i16</entry>
+    <entry>i32</entry>
+    <entry>i64</entry>
+    <entry>str</entry>
+    <entry>Self</entry>
+  </pattern>
+</language>

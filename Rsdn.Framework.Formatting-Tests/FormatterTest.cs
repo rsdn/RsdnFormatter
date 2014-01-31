@@ -51,5 +51,6 @@ namespace Rsdn.Framework.Formatting.Tests
 		[Test] public void ObjC() { TestFormat(); }
 		[Test] public void MakeQuote() { TestQuote(); }
 		[Test] public void ExcessiveBrs() { TestFormat(); }
+        [Test] public void Rust() { TestFormat(); }
 	}
 }

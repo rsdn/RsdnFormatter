@@ -1,0 +1,8 @@
+﻿<html>
+	<body>
+<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>
+<span class='kw'>fn</span> foo() -&gt; <span class='kw'>i32
+assert!</span>(<span class='str'>"error!"</span>);
+<span class='kw'>let</span> assert = 10;</pre></td></tr></table>
+	</body>
+</html>

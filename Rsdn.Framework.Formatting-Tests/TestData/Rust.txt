@@ -1,0 +1,5 @@
+﻿[rust]
+fn foo() -> i32
+assert!("error!");
+let assert = 10;
+[/rust]

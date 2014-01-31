@@ -236,6 +236,9 @@
   <ItemGroup>
     <EmbeddedResource Include="CodeFormat\Patterns\ObjC.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CodeFormat\Patterns\Rust.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
