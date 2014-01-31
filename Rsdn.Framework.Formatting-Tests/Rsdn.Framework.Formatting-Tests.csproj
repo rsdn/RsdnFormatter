@@ -71,6 +71,7 @@
     <Content Include="TestData\ObjC.txt" />
     <Content Include="TestData\Sql.txt" />
     <Content Include="TestData\SubSup.txt" />
+    <Content Include="TestData\Rust.txt" />
     <Content Include="TestData\XSS.txt" />
     <Content Include="TestData\Heading.txt" />
     <Content Include="TestData\Quotation.txt" />
@@ -89,6 +90,7 @@
     <None Include="TestData\Quotation.gold" />
     <None Include="TestData\RsdnLink.gold" />
     <None Include="TestData\SimpleFormatting.gold" />
+    <None Include="TestData\Rust.gold" />
     <None Include="TestData\Smiles.gold" />
     <None Include="TestData\Sql.gold" />
     <None Include="TestData\SubSup.gold" />

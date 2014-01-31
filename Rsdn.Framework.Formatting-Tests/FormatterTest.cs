@@ -26,8 +26,8 @@ namespace Rsdn.Framework.Formatting.Tests
 						new Uri(GetType().Assembly.CodeBase).AbsolutePath),
 						"../../TestData");
 			testFunc(
-				Path.Combine(asmPath, testName + ".txt"),
-				Path.Combine(asmPath, testName + ".gold"));
+			Path.Combine(asmPath, testName + ".txt"),
+			Path.Combine(asmPath, testName + ".gold"));
 		}
 
 		private void TestFormat()
@@ -60,7 +60,7 @@ namespace Rsdn.Framework.Formatting.Tests
 		[Test] public void ObjC() { TestFormat(); }
 		[Test] public void MakeQuote() { TestQuote(); }
 		[Test] public void ExcessiveBrs() { TestFormat(); }
-
+		[Test] public void Rust() { TestFormat(); }
 		[Test]
 		public void ExcessiveBrsRelease()
 		{

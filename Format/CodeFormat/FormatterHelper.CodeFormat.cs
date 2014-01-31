@@ -72,6 +72,8 @@ namespace Rsdn.Framework.Formatting
 
 					{"rb", "Ruby"},
 					{"ruby", "Ruby"},
+                    
+                    {"rust", "Rust"},
 
 					{"code", null},
 					{"pre", null},
