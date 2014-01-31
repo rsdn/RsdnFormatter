@@ -15,20 +15,29 @@ namespace Rsdn.Framework.Formatting.Tests
 		[MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
 		private void CallTest(TestDelegate testFunc)
 		{
-			var name = new StackTrace().GetFrame(2).GetMethod().Name;
+			CallTest(testFunc, new StackTrace().GetFrame(2).GetMethod().Name);
+		}
+
+		private void CallTest(TestDelegate testFunc, string testName)
+		{
 			var asmPath =
 				Path.Combine(
 					Path.GetDirectoryName(
 						new Uri(GetType().Assembly.CodeBase).AbsolutePath),
 						"../../TestData");
 			testFunc(
-				Path.Combine(asmPath, name + ".txt"),
-				Path.Combine(asmPath, name + ".gold"));
+				Path.Combine(asmPath, testName + ".txt"),
+				Path.Combine(asmPath, testName + ".gold"));
 		}
 
 		private void TestFormat()
 		{
 			CallTest(TestHelper.TestFormat);
+		}
+
+		private void TestFormat(string testName)
+		{
+			CallTest(TestHelper.TestFormat, testName);
 		}
 
 		private void TestQuote()
@@ -51,5 +60,11 @@ namespace Rsdn.Framework.Formatting.Tests
 		[Test] public void ObjC() { TestFormat(); }
 		[Test] public void MakeQuote() { TestQuote(); }
 		[Test] public void ExcessiveBrs() { TestFormat(); }
+
+		[Test]
+		public void ExcessiveBrsRelease()
+		{
+			TestFormat("ExcessiveBrs");
+		}
 	}
 }
