@@ -1,4 +1,4 @@
-using System.Diagnostics;
+п»їusing System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,8 +8,8 @@ using System.Xml.Schema;
 namespace Rsdn.Framework.Formatting
 {
 	/// <summary>
-	/// Класс, для раскраски исходников
-	/// Загружает правила раскраски из xml-файла
+	/// РљР»Р°СЃСЃ, РґР»СЏ СЂР°СЃРєСЂР°СЃРєРё РёСЃС…РѕРґРЅРёРєРѕРІ
+	/// Р—Р°РіСЂСѓР¶Р°РµС‚ РїСЂР°РІРёР»Р° СЂР°СЃРєСЂР°СЃРєРё РёР· xml-С„Р°Р№Р»Р°
 	/// </summary>
 	public class CodeFormatter
 	{
@@ -38,35 +38,35 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Регулярное выражение, используемое при расераске.
-		/// Получается после преобразования исходных данных.
+		/// Р РµРіСѓР»СЏСЂРЅРѕРµ РІС‹СЂР°Р¶РµРЅРёРµ, РёСЃРїРѕР»СЊР·СѓРµРјРѕРµ РїСЂРё СЂР°СЃРµСЂР°СЃРєРµ.
+		/// РџРѕР»СѓС‡Р°РµС‚СЃСЏ РїРѕСЃР»Рµ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РёСЃС…РѕРґРЅС‹С… РґР°РЅРЅС‹С….
 		/// </summary>
 		protected Regex ColorerRegex;
 
 		/// <summary>
-		/// Массив имен именованых групп в регулярном выражении
-		/// Используется при поиске имени группы по ее номеру
+		/// РњР°СЃСЃРёРІ РёРјРµРЅ РёРјРµРЅРѕРІР°РЅС‹С… РіСЂСѓРїРї РІ СЂРµРіСѓР»СЏСЂРЅРѕРј РІС‹СЂР°Р¶РµРЅРёРё
+		/// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїСЂРё РїРѕРёСЃРєРµ РёРјРµРЅРё РіСЂСѓРїРїС‹ РїРѕ РµРµ РЅРѕРјРµСЂСѓ
 		/// </summary>
 		protected string[] GroupNames;
 
 		/// <summary>
-		/// Число групп в регулярном выражении
+		/// Р§РёСЃР»Рѕ РіСЂСѓРїРї РІ СЂРµРіСѓР»СЏСЂРЅРѕРј РІС‹СЂР°Р¶РµРЅРёРё
 		/// </summary>
 		protected int CountGroups;
 
 		/// <summary>
-		/// Создание экземпляра раскрасивальщика.
+		/// РЎРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° СЂР°СЃРєСЂР°СЃРёРІР°Р»СЊС‰РёРєР°.
 		/// </summary>
-		/// <param name="name">Имя схемы</param>
-		/// <param name="xmlSource">Исходный xml-поток</param>
+		/// <param name="name">РРјСЏ СЃС…РµРјС‹</param>
+		/// <param name="xmlSource">РСЃС…РѕРґРЅС‹Р№ xml-РїРѕС‚РѕРє</param>
 		public CodeFormatter(string name, Stream xmlSource) : this(name, xmlSource, RegexOptions.None) {}
 
 		/// <summary>
-		/// Создание экземпляра раскрасивальщика с дополнительными опциями для регулярного выражения.
+		/// РЎРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° СЂР°СЃРєСЂР°СЃРёРІР°Р»СЊС‰РёРєР° СЃ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹РјРё РѕРїС†РёСЏРјРё РґР»СЏ СЂРµРіСѓР»СЏСЂРЅРѕРіРѕ РІС‹СЂР°Р¶РµРЅРёСЏ.
 		/// </summary>
-		/// <param name="name">Имя схемы</param>
-		/// <param name="xmlSource">Исходный xml-поток</param>
-		/// <param name="options">Regex опции</param>
+		/// <param name="name">РРјСЏ СЃС…РµРјС‹</param>
+		/// <param name="xmlSource">РСЃС…РѕРґРЅС‹Р№ xml-РїРѕС‚РѕРє</param>
+		/// <param name="options">Regex РѕРїС†РёРё</param>
 		public CodeFormatter(string name, Stream xmlSource, RegexOptions options)
 		{
 			try
@@ -89,15 +89,15 @@ namespace Rsdn.Framework.Formatting
 				var namespaceManager = new XmlNamespaceManager(doc.NameTable);
 				namespaceManager.AddNamespace("cc", "http://rsdn.ru/coloring");
 
-				// Поиск коневого элемента
+				// РџРѕРёСЃРє РєРѕРЅРµРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 				var root = doc.SelectSingleNode("cc:language", namespaceManager);
 
-				// Установка regex опций, если есть
+				// РЈСЃС‚Р°РЅРѕРІРєР° regex РѕРїС†РёР№, РµСЃР»Рё РµСЃС‚СЊ
 				Debug.Assert(root != null, "root != null");
 				if (root.Attributes != null && root.Attributes["options"] != null)
 					regexString.Append(root.Attributes["options"].Value);
 
-				// Выборка шаблонов
+				// Р’С‹Р±РѕСЂРєР° С€Р°Р±Р»РѕРЅРѕРІ
 				var syntax = root.SelectNodes("cc:pattern", namespaceManager);
 				Debug.Assert(syntax != null);
 				for (var i = 0; i < syntax.Count; i++)
@@ -110,7 +110,7 @@ namespace Rsdn.Framework.Formatting
 					var prefix = syntax[i].Attributes["prefix"] != null ? syntax[i].Attributes["prefix"].Value : null;
 					var postfix = syntax[i].Attributes["postfix"] != null ? syntax[i].Attributes["postfix"].Value : null;
 
-					// Выборка элементов шаблона
+					// Р’С‹Р±РѕСЂРєР° СЌР»РµРјРµРЅС‚РѕРІ С€Р°Р±Р»РѕРЅР°
 					var items = syntax[i].SelectNodes("cc:entry", namespaceManager);
 					Debug.Assert(items != null);
 					for (var j = 0; j < items.Count; j++)
@@ -123,9 +123,9 @@ namespace Rsdn.Framework.Formatting
 					regexString.Append(')');
 				}
 
-				// Создание регулярного выражения
+				// РЎРѕР·РґР°РЅРёРµ СЂРµРіСѓР»СЏСЂРЅРѕРіРѕ РІС‹СЂР°Р¶РµРЅРёСЏ
 				ColorerRegex = new Regex(regexString.ToString(), options);
-				// Чтение параметров регулярного выражения
+				// Р§С‚РµРЅРёРµ РїР°СЂР°РјРµС‚СЂРѕРІ СЂРµРіСѓР»СЏСЂРЅРѕРіРѕ РІС‹СЂР°Р¶РµРЅРёСЏ
 				CountGroups = ColorerRegex.GetGroupNumbers().Length;
 				var numbers = ColorerRegex.GetGroupNumbers();
 				var names = ColorerRegex.GetGroupNames();
@@ -148,20 +148,20 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Преобразование текста раскрасивальщиком
+		/// РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ С‚РµРєСЃС‚Р° СЂР°СЃРєСЂР°СЃРёРІР°Р»СЊС‰РёРєРѕРј
 		/// </summary>
-		/// <param name="sourceText">Исходный текст</param>
-		/// <returns>Преобразованный текст</returns>
+		/// <param name="sourceText">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚</param>
+		/// <returns>РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚</returns>
 		public string Transform(string sourceText)
 		{
 			return ColorerRegex.Replace(sourceText, ReplaceEvaluator);
 		}
 
 		/// <summary>
-		/// Функция обработки найденного выражения во время трансформации
+		/// Р¤СѓРЅРєС†РёСЏ РѕР±СЂР°Р±РѕС‚РєРё РЅР°Р№РґРµРЅРЅРѕРіРѕ РІС‹СЂР°Р¶РµРЅРёСЏ РІРѕ РІСЂРµРјСЏ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёРё
 		/// </summary>
-		/// <param name="match">Соответсвие</param>
-		/// <returns>Обработанное соответсвие</returns>
+		/// <param name="match">РЎРѕРѕС‚РІРµС‚СЃРІРёРµ</param>
+		/// <returns>РћР±СЂР°Р±РѕС‚Р°РЅРЅРѕРµ СЃРѕРѕС‚РІРµС‚СЃРІРёРµ</returns>
 		protected string ReplaceEvaluator(Match match)
 		{
 			var capturedGroup = "";

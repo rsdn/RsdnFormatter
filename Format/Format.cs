@@ -1,22 +1,22 @@
-using System;
+п»їusing System;
 using System.Web;
 
 namespace Rsdn.Framework.Formatting
 {
 	/// <summary>
-	/// Инкапсулирует функции форматирования.
+	/// РРЅРєР°РїСЃСѓР»РёСЂСѓРµС‚ С„СѓРЅРєС†РёРё С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ.
 	/// </summary>
 	public static partial class Format
 	{
 		/// <summary>
-		/// Инкапсулирует функции форматирования даты.
+		/// РРЅРєР°РїСЃСѓР»РёСЂСѓРµС‚ С„СѓРЅРєС†РёРё С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ РґР°С‚С‹.
 		/// </summary>
 		public class Date
 		{
 			private readonly DateTime _dateTimeValue;
 
 			/// <summary>
-			/// Контсруктор объекта.
+			/// РљРѕРЅС‚СЃСЂСѓРєС‚РѕСЂ РѕР±СЉРµРєС‚Р°.
 			/// </summary>
 			public Date()
 			{
@@ -24,9 +24,9 @@ namespace Rsdn.Framework.Formatting
 			}
 
 			/// <summary>
-			/// Конструктор объекта.
+			/// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РѕР±СЉРµРєС‚Р°.
 			/// </summary>
-			/// <param name="dateTime">Дата.</param>
+			/// <param name="dateTime">Р”Р°С‚Р°.</param>
 			public Date(DateTime dateTime)
 			{
 				_dateTimeValue = dateTime;
@@ -99,78 +99,78 @@ namespace Rsdn.Framework.Formatting
 			}
 
 			/// <summary>
-			/// Форматирует дату используя формат "dd.MM.yy HH:mm"
+			/// Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РґР°С‚Сѓ РёСЃРїРѕР»СЊР·СѓСЏ С„РѕСЂРјР°С‚ "dd.MM.yy HH:mm"
 			/// </summary>
-			/// <returns>Результирующая строка.</returns>
+			/// <returns>Р РµР·СѓР»СЊС‚РёСЂСѓСЋС‰Р°СЏ СЃС‚СЂРѕРєР°.</returns>
 			public string ToYearString()
 			{
 				return ToYearString(_dateTimeValue);
 			}
 
 			/// <summary>
-			/// Форматирует дату используя формат "dd.MM.yy HH:mm"
+			/// Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РґР°С‚Сѓ РёСЃРїРѕР»СЊР·СѓСЏ С„РѕСЂРјР°С‚ "dd.MM.yy HH:mm"
 			/// </summary>
-			/// <param name="dateTime">Форматируемая дата.</param>
-			/// <returns>Результирующая строка.</returns>
+			/// <param name="dateTime">Р¤РѕСЂРјР°С‚РёСЂСѓРµРјР°СЏ РґР°С‚Р°.</param>
+			/// <returns>Р РµР·СѓР»СЊС‚РёСЂСѓСЋС‰Р°СЏ СЃС‚СЂРѕРєР°.</returns>
 			public static string ToYearString(DateTime dateTime)
 			{
 				return dateTime.ToString("dd.MM.yy HH:mm");
 			}
 
 			/// <summary>
-			/// Форматирует дату используя формат "dd.MM.yy"
+			/// Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РґР°С‚Сѓ РёСЃРїРѕР»СЊР·СѓСЏ С„РѕСЂРјР°С‚ "dd.MM.yy"
 			/// </summary>
-			/// <returns>Результирующая строка.</returns>
+			/// <returns>Р РµР·СѓР»СЊС‚РёСЂСѓСЋС‰Р°СЏ СЃС‚СЂРѕРєР°.</returns>
 			public string ToLongString()
 			{
 				return ToLongString(_dateTimeValue);
 			}
 
 			/// <summary>
-			/// Форматирует дату используя формат "dd.MM.yy"
+			/// Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РґР°С‚Сѓ РёСЃРїРѕР»СЊР·СѓСЏ С„РѕСЂРјР°С‚ "dd.MM.yy"
 			/// </summary>
-			/// <param name="dateTime">Форматируемая дата.</param>
-			/// <returns>Результирующая строка.</returns>
+			/// <param name="dateTime">Р¤РѕСЂРјР°С‚РёСЂСѓРµРјР°СЏ РґР°С‚Р°.</param>
+			/// <returns>Р РµР·СѓР»СЊС‚РёСЂСѓСЋС‰Р°СЏ СЃС‚СЂРѕРєР°.</returns>
 			public static string ToLongString(DateTime dateTime)
 			{
 				return dateTime.ToString("dd.MM.yy");
 			}
 
 			/// <summary>
-			/// Форматирует дату используя формат "dd.MM HH:mm"
+			/// Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РґР°С‚Сѓ РёСЃРїРѕР»СЊР·СѓСЏ С„РѕСЂРјР°С‚ "dd.MM HH:mm"
 			/// </summary>
-			/// <returns>Результирующая строка.</returns>
+			/// <returns>Р РµР·СѓР»СЊС‚РёСЂСѓСЋС‰Р°СЏ СЃС‚СЂРѕРєР°.</returns>
 			public string ToShortString()
 			{
 				return ToShortString(_dateTimeValue);
 			}
 
 			/// <summary>
-			/// Форматирует дату используя формат "dd.MM HH:mm"
+			/// Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РґР°С‚Сѓ РёСЃРїРѕР»СЊР·СѓСЏ С„РѕСЂРјР°С‚ "dd.MM HH:mm"
 			/// </summary>
-			/// <param name="dateTime">Форматируемая дата.</param>
-			/// <returns>Результирующая строка.</returns>
+			/// <param name="dateTime">Р¤РѕСЂРјР°С‚РёСЂСѓРµРјР°СЏ РґР°С‚Р°.</param>
+			/// <returns>Р РµР·СѓР»СЊС‚РёСЂСѓСЋС‰Р°СЏ СЃС‚СЂРѕРєР°.</returns>
 			public static string ToShortString(DateTime dateTime)
 			{
 				return dateTime.ToString("dd.MM HH:mm");
 			}
 
 			/// <summary>
-			/// Форматирует дату в зависимости от ее давности.
-			/// Больше полугода - "dd.MM.yy.", меньше - "dd/MM HH:mm"
+			/// Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РґР°С‚Сѓ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РµРµ РґР°РІРЅРѕСЃС‚Рё.
+			/// Р‘РѕР»СЊС€Рµ РїРѕР»СѓРіРѕРґР° - "dd.MM.yy.", РјРµРЅСЊС€Рµ - "dd/MM HH:mm"
 			/// </summary>
-			/// <returns>Результирующая строка.</returns>
+			/// <returns>Р РµР·СѓР»СЊС‚РёСЂСѓСЋС‰Р°СЏ СЃС‚СЂРѕРєР°.</returns>
 			public string ToDependString()
 			{
 				return ToDependString(_dateTimeValue);
 			}
 
 			/// <summary>
-			/// Форматирует дату в зависимости от ее давности.
-			/// Больше полугода - "dd.MM.yy.", меньше - "dd/MM HH:mm"
+			/// Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РґР°С‚Сѓ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РµРµ РґР°РІРЅРѕСЃС‚Рё.
+			/// Р‘РѕР»СЊС€Рµ РїРѕР»СѓРіРѕРґР° - "dd.MM.yy.", РјРµРЅСЊС€Рµ - "dd/MM HH:mm"
 			/// </summary>
-			/// <param name="dateTime">Форматируемая дата.</param>
-			/// <returns>Результирующая строка.</returns>
+			/// <param name="dateTime">Р¤РѕСЂРјР°С‚РёСЂСѓРµРјР°СЏ РґР°С‚Р°.</param>
+			/// <returns>Р РµР·СѓР»СЊС‚РёСЂСѓСЋС‰Р°СЏ СЃС‚СЂРѕРєР°.</returns>
 			public static string ToDependString(DateTime dateTime)
 			{
 				return (dateTime > DateTime.Now.AddMonths(-6))
@@ -180,38 +180,38 @@ namespace Rsdn.Framework.Formatting
 			}
 
 			/// <summary>
-			/// Возвращает дату на начало текущего дня.
+			/// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°С‚Сѓ РЅР° РЅР°С‡Р°Р»Рѕ С‚РµРєСѓС‰РµРіРѕ РґРЅСЏ.
 			/// </summary>
-			/// <returns>Начало текущего дня.</returns>
+			/// <returns>РќР°С‡Р°Р»Рѕ С‚РµРєСѓС‰РµРіРѕ РґРЅСЏ.</returns>
 			public static DateTime GetDayBeginning()
 			{
 				return GetDayBeginning(DateTime.Now);
 			}
 
 			/// <summary>
-			/// Возвращает дату на начало заданного дня.
+			/// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°С‚Сѓ РЅР° РЅР°С‡Р°Р»Рѕ Р·Р°РґР°РЅРЅРѕРіРѕ РґРЅСЏ.
 			/// </summary>
-			/// <param name="dateTime">Заданная дата.</param>
-			/// <returns>Начало дня.</returns>
+			/// <param name="dateTime">Р—Р°РґР°РЅРЅР°СЏ РґР°С‚Р°.</param>
+			/// <returns>РќР°С‡Р°Р»Рѕ РґРЅСЏ.</returns>
 			public static DateTime GetDayBeginning(DateTime dateTime)
 			{
 				return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day);
 			}
 
 			/// <summary>
-			/// Возвращает дату на начало текущего месяца.
+			/// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°С‚Сѓ РЅР° РЅР°С‡Р°Р»Рѕ С‚РµРєСѓС‰РµРіРѕ РјРµСЃСЏС†Р°.
 			/// </summary>
-			/// <returns>Начало месяца.</returns>
+			/// <returns>РќР°С‡Р°Р»Рѕ РјРµСЃСЏС†Р°.</returns>
 			public static DateTime GetMonthBeginning()
 			{
 				return GetMonthBeginning(DateTime.Now);
 			}
 
 			/// <summary>
-			/// Возвращает дату на начало заданного месяца.
+			/// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°С‚Сѓ РЅР° РЅР°С‡Р°Р»Рѕ Р·Р°РґР°РЅРЅРѕРіРѕ РјРµСЃСЏС†Р°.
 			/// </summary>
-			/// <param name="dateTime">Заданная дата.</param>
-			/// <returns>Начало месяца.</returns>
+			/// <param name="dateTime">Р—Р°РґР°РЅРЅР°СЏ РґР°С‚Р°.</param>
+			/// <returns>РќР°С‡Р°Р»Рѕ РјРµСЃСЏС†Р°.</returns>
 			public static DateTime GetMonthBeginning(DateTime dateTime)
 			{
 				return new DateTime(dateTime.Year, dateTime.Month, 1);

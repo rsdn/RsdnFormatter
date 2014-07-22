@@ -1,4 +1,4 @@
-namespace Rsdn.Framework.Formatting
+﻿namespace Rsdn.Framework.Formatting
 {
 	///<summary>
 	/// Application wide constants.
@@ -43,6 +43,6 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Copyright.
 		/// </summary>
-		public const string Copyright = "� RSDN Team, 2002-2012";
+		public const string Copyright = "© RSDN Team, 2002-2012";
 	}
 }

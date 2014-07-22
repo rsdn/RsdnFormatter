@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -128,10 +128,10 @@ namespace Rsdn.Framework.Formatting
 				RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		/// <summary>
-		/// Заменяет служебные символы HTML на их аналоги исключая '"'.
+		/// Р—Р°РјРµРЅСЏРµС‚ СЃР»СѓР¶РµР±РЅС‹Рµ СЃРёРјРІРѕР»С‹ HTML РЅР° РёС… Р°РЅР°Р»РѕРіРё РёСЃРєР»СЋС‡Р°СЏ '"'.
 		/// </summary>
-		/// <param name="sb">Исходный текст.</param>
-		/// <returns>Результат.</returns>
+		/// <param name="sb">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <returns>Р РµР·СѓР»СЊС‚Р°С‚.</returns>
 		public static StringBuilder ReplaceTagsWQ(this StringBuilder sb)
 		{
 			return
@@ -144,10 +144,10 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Заменяет служебные символы HTML на их аналоги исключая '"'.
+		/// Р—Р°РјРµРЅСЏРµС‚ СЃР»СѓР¶РµР±РЅС‹Рµ СЃРёРјРІРѕР»С‹ HTML РЅР° РёС… Р°РЅР°Р»РѕРіРё РёСЃРєР»СЋС‡Р°СЏ '"'.
 		/// </summary>
-		/// <param name="str">Исходный текст.</param>
-		/// <returns>Результат.</returns>
+		/// <param name="str">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <returns>Р РµР·СѓР»СЊС‚Р°С‚.</returns>
 		public static string ReplaceTagsWQ(this string str)
 		{
 			return
@@ -159,10 +159,10 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Заменяет служебные символы HTML на их аналоги.
+		/// Р—Р°РјРµРЅСЏРµС‚ СЃР»СѓР¶РµР±РЅС‹Рµ СЃРёРјРІРѕР»С‹ HTML РЅР° РёС… Р°РЅР°Р»РѕРіРё.
 		/// </summary>
-		/// <param name="str">Исходный текст.</param>
-		/// <returns>Результат.</returns>
+		/// <param name="str">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <returns>Р РµР·СѓР»СЊС‚Р°С‚.</returns>
 		public static string ReplaceTags(this string str)
 		{
 			return
@@ -172,21 +172,21 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Заменяет служебные символы HTML на их аналоги.
+		/// Р—Р°РјРµРЅСЏРµС‚ СЃР»СѓР¶РµР±РЅС‹Рµ СЃРёРјРІРѕР»С‹ HTML РЅР° РёС… Р°РЅР°Р»РѕРіРё.
 		/// </summary>
-		/// <param name="str">Исходный текст.</param>
-		/// <returns>Результат.</returns>
+		/// <param name="str">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <returns>Р РµР·СѓР»СЊС‚Р°С‚.</returns>
 		public static string ReplaceTags(this object str)
 		{
 			return str == null ? null : ReplaceTags(str.ToString());
 		}
 
 		/// <summary>
-		/// Подготавливает текст для JScript.
+		/// РџРѕРґРіРѕС‚Р°РІР»РёРІР°РµС‚ С‚РµРєСЃС‚ РґР»СЏ JScript.
 		/// </summary>
-		/// <warning>Текст не должен содержать спецмаркеры :quotes:, :apostroph: !</warning>
-		/// <param name="str">Исходная строка.</param>
-		/// <returns>Преобразованная строка.</returns>
+		/// <warning>РўРµРєСЃС‚ РЅРµ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ СЃРїРµС†РјР°СЂРєРµСЂС‹ :quotes:, :apostroph: !</warning>
+		/// <param name="str">РСЃС…РѕРґРЅР°СЏ СЃС‚СЂРѕРєР°.</param>
+		/// <returns>РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРЅР°СЏ СЃС‚СЂРѕРєР°.</returns>
 		public static string EncodeJScriptText(this string str)
 		{
 			return
@@ -201,11 +201,11 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Подготавливает текст для предотовращения XSS (Cross Site Scripting)
-		/// Используется, в основном для кодирования адресов (ссылок, картинок).
+		/// РџРѕРґРіРѕС‚Р°РІР»РёРІР°РµС‚ С‚РµРєСЃС‚ РґР»СЏ РїСЂРµРґРѕС‚РѕРІСЂР°С‰РµРЅРёСЏ XSS (Cross Site Scripting)
+		/// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ, РІ РѕСЃРЅРѕРІРЅРѕРј РґР»СЏ РєРѕРґРёСЂРѕРІР°РЅРёСЏ Р°РґСЂРµСЃРѕРІ (СЃСЃС‹Р»РѕРє, РєР°СЂС‚РёРЅРѕРє).
 		/// </summary>
-		/// <param name="value">Исходный текст.</param>
-		/// <returns>Преобразованный текст.</returns>
+		/// <param name="value">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <returns>РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚.</returns>
 		public static string EncodeAgainstXSS(this string value)
 		{
 			return
@@ -218,23 +218,23 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Преобразует object в int. 
-		/// В случае возникновения исключения возвращается 0.
+		/// РџСЂРµРѕР±СЂР°Р·СѓРµС‚ object РІ int. 
+		/// Р’ СЃР»СѓС‡Р°Рµ РІРѕР·РЅРёРєРЅРѕРІРµРЅРёСЏ РёСЃРєР»СЋС‡РµРЅРёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ 0.
 		/// </summary>
-		/// <param name="o">Преобразуемый объект.</param>
-		/// <returns>Результат.</returns>
+		/// <param name="o">РџСЂРµРѕР±СЂР°Р·СѓРµРјС‹Р№ РѕР±СЉРµРєС‚.</param>
+		/// <returns>Р РµР·СѓР»СЊС‚Р°С‚.</returns>
 		public static int ToInt(this object o)
 		{
 			return ToInt(o, 0);
 		}
 
 		/// <summary>
-		/// Преобразует object в int. 
-		/// В случае возникновения исключения возвращается errorValue.
+		/// РџСЂРµРѕР±СЂР°Р·СѓРµС‚ object РІ int. 
+		/// Р’ СЃР»СѓС‡Р°Рµ РІРѕР·РЅРёРєРЅРѕРІРµРЅРёСЏ РёСЃРєР»СЋС‡РµРЅРёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ errorValue.
 		/// </summary>
-		/// <param name="o">Преобразуемый объект.</param>
-		/// <param name="errorValue">Значение возвращаемое если произошла ошибка.</param>
-		/// <returns>Результат.</returns>
+		/// <param name="o">РџСЂРµРѕР±СЂР°Р·СѓРµРјС‹Р№ РѕР±СЉРµРєС‚.</param>
+		/// <param name="errorValue">Р—РЅР°С‡РµРЅРёРµ РІРѕР·РІСЂР°С‰Р°РµРјРѕРµ РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.</param>
+		/// <returns>Р РµР·СѓР»СЊС‚Р°С‚.</returns>
 		public static int ToInt(this object o, int errorValue)
 		{
 			if (o == null || string.Empty.Equals(o))
@@ -248,11 +248,11 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Преобразует object в double. 
-		/// В случае возникновения исключения возвращается 0.
+		/// РџСЂРµРѕР±СЂР°Р·СѓРµС‚ object РІ double. 
+		/// Р’ СЃР»СѓС‡Р°Рµ РІРѕР·РЅРёРєРЅРѕРІРµРЅРёСЏ РёСЃРєР»СЋС‡РµРЅРёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ 0.
 		/// </summary>
-		/// <param name="o">Преобразуемый объект.</param>
-		/// <returns>Результат.</returns>
+		/// <param name="o">РџСЂРµРѕР±СЂР°Р·СѓРµРјС‹Р№ РѕР±СЉРµРєС‚.</param>
+		/// <returns>Р РµР·СѓР»СЊС‚Р°С‚.</returns>
 		public static double ToDouble(this object o)
 		{
 			if (o == null)
@@ -305,15 +305,15 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		///<summary>
-		/// Убирает цитирование из текста сообщения.
+		/// РЈР±РёСЂР°РµС‚ С†РёС‚РёСЂРѕРІР°РЅРёРµ РёР· С‚РµРєСЃС‚Р° СЃРѕРѕР±С‰РµРЅРёСЏ.
 		///</summary>
-		/// <param name="msg">Сообщение.</param>
-		/// <returns>Обработанное сообщение</returns>
+		/// <param name="msg">РЎРѕРѕР±С‰РµРЅРёРµ.</param>
+		/// <returns>РћР±СЂР°Р±РѕС‚Р°РЅРЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ</returns>
 		public static string RemoveQuotations(string msg)
 		{
 			msg = TextFormatter.RemoveTaglineTag(msg);
 			msg = TextFormatter.RemoveModeratorTag(msg);
-			msg = Regex.Replace(msg, "Здравствуйте.*ы писали:", "");
+			msg = Regex.Replace(msg, "Р—РґСЂР°РІСЃС‚РІСѓР№С‚Рµ.*С‹ РїРёСЃР°Р»Рё:", "");
 			msg = msg.ReplaceTags();
 			msg = Regex.Replace(msg, TextFormatter.StartCitation + ".*$", "", RegexOptions.Multiline);
 			return msg;
