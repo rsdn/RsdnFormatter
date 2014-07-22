@@ -1,6 +1,6 @@
 <html>
 	<body>
-Text <a href="http://rsdn.ru" class="m" target="_blank">Здесь</a><br />
-Text <a href="http://rsdn.ru" class="m" target="_blank">Здесь</a>
+Text <a class="m" href="http://rsdn.ru" target="_blank">Здесь</a><br />
+Text <a class="m" href="http://rsdn.ru" target="_blank">Здесь</a>
 	</body>
 </html>
