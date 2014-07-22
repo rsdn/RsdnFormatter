@@ -64,38 +64,38 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestData\Cpp.txt" />
-    <Content Include="TestData\Cut.txt" />
-    <Content Include="TestData\ExcessiveBrs.txt" />
-    <Content Include="TestData\Msg2408361.txt" />
-    <Content Include="TestData\ObjC.txt" />
-    <Content Include="TestData\Sql.txt" />
-    <Content Include="TestData\SubSup.txt" />
-    <Content Include="TestData\Rust.txt" />
-    <Content Include="TestData\XSS.txt" />
-    <Content Include="TestData\Heading.txt" />
-    <Content Include="TestData\Quotation.txt" />
-    <Content Include="TestData\RsdnLink.txt" />
-    <Content Include="TestData\SimpleFormatting.txt" />
-    <Content Include="TestData\Smiles.txt" />
-    <Content Include="TestData\Urls.txt" />
+    <EmbeddedResource Include="TestData\Cpp.txt" />
+    <EmbeddedResource Include="TestData\Cut.txt" />
+    <EmbeddedResource Include="TestData\ExcessiveBrs.txt" />
+    <EmbeddedResource Include="TestData\Msg2408361.txt" />
+    <EmbeddedResource Include="TestData\ObjC.txt" />
+    <EmbeddedResource Include="TestData\Sql.txt" />
+    <EmbeddedResource Include="TestData\SubSup.txt" />
+    <EmbeddedResource Include="TestData\Rust.txt" />
+    <EmbeddedResource Include="TestData\XSS.txt" />
+    <EmbeddedResource Include="TestData\Heading.txt" />
+    <EmbeddedResource Include="TestData\Quotation.txt" />
+    <EmbeddedResource Include="TestData\RsdnLink.txt" />
+    <EmbeddedResource Include="TestData\SimpleFormatting.txt" />
+    <EmbeddedResource Include="TestData\Smiles.txt" />
+    <EmbeddedResource Include="TestData\Urls.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestData\Cpp.gold" />
-    <None Include="TestData\Cut.gold" />
-    <None Include="TestData\ExcessiveBrs.gold" />
-    <None Include="TestData\Heading.gold" />
-    <None Include="TestData\Msg2408361.gold" />
-    <None Include="TestData\ObjC.gold" />
-    <None Include="TestData\Quotation.gold" />
-    <None Include="TestData\RsdnLink.gold" />
-    <None Include="TestData\SimpleFormatting.gold" />
-    <None Include="TestData\Rust.gold" />
-    <None Include="TestData\Smiles.gold" />
-    <None Include="TestData\Sql.gold" />
-    <None Include="TestData\SubSup.gold" />
-    <None Include="TestData\Urls.gold" />
-    <None Include="TestData\XSS.gold" />
+    <EmbeddedResource Include="TestData\Cpp.gold" />
+    <EmbeddedResource Include="TestData\Cut.gold" />
+    <EmbeddedResource Include="TestData\ExcessiveBrs.gold" />
+    <EmbeddedResource Include="TestData\Heading.gold" />
+    <EmbeddedResource Include="TestData\Msg2408361.gold" />
+    <EmbeddedResource Include="TestData\ObjC.gold" />
+    <EmbeddedResource Include="TestData\Quotation.gold" />
+    <EmbeddedResource Include="TestData\RsdnLink.gold" />
+    <EmbeddedResource Include="TestData\SimpleFormatting.gold" />
+    <EmbeddedResource Include="TestData\Rust.gold" />
+    <EmbeddedResource Include="TestData\Smiles.gold" />
+    <EmbeddedResource Include="TestData\Sql.gold" />
+    <EmbeddedResource Include="TestData\SubSup.gold" />
+    <EmbeddedResource Include="TestData\Urls.gold" />
+    <EmbeddedResource Include="TestData\XSS.gold" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
