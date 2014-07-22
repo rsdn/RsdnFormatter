@@ -17,7 +17,18 @@ namespace Rsdn.Framework.Formatting.Tests
             yield return GetTestCaseData("Cut");
             yield return GetTestCaseData("ExcessiveBrs");
             yield return GetTestCaseData("Heading");
+            yield return GetTestCaseData("MakeQuote").Ignore("TBD");
             yield return GetTestCaseData("Msg2408361");
+            yield return GetTestCaseData("ObjC");
+            yield return GetTestCaseData("Quotation");
+            yield return GetTestCaseData("RsdnLink");
+            yield return GetTestCaseData("Rust");
+            yield return GetTestCaseData("SimpleFormatting");
+            yield return GetTestCaseData("Smiles");
+            yield return GetTestCaseData("Sql");
+            yield return GetTestCaseData("SubSup");
+            yield return GetTestCaseData("Urls");
+            yield return GetTestCaseData("XSS");
         }
 
         private static TestCaseData GetTestCaseData(string name)
@@ -40,7 +51,7 @@ namespace Rsdn.Framework.Formatting.Tests
             var testCaseData = new TestCaseData(original);
 
             testCaseData.SetName(name);
-            testCaseData.Returns(gold);
+            testCaseData.Returns(gold.Split(new [] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
 
             return testCaseData;
         }
