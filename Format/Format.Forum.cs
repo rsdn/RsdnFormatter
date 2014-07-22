@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Text.RegularExpressions;
 
 namespace Rsdn.Framework.Formatting
@@ -6,7 +6,7 @@ namespace Rsdn.Framework.Formatting
 	public static partial class Format
 	{
 		/// <summary>
-		/// Инкапсулирует функции форматирования сообщений форума.
+		/// РРЅРєР°РїСЃСѓР»РёСЂСѓРµС‚ С„СѓРЅРєС†РёРё С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ СЃРѕРѕР±С‰РµРЅРёР№ С„РѕСЂСѓРјР°.
 		/// </summary>
 		public class Forum
 		{
@@ -14,43 +14,43 @@ namespace Rsdn.Framework.Formatting
 			/// Regex for detecting Re: and Re[number]: prefixes in subject at the start of the line
 			/// </summary>
 			private static readonly Regex _reDetector =
-				new Regex(@"(?in)^((Re|На)(\[(?<number>\d+)\])?:\s*)+", RegexOptions.Compiled);
+				new Regex(@"(?in)^((Re|РќР°)(\[(?<number>\d+)\])?:\s*)+", RegexOptions.Compiled);
 
 			/// <summary>
-			/// Готовит поле 'тема' для редактирования.
+			/// Р“РѕС‚РѕРІРёС‚ РїРѕР»Рµ 'С‚РµРјР°' РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ.
 			/// </summary>
-			/// <param name="subj">Название темы.</param>
-			/// <returns>Результат.</returns>
+			/// <param name="subj">РќР°Р·РІР°РЅРёРµ С‚РµРјС‹.</param>
+			/// <returns>Р РµР·СѓР»СЊС‚Р°С‚.</returns>
 			public static string GetEditSubject(string subj)
 			{
 				if (string.IsNullOrEmpty(subj))
 					return subj;
 
-				// Удаляем элемент Re[..]
+				// РЈРґР°Р»СЏРµРј СЌР»РµРјРµРЅС‚ Re[..]
 				return _reDetector.Replace(subj, "");
 			}
 
 			/// <summary>
-			/// Корректировка темы сообщения.
+			/// РљРѕСЂСЂРµРєС‚РёСЂРѕРІРєР° С‚РµРјС‹ СЃРѕРѕР±С‰РµРЅРёСЏ.
 			/// </summary>
 			/// <remarks>
-			/// Добавляет префикс '<b>Re</b>' к новой теме сообщения.
-			/// Для первого ответа в ветке добавляется префикс '<b>Re:</b>', 
-			/// для всех последующий '<b>Re[n]:</b>', где <b>n</b> - уровень вложенности.
+			/// Р”РѕР±Р°РІР»СЏРµС‚ РїСЂРµС„РёРєСЃ '<b>Re</b>' Рє РЅРѕРІРѕР№ С‚РµРјРµ СЃРѕРѕР±С‰РµРЅРёСЏ.
+			/// Р”Р»СЏ РїРµСЂРІРѕРіРѕ РѕС‚РІРµС‚Р° РІ РІРµС‚РєРµ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РїСЂРµС„РёРєСЃ '<b>Re:</b>', 
+			/// РґР»СЏ РІСЃРµС… РїРѕСЃР»РµРґСѓСЋС‰РёР№ '<b>Re[n]:</b>', РіРґРµ <b>n</b> - СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё.
 			/// </remarks>
-			/// <param name="oldSubject">Тема предыдущего сообщения.</param>
-			/// <param name="newSubject">Тема нового сообщения.</param>
-			/// <returns>Возвращает сообщение с добавленным префиксом 'Re'.</returns>
+			/// <param name="oldSubject">РўРµРјР° РїСЂРµРґС‹РґСѓС‰РµРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ.</param>
+			/// <param name="newSubject">РўРµРјР° РЅРѕРІРѕРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ.</param>
+			/// <returns>Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРѕРѕР±С‰РµРЅРёРµ СЃ РґРѕР±Р°РІР»РµРЅРЅС‹Рј РїСЂРµС„РёРєСЃРѕРј 'Re'.</returns>
 			public static string AdjustSubject(string oldSubject, string newSubject)
 			{
 				return GetRePrefix(GetSubjectDeep(oldSubject) + 1) + newSubject;
 			}
 
 			/// <summary>
-			/// Возвращает уровень вложенности темы сообщения.
+			/// Р’РѕР·РІСЂР°С‰Р°РµС‚ СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё С‚РµРјС‹ СЃРѕРѕР±С‰РµРЅРёСЏ.
 			/// </summary>
-			/// <param name="subject">Тема сообщения</param>
-			/// <returns>Уровень вложенности.</returns>
+			/// <param name="subject">РўРµРјР° СЃРѕРѕР±С‰РµРЅРёСЏ</param>
+			/// <returns>РЈСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё.</returns>
 			public static int GetSubjectDeep(string subject)
 			{
 				var level = 0;
@@ -66,29 +66,29 @@ namespace Rsdn.Framework.Formatting
 			}
 
 			/// <summary>
-			/// Возвращает префикс темы сообщения.
+			/// Р’РѕР·РІСЂР°С‰Р°РµС‚ РїСЂРµС„РёРєСЃ С‚РµРјС‹ СЃРѕРѕР±С‰РµРЅРёСЏ.
 			/// </summary>
 			/// <remarks>
-			/// Для первого ответа в ветке префикс '<b>Re:</b>', 
-			/// для всех последующий '<b>Re[n]:</b>', где <b>n</b> - уровень вложенности.
+			/// Р”Р»СЏ РїРµСЂРІРѕРіРѕ РѕС‚РІРµС‚Р° РІ РІРµС‚РєРµ РїСЂРµС„РёРєСЃ '<b>Re:</b>', 
+			/// РґР»СЏ РІСЃРµС… РїРѕСЃР»РµРґСѓСЋС‰РёР№ '<b>Re[n]:</b>', РіРґРµ <b>n</b> - СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё.
 			/// </remarks>
-			/// <param name="level">Уровень вложенности сообщения.</param>
-			/// <returns>Префикс.</returns>
+			/// <param name="level">РЈСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё СЃРѕРѕР±С‰РµРЅРёСЏ.</param>
+			/// <returns>РџСЂРµС„РёРєСЃ.</returns>
 			private static string GetRePrefix(int level)
 			{
 				return (level == 1) ? "Re: " : string.Format("Re[{0}]: ", level);
 			}
 
 			/// <summary>
-			/// Корректировка темы сообщения.
+			/// РљРѕСЂСЂРµРєС‚РёСЂРѕРІРєР° С‚РµРјС‹ СЃРѕРѕР±С‰РµРЅРёСЏ.
 			/// </summary>
 			/// <remarks>
-			/// Корректирует уровень вложенности сообщения (Re[xxx])
-			/// относительно нового корня.
+			/// РљРѕСЂСЂРµРєС‚РёСЂСѓРµС‚ СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё СЃРѕРѕР±С‰РµРЅРёСЏ (Re[xxx])
+			/// РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РЅРѕРІРѕРіРѕ РєРѕСЂРЅСЏ.
 			/// </remarks>
-			/// <param name="level">Уровень вложенности корневого сообщения.</param>
-			/// <param name="subject">Тема сообщения.</param>
-			/// <returns>Откорректированная тема сообщения.</returns>
+			/// <param name="level">РЈСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё РєРѕСЂРЅРµРІРѕРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ.</param>
+			/// <param name="subject">РўРµРјР° СЃРѕРѕР±С‰РµРЅРёСЏ.</param>
+			/// <returns>РћС‚РєРѕСЂСЂРµРєС‚РёСЂРѕРІР°РЅРЅР°СЏ С‚РµРјР° СЃРѕРѕР±С‰РµРЅРёСЏ.</returns>
 			public static string AdjustSubject(int level, string subject)
 			{
 				return _reDetector.Replace(subject, match =>
@@ -96,19 +96,19 @@ namespace Rsdn.Framework.Formatting
 			}
 
 			/// <summary>
-			/// Возвращает сокращения для заданного ника.
+			/// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРѕРєСЂР°С‰РµРЅРёСЏ РґР»СЏ Р·Р°РґР°РЅРЅРѕРіРѕ РЅРёРєР°.
 			/// </summary>
-			/// <param name="nick">Ник.</param>
-			/// <returns>Сокращение.</returns>
+			/// <param name="nick">РќРёРє.</param>
+			/// <returns>РЎРѕРєСЂР°С‰РµРЅРёРµ.</returns>
 			public static string GetShortNick(string nick)
 			{
-				// Получаем сокращения для ника.
+				// РџРѕР»СѓС‡Р°РµРј СЃРѕРєСЂР°С‰РµРЅРёСЏ РґР»СЏ РЅРёРєР°.
 				//
 				var shortname = "";
 
 				if (nick.Length <= 3 && !nick.Contains(" "))
 				{
-					// Ник короче трёх символов.
+					// РќРёРє РєРѕСЂРѕС‡Рµ С‚СЂС‘С… СЃРёРјРІРѕР»РѕРІ.
 					shortname = nick
 						.Replace("&", "")
 						.Replace("<", "")
@@ -130,29 +130,29 @@ namespace Rsdn.Framework.Formatting
 				}
 				else
 				{
-					// Заменяем все левые символы на пробелы.
+					// Р—Р°РјРµРЅСЏРµРј РІСЃРµ Р»РµРІС‹Рµ СЃРёРјРІРѕР»С‹ РЅР° РїСЂРѕР±РµР»С‹.
 					var un = Regex.Replace(nick, @"\W+", " ").Trim();
 
-					// Удаляем символы нижнего регистра и цифры.
+					// РЈРґР°Р»СЏРµРј СЃРёРјРІРѕР»С‹ РЅРёР¶РЅРµРіРѕ СЂРµРіРёСЃС‚СЂР° Рё С†РёС„СЂС‹.
 					if (!un.Contains(" "))
 					{
-						shortname = Regex.Replace(un, @"[a-zа-я0-9]", "");
+						shortname = Regex.Replace(un, @"[a-zР°-СЏ0-9]", "");
 						if (shortname.Length > 3)
 							shortname = shortname.Substring(0, 3);
 					}
 
-					// Если ник весь в нижнем регистре.
+					// Р•СЃР»Рё РЅРёРє РІРµСЃСЊ РІ РЅРёР¶РЅРµРј СЂРµРіРёСЃС‚СЂРµ.
 					if (shortname.Length == 0)
 					{
-						// Разваливаем на массив слов.
+						// Р Р°Р·РІР°Р»РёРІР°РµРј РЅР° РјР°СЃСЃРёРІ СЃР»РѕРІ.
 						var sa = un.Split(' ');
 
-						// Берём только первые символы.
+						// Р‘РµСЂС‘Рј С‚РѕР»СЊРєРѕ РїРµСЂРІС‹Рµ СЃРёРјРІРѕР»С‹.
 						for (var i = 0; i < sa.Length && i < 3; i++)
 							if (sa[i].Length > 0)
 								shortname += sa[i][0];
 
-						// Приводим к верхнему регистру.
+						// РџСЂРёРІРѕРґРёРј Рє РІРµСЂС…РЅРµРјСѓ СЂРµРіРёСЃС‚СЂСѓ.
 						shortname = shortname.ToUpper();
 					}
 				}
@@ -161,46 +161,46 @@ namespace Rsdn.Framework.Formatting
 			}
 
 			/// <summary>
-			/// Готовит сообщение к цитированию.
+			/// Р“РѕС‚РѕРІРёС‚ СЃРѕРѕР±С‰РµРЅРёРµ Рє С†РёС‚РёСЂРѕРІР°РЅРёСЋ.
 			/// </summary>
-			/// <param name="msg">Сообщение.</param>
-			/// <param name="nick">Автор ссобщения.</param>
-			/// <returns>Обработанное сообщение</returns>
+			/// <param name="msg">РЎРѕРѕР±С‰РµРЅРёРµ.</param>
+			/// <param name="nick">РђРІС‚РѕСЂ СЃСЃРѕР±С‰РµРЅРёСЏ.</param>
+			/// <returns>РћР±СЂР°Р±РѕС‚Р°РЅРЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ</returns>
 			public static string GetEditMessage(string msg, string nick)
 			{
 				return GetEditMessage(msg, nick, false);
 			}
 
 			/// <summary>
-			/// Готовит сообщение к цитированию.
+			/// Р“РѕС‚РѕРІРёС‚ СЃРѕРѕР±С‰РµРЅРёРµ Рє С†РёС‚РёСЂРѕРІР°РЅРёСЋ.
 			/// </summary>
-			/// <param name="msg">Сообщение.</param>
-			/// <param name="nick">Автор ссобщения.</param>
-			/// <param name="moderator">== true, если пользователь - модератор.</param>
-			/// <returns>Обработанное сообщение</returns>
+			/// <param name="msg">РЎРѕРѕР±С‰РµРЅРёРµ.</param>
+			/// <param name="nick">РђРІС‚РѕСЂ СЃСЃРѕР±С‰РµРЅРёСЏ.</param>
+			/// <param name="moderator">== true, РµСЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ - РјРѕРґРµСЂР°С‚РѕСЂ.</param>
+			/// <returns>РћР±СЂР°Р±РѕС‚Р°РЅРЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ</returns>
 			public static string GetEditMessage(string msg, string nick, bool moderator)
 			{
-				// Получаем сокращения для ника.
+				// РџРѕР»СѓС‡Р°РµРј СЃРѕРєСЂР°С‰РµРЅРёСЏ РґР»СЏ РЅРёРєР°.
 				//
 				var shortname = GetShortNick(nick);
 
-				// Если пользователь не модератор. тег [moderator] удаляется.
-				// Дополнительная проверка производиться при сохранении сообщения.
+				// Р•СЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ РјРѕРґРµСЂР°С‚РѕСЂ. С‚РµРі [moderator] СѓРґР°Р»СЏРµС‚СЃСЏ.
+				// Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РїСЂРѕРІРµСЂРєР° РїСЂРѕРёР·РІРѕРґРёС‚СЊСЃСЏ РїСЂРё СЃРѕС…СЂР°РЅРµРЅРёРё СЃРѕРѕР±С‰РµРЅРёСЏ.
 				//
 				if (moderator == false)
 				{
 					msg = TextFormatter.RemoveModeratorTag(msg);
 				}
-				// Убираем таглайн
+				// РЈР±РёСЂР°РµРј С‚Р°РіР»Р°Р№РЅ
 				//
 				msg = TextFormatter.RemoveTaglineTag(msg);
 
-				// Формирование цитаты.
+				// Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ С†РёС‚Р°С‚С‹.
 				//
 				msg = Regex.Replace(msg, @"^\s*[-\w\.]{0,5}>+", "$&>", RegexOptions.Multiline);
 				msg = Regex.Replace(msg, @"(?m)^(?!\s*[-\w\.]{0,5}>|\s*$)", shortname + ">");
 				msg = TextFormatter.ReplaceImgWithUrl(msg);
-				msg = "Здравствуйте, " + nick + ", Вы писали:\n\n" + msg;
+				msg = "Р—РґСЂР°РІСЃС‚РІСѓР№С‚Рµ, " + nick + ", Р’С‹ РїРёСЃР°Р»Рё:\n\n" + msg;
 
 				return msg;
 			}

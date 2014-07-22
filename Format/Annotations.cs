@@ -1,4 +1,4 @@
-namespace Rsdn.Framework.Formatting
+﻿namespace Rsdn.Framework.Formatting
 {
 	using System;
 	using System.Collections.Generic;

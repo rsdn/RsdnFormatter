@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,23 +14,23 @@ using Rsdn.Framework.Formatting.Resources;
 namespace Rsdn.Framework.Formatting
 {
 	/// <summary>
-	/// Форматирование сообщение и расцветка кода.
+	/// Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ СЃРѕРѕР±С‰РµРЅРёРµ Рё СЂР°СЃС†РІРµС‚РєР° РєРѕРґР°.
 	/// </summary>
 	public class TextFormatter
 	{
 		private readonly string _hiddenTextSnippet;
 
 		/// <summary>
-		/// Создаёт экземпляр класса <b>TextFormatter</b>.
+		/// РЎРѕР·РґР°С‘С‚ СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° <b>TextFormatter</b>.
 		/// </summary>
 		public TextFormatter() : this(null)
 		{}
 
 		/// <summary>
-		/// Создаёт экземпляр класса <b>TextFormatter</b>
+		/// РЎРѕР·РґР°С‘С‚ СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° <b>TextFormatter</b>
 		/// </summary>
-		/// <param name="imagesDelegate">Делегат для обработки картинок.
-		/// Если null - используется делегат по умолчанию <see cref="DefaultProcessImagesDelegate"/>.
+		/// <param name="imagesDelegate">Р”РµР»РµРіР°С‚ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РєР°СЂС‚РёРЅРѕРє.
+		/// Р•СЃР»Рё null - РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґРµР»РµРіР°С‚ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ <see cref="DefaultProcessImagesDelegate"/>.
 		/// </param>
 		public TextFormatter(ProcessImagesDelegate imagesDelegate)
 		{
@@ -76,7 +76,7 @@ namespace Rsdn.Framework.Formatting
 			new Regex("\r\n|\r");
 
 		/// <summary>
-		/// Выражения для обработки кодов.
+		/// Р’С‹СЂР°Р¶РµРЅРёСЏ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РєРѕРґРѕРІ.
 		/// </summary>
 		private static readonly Regex _rxCodeFormatting;
 
@@ -96,7 +96,7 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Статическая инициализация форматтера.
+		/// РЎС‚Р°С‚РёС‡РµСЃРєР°СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С„РѕСЂРјР°С‚С‚РµСЂР°.
 		/// </summary>
 		static TextFormatter()
 		{
@@ -118,8 +118,8 @@ namespace Rsdn.Framework.Formatting
 
 
 			var codeTags = FormatterHelper.GetCodeTagNames().ToArray();
-			// Построение регулярного выражения для обнаружения кода
-			// (с учетом лишнего NAME> цитирования).
+			// РџРѕСЃС‚СЂРѕРµРЅРёРµ СЂРµРіСѓР»СЏСЂРЅРѕРіРѕ РІС‹СЂР°Р¶РµРЅРёСЏ РґР»СЏ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ РєРѕРґР°
+			// (СЃ СѓС‡РµС‚РѕРј Р»РёС€РЅРµРіРѕ NAME> С†РёС‚РёСЂРѕРІР°РЅРёСЏ).
 			_rxCodeFormatting =
 				//|(code=(?<tag>{0})\](?<body>.*?)\s*\[/code)
 				new Regex(string.Format(
@@ -133,27 +133,27 @@ namespace Rsdn.Framework.Formatting
 
 		#region code coloring
 		/// <summary>
-		/// Раскраска кода
+		/// Р Р°СЃРєСЂР°СЃРєР° РєРѕРґР°
 		/// </summary>
-		/// <param name="codeMatch">Вхождение кода (группа tag содержит тип кода)</param>
+		/// <param name="codeMatch">Р’С…РѕР¶РґРµРЅРёРµ РєРѕРґР° (РіСЂСѓРїРїР° tag СЃРѕРґРµСЂР¶РёС‚ С‚РёРї РєРѕРґР°)</param>
 		protected static StringBuilder PaintCode(Match codeMatch)
 		{
 			var tagName = codeMatch.Groups["tag"].Value;
 			var formatter = FormatterHelper.GetCodeFormatterByTag(tagName);
 
-			// Заменяем табуляцию на 4 пробела.
+			// Р—Р°РјРµРЅСЏРµРј С‚Р°Р±СѓР»СЏС†РёСЋ РЅР° 4 РїСЂРѕР±РµР»Р°.
 			var text = codeMatch.Groups["body"].Value.Replace("\t", "    ");
 
-			// Если есть такой тип кода
+			// Р•СЃР»Рё РµСЃС‚СЊ С‚Р°РєРѕР№ С‚РёРї РєРѕРґР°
 			if (formatter != null)
 			{
-				// Расцветка синтаксиса.
+				// Р Р°СЃС†РІРµС‚РєР° СЃРёРЅС‚Р°РєСЃРёСЃР°.
 				text = formatter.Transform(text);
-				// Замена временных тегов на html.
+				// Р—Р°РјРµРЅР° РІСЂРµРјРµРЅРЅС‹С… С‚РµРіРѕРІ РЅР° html.
 				text = SetFont(text);
 			}
 
-			// обрамляем html
+			// РѕР±СЂР°РјР»СЏРµРј html
 			text =
 				"<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>"
 				+ text
@@ -164,7 +164,7 @@ namespace Rsdn.Framework.Formatting
 
 
 		/// <summary>
-		/// Выражения для замены временных тегов.
+		/// Р’С‹СЂР°Р¶РµРЅРёСЏ РґР»СЏ Р·Р°РјРµРЅС‹ РІСЂРµРјРµРЅРЅС‹С… С‚РµРіРѕРІ.
 		/// </summary>
 		private static readonly Regex _rxSetFont01 = new Regex(@"</(?<tag>kw|str|com)>(\s+)<\k<tag>>");
 
@@ -172,17 +172,17 @@ namespace Rsdn.Framework.Formatting
 			new Regex(@"(?s)<(?<tag>kw|str|com)>(?<content>.*?)</\k<tag>>");
 
 		/// <summary>
-		/// Заменяет временные теги на html.
+		/// Р—Р°РјРµРЅСЏРµС‚ РІСЂРµРјРµРЅРЅС‹Рµ С‚РµРіРё РЅР° html.
 		/// </summary>
-		/// <param name="code">Исходный код.</param>
-		/// <returns>Обработанный текст.</returns>
+		/// <param name="code">РСЃС…РѕРґРЅС‹Р№ РєРѕРґ.</param>
+		/// <returns>РћР±СЂР°Р±РѕС‚Р°РЅРЅС‹Р№ С‚РµРєСЃС‚.</returns>
 		private static string SetFont(string code)
 		{
-			// Объединяем рядом стоящие элементы.
-			// TODO: Надо ли???
+			// РћР±СЉРµРґРёРЅСЏРµРј СЂСЏРґРѕРј СЃС‚РѕСЏС‰РёРµ СЌР»РµРјРµРЅС‚С‹.
+			// TODO: РќР°РґРѕ Р»Рё???
 			code = _rxSetFont01.Replace(code, "$1");
 
-			// Заменяем временные теги на html.
+			// Р—Р°РјРµРЅСЏРµРј РІСЂРµРјРµРЅРЅС‹Рµ С‚РµРіРё РЅР° html.
 			code = _rxSetFont02.Replace(code, "<span class='${tag}'>${content}</span>");
 
 			return code;
@@ -190,7 +190,7 @@ namespace Rsdn.Framework.Formatting
 		#endregion
 
 		#region smiles
-		// Выражения для обработки смайликов.
+		// Р’С‹СЂР°Р¶РµРЅРёСЏ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё СЃРјР°Р№Р»РёРєРѕРІ.
 		private class SmileReplacer
 		{
 			private readonly Regex _regex;
@@ -248,28 +248,28 @@ namespace Rsdn.Framework.Formatting
 
 		#region IMG processing
 		/// <summary>
-		/// Тип делегата для обработки картинок (тэга [img])
+		/// РўРёРї РґРµР»РµРіР°С‚Р° РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РєР°СЂС‚РёРЅРѕРє (С‚СЌРіР° [img])
 		/// </summary>
 		public delegate string ProcessImagesDelegate(TextFormatter formatter, Match image);
 
 		/// <summary>
-		/// Делагат по умолчанию для обработки картинок.
+		/// Р”РµР»Р°РіР°С‚ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РєР°СЂС‚РёРЅРѕРє.
 		/// </summary>
-		/// <param name="formatter">Форматтер.</param>
-		/// <param name="image">Регэксповское совпадение тэга [img].</param>
-		/// <returns>Обработанный тэг.</returns>
+		/// <param name="formatter">Р¤РѕСЂРјР°С‚С‚РµСЂ.</param>
+		/// <param name="image">Р РµРіСЌРєСЃРїРѕРІСЃРєРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ С‚СЌРіР° [img].</param>
+		/// <returns>РћР±СЂР°Р±РѕС‚Р°РЅРЅС‹Р№ С‚СЌРі.</returns>
 		protected static string DefaultProcessImagesDelegate(TextFormatter formatter, Match image)
 		{
 			return formatter.ProcessImages(image);
 		}
 
 		/// <summary>
-		/// Делегат для обработки картинок.
+		/// Р”РµР»РµРіР°С‚ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РєР°СЂС‚РёРЅРѕРє.
 		/// </summary>
 		protected ProcessImagesDelegate ImagesDelegate;
 
 		/// <summary>
-		/// [img] тэг. С защитой от javascript.
+		/// [img] С‚СЌРі. РЎ Р·Р°С‰РёС‚РѕР№ РѕС‚ javascript.
 		/// </summary>
 		private static readonly Regex _imgTagRegex =
 			new Regex(@"(?i)(?<!\[)\[img\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
@@ -289,7 +289,7 @@ namespace Rsdn.Framework.Formatting
 
 		#region URL formatting
 		/// <summary>
-		/// [url] &amp; [purl] тэг.
+		/// [url] &amp; [purl] С‚СЌРі.
 		/// </summary>
 		private static readonly Regex _urlTagRegex =
 			new Regex(
@@ -435,7 +435,7 @@ namespace Rsdn.Framework.Formatting
 		{
 			var uriBuilder = new UriBuilder(link.HRef);
 			var queryBuilder = new QueryBuilder(uriBuilder.Query);
-			// если есть анонимный параметр
+			// РµСЃР»Рё РµСЃС‚СЊ Р°РЅРѕРЅРёРјРЅС‹Р№ РїР°СЂР°РјРµС‚СЂ
 			if (!string.IsNullOrEmpty(queryBuilder[null]))
 			{
 				queryBuilder["id"] = queryBuilder[null];
@@ -443,7 +443,7 @@ namespace Rsdn.Framework.Formatting
 				uriBuilder.Query = HttpUtility.HtmlEncode(queryBuilder.ToString());
 				link.HRef = uriBuilder.Uri.AbsoluteUri;
 			}
-			// стандартная обработка
+			// СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ РѕР±СЂР°Р±РѕС‚РєР°
 			return ProcessPartnerLink(urlMatch, link);
 		}
 
@@ -752,10 +752,10 @@ namespace Rsdn.Framework.Formatting
 
 		#region MSDN formatting
 		/// <summary>
-		/// Возвращает ссылку на MSDN.
+		/// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° MSDN.
 		/// </summary>
-		/// <param name="keyword">Название функции или искомый текст.</param>
-		/// <returns>Ссылка.</returns>
+		/// <param name="keyword">РќР°Р·РІР°РЅРёРµ С„СѓРЅРєС†РёРё РёР»Рё РёСЃРєРѕРјС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <returns>РЎСЃС‹Р»РєР°.</returns>
 		public virtual string GetMSDNRef(string keyword)
 		{
 			return string.Format(
@@ -764,15 +764,15 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Выражения для обработки ссылок на MSDN.
+		/// Р’С‹СЂР°Р¶РµРЅРёСЏ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё СЃСЃС‹Р»РѕРє РЅР° MSDN.
 		/// </summary>
 		private static readonly Regex _rxMsdn = new Regex(@"(?i)(?<!\[)\[msdn\](.*?)\[[\\/]msdn\]");
 
 		/// <summary>
-		/// Обработывает ссылки на MSDN.
+		/// РћР±СЂР°Р±РѕС‚С‹РІР°РµС‚ СЃСЃС‹Р»РєРё РЅР° MSDN.
 		/// </summary>
-		/// <param name="match">Вхождение [msdn]</param>
-		/// <returns>Обработаный текст</returns>
+		/// <param name="match">Р’С…РѕР¶РґРµРЅРёРµ [msdn]</param>
+		/// <returns>РћР±СЂР°Р±РѕС‚Р°РЅС‹Р№ С‚РµРєСЃС‚</returns>
 		protected string DoMSDNRef(Match match)
 		{
 			var msdnKeyword = match.Groups[1].Value;
@@ -784,16 +784,16 @@ namespace Rsdn.Framework.Formatting
 		#endregion
 
 		/// <summary>
-		/// Возвращает префикс для картинок.
+		/// Р’РѕР·РІСЂР°С‰Р°РµС‚ РїСЂРµС„РёРєСЃ РґР»СЏ РєР°СЂС‚РёРЅРѕРє.
 		/// </summary>
-		/// <returns>Строка префикса.</returns>
+		/// <returns>РЎС‚СЂРѕРєР° РїСЂРµС„РёРєСЃР°.</returns>
 		protected virtual string GetImagePrefix()
 		{
 			return "";
 		}
 
 		/// <summary>
-		/// Обработка нумерованных списков
+		/// РћР±СЂР°Р±РѕС‚РєР° РЅСѓРјРµСЂРѕРІР°РЅРЅС‹С… СЃРїРёСЃРєРѕРІ
 		/// </summary>
 		/// <param name="match"></param>
 		/// <returns></returns>
@@ -808,23 +808,23 @@ namespace Rsdn.Framework.Formatting
 				match.Groups["content"].Value);
 		}
 
-		#region Цитирование
+		#region Р¦РёС‚РёСЂРѕРІР°РЅРёРµ
 		/// <summary>
 		/// Start of line citation.
 		/// </summary>
 		public const string StartCitation = @"^\s*[-\w\.]{0,5}(&gt;)+";
 
-		// Цитирование.
+		// Р¦РёС‚РёСЂРѕРІР°РЅРёРµ.
 		private static readonly Regex _rxTextUrl09 =
 			new Regex(string.Format("(?mn)({0}.*?$)+", StartCitation), RegexOptions.Multiline | RegexOptions.ExplicitCapture);
 
-		// [q] цитирование
-		// (с учетом лишнего NAME> цитирования).
+		// [q] С†РёС‚РёСЂРѕРІР°РЅРёРµ
+		// (СЃ СѓС‡РµС‚РѕРј Р»РёС€РЅРµРіРѕ NAME> С†РёС‚РёСЂРѕРІР°РЅРёСЏ).
 		private static readonly Regex _rxPrep12 =
 			new Regex(string.Format(@"(?is)(?<!\[)\[q\]\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]q\]", StartCitation));
 
-		// [q] цитирование
-		// (с учетом лишнего NAME> цитирования).
+		// [q] С†РёС‚РёСЂРѕРІР°РЅРёРµ
+		// (СЃ СѓС‡РµС‚РѕРј Р»РёС€РЅРµРіРѕ NAME> С†РёС‚РёСЂРѕРІР°РЅРёСЏ).
 		//private static readonly Regex _rxPrep13 =
 		//	new Regex(string.Format(@"(?is)(?<!\[)\[cut\]\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]cut\]", StartCitation));
 
@@ -836,9 +836,9 @@ namespace Rsdn.Framework.Formatting
 		#endregion
 
 		/// <summary>
-		/// Выражения для форматирования текста.
+		/// Р’С‹СЂР°Р¶РµРЅРёСЏ РґР»СЏ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ С‚РµРєСЃС‚Р°.
 		/// </summary>
-		// Проверка отмены тэгов.
+		// РџСЂРѕРІРµСЂРєР° РѕС‚РјРµРЅС‹ С‚СЌРіРѕРІ.
 		private static readonly Regex _rxPrep01 = new Regex(@"\[(?=\[(?=[^\s\[]+?\]))");
 
 		private static readonly Regex _rxPrep02 = new Regex(@":(?=:-?[\)\(\\/])");
@@ -979,42 +979,42 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Массив символов для отсечения ведущих и концевых пробельных строк сообщений.
+		/// РњР°СЃСЃРёРІ СЃРёРјРІРѕР»РѕРІ РґР»СЏ РѕС‚СЃРµС‡РµРЅРёСЏ РІРµРґСѓС‰РёС… Рё РєРѕРЅС†РµРІС‹С… РїСЂРѕР±РµР»СЊРЅС‹С… СЃС‚СЂРѕРє СЃРѕРѕР±С‰РµРЅРёР№.
 		/// </summary>
 		public static readonly char[] TrimArray = new[] {' ', '\r', '\n', '\t'};
 
 		/// <summary>
-		/// Форматирование текста.
-		/// <b>НЕПОТОКОБЕЗОПАСНЫЙ!</b>
+		/// Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ С‚РµРєСЃС‚Р°.
+		/// <b>РќР•РџРћРўРћРљРћР‘Р•Р—РћРџРђРЎРќР«Р™!</b>
 		/// </summary>
-		/// <param name="txt">Исходный текст.</param>
-		/// <returns>Сформатированный текст.</returns>
+		/// <param name="txt">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <returns>РЎС„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚.</returns>
 		public virtual string Format(string txt)
 		{
 			return Format(txt, true);
 		}
 
 		/// <summary>
-		/// Форматирование текста.
-		/// <b>НЕПОТОКОБЕЗОПАСНЫЙ!</b>
+		/// Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ С‚РµРєСЃС‚Р°.
+		/// <b>РќР•РџРћРўРћРљРћР‘Р•Р—РћРџРђРЎРќР«Р™!</b>
 		/// </summary>
-		/// <param name="txt">Исходный текст.</param>
-		/// <param name="smile">Признак обработки смайликов.</param>
-		/// <returns>Сформатированный текст.</returns>
+		/// <param name="txt">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <param name="smile">РџСЂРёР·РЅР°Рє РѕР±СЂР°Р±РѕС‚РєРё СЃРјР°Р№Р»РёРєРѕРІ.</param>
+		/// <returns>РЎС„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚.</returns>
 		public virtual string Format(string txt, bool smile)
 		{
 			return Format(txt, smile, false, false);
 		}
 
 		/// <summary>
-		/// Форматирование текста.
-		/// <b>НЕПОТОКОБЕЗОПАСНЫЙ!</b>
+		/// Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ С‚РµРєСЃС‚Р°.
+		/// <b>РќР•РџРћРўРћРљРћР‘Р•Р—РћРџРђРЎРќР«Р™!</b>
 		/// </summary>
-		/// <param name="txt">Исходный текст.</param>
-		/// <param name="smile">Признак обработки смайликов.</param>
-		/// <param name="doNotReplaceTags">Не заменять служебные символы HTML.</param>
-		/// <param name="doNotFormatImplicitLinks">Не форматировать явно не указанные ссылки.</param>
-		/// <returns>Сформатированный текст.</returns>
+		/// <param name="txt">РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚.</param>
+		/// <param name="smile">РџСЂРёР·РЅР°Рє РѕР±СЂР°Р±РѕС‚РєРё СЃРјР°Р№Р»РёРєРѕРІ.</param>
+		/// <param name="doNotReplaceTags">РќРµ Р·Р°РјРµРЅСЏС‚СЊ СЃР»СѓР¶РµР±РЅС‹Рµ СЃРёРјРІРѕР»С‹ HTML.</param>
+		/// <param name="doNotFormatImplicitLinks">РќРµ С„РѕСЂРјР°С‚РёСЂРѕРІР°С‚СЊ СЏРІРЅРѕ РЅРµ СѓРєР°Р·Р°РЅРЅС‹Рµ СЃСЃС‹Р»РєРё.</param>
+		/// <returns>РЎС„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚.</returns>
 		public virtual string Format(
 			string txt,
 			bool smile,
@@ -1028,19 +1028,19 @@ namespace Rsdn.Framework.Formatting
 			if (sb.IsEmpty())
 				return "";
 
-			// Внимание! Порядок преобразования ВАЖЕН.
+			// Р’РЅРёРјР°РЅРёРµ! РџРѕСЂСЏРґРѕРє РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ Р’РђР–Р•Рќ.
 			//
 
-			// Замена  небезопасных символов
+			// Р—Р°РјРµРЅР°  РЅРµР±РµР·РѕРїР°СЃРЅС‹С… СЃРёРјРІРѕР»РѕРІ
 			if (!doNotReplaceTags)
 				sb = sb.ReplaceTagsWQ();
 
-			// Приведение всех типов концов строк к \n
+			// РџСЂРёРІРµРґРµРЅРёРµ РІСЃРµС… С‚РёРїРѕРІ РєРѕРЅС†РѕРІ СЃС‚СЂРѕРє Рє \n
 			//
 			sb = _rxNewLineUnifier.Replace(sb, "\n");
 
-			// Обработка исходных кодов и тегов, 
-			// которые не могут быть внутри исходников.
+			// РћР±СЂР°Р±РѕС‚РєР° РёСЃС…РѕРґРЅС‹С… РєРѕРґРѕРІ Рё С‚РµРіРѕРІ, 
+			// РєРѕС‚РѕСЂС‹Рµ РЅРµ РјРѕРіСѓС‚ Р±С‹С‚СЊ РІРЅСѓС‚СЂРё РёСЃС…РѕРґРЅРёРєРѕРІ.
 			//
 
 			// temporary remove [code...] tags
@@ -1077,14 +1077,14 @@ namespace Rsdn.Framework.Formatting
 				cutMatcher = new Matcher(cutExpression);
 				sb = _rxPrep13.Replace(sb, cutMatcher.Match);
 
-				// Цитирование.
+				// Р¦РёС‚РёСЂРѕРІР°РЅРёРµ.
 				sb = _rxTextUrl09.Replace(sb, "<span class='lineQuote'>$&</span>");
 
 				// restore & transform [cut] tags
 				for (var i = 0; i < cutMatcher.Count; i++)
 				{
 					var m = cutMatcher[i];
-					var capt = String.IsNullOrEmpty(m.Groups[3].Value) ? "Скрытый текст" : m.Groups[3].Value;
+					var capt = String.IsNullOrEmpty(m.Groups[3].Value) ? "РЎРєСЂС‹С‚С‹Р№ С‚РµРєСЃС‚" : m.Groups[3].Value;
 					sb = sb.Replace(String.Format(cutExpression, i),
 						_hiddenTextSnippet.Replace("%CAPT%", capt).Replace("%TEXT%", m.Groups[4].Value).
 						Replace("%URL%", GetImagePrefix()));
@@ -1092,7 +1092,7 @@ namespace Rsdn.Framework.Formatting
 			} while (cutMatcher.Count > 0);
 
 			// restore & transform [q] tags
-			// Цитирование [q].
+			// Р¦РёС‚РёСЂРѕРІР°РЅРёРµ [q].
 			// http://www.rsdn.ru/forum/?mid=111506
 			for (var i = 0; i < quoteMatcher.Count; i++)
 				sb =
@@ -1102,7 +1102,7 @@ namespace Rsdn.Framework.Formatting
 							"<blockquote class='q'><p>{0}</p></blockquote>",
 							quoteMatcher[i].Groups[1]));
 
-			// Обработка смайликов с учетом отмены и http://www.rsdn.ru/forum/?mid=184751
+			// РћР±СЂР°Р±РѕС‚РєР° СЃРјР°Р№Р»РёРєРѕРІ СЃ СѓС‡РµС‚РѕРј РѕС‚РјРµРЅС‹ Рё http://www.rsdn.ru/forum/?mid=184751
 			if (smile)
 			{
 				var prefix = GetImagePrefix();
@@ -1133,13 +1133,13 @@ namespace Rsdn.Framework.Formatting
 				var url = urlMatcher[i].Groups["url"].Value;
 				var tag = urlMatcher[i].Groups["tag"].Value;
 
-				// если url и tag перепутаны:
+				// РµСЃР»Рё url Рё tag РїРµСЂРµРїСѓС‚Р°РЅС‹:
 				//
 				if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
-					// если tag не пустой
+					// РµСЃР»Рё tag РЅРµ РїСѓСЃС‚РѕР№
 					//
 					if (!String.IsNullOrEmpty(tag))
-						// если tag правильный Uri
+						// РµСЃР»Рё tag РїСЂР°РІРёР»СЊРЅС‹Р№ Uri
 						//
 						if (Uri.IsWellFormedUriString(tag, UriKind.RelativeOrAbsolute))
 						{
@@ -1196,7 +1196,7 @@ namespace Rsdn.Framework.Formatting
 				sb,
 				@"<a target='_blank' class='m' href='http://support.microsoft.com/default.aspx?scid=kb;EN-US;$1'>$1</a>");
 
-			// Сообщение модератора.
+			// РЎРѕРѕР±С‰РµРЅРёРµ РјРѕРґРµСЂР°С‚РѕСЂР°.
 			sb = _moderatorDetector.Replace(sb, "<div class='mod'>$1</div>");
 
 			// Table
@@ -1210,17 +1210,17 @@ namespace Rsdn.Framework.Formatting
 			// Headers
 			sb = _rxHeaders.Replace(sb, "<h$2 class='formatter'>$1</h$2>");
 
-			// Добавляем в конец каждой строки <br />,
-			// но не после </table>, </div>, </ol>, </ul>, <blockquote> (возможно внутри <span>)
-			// и не в самом конце текста
+			// Р”РѕР±Р°РІР»СЏРµРј РІ РєРѕРЅРµС† РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРё <br />,
+			// РЅРѕ РЅРµ РїРѕСЃР»Рµ </table>, </div>, </ol>, </ul>, <blockquote> (РІРѕР·РјРѕР¶РЅРѕ РІРЅСѓС‚СЂРё <span>)
+			// Рё РЅРµ РІ СЃР°РјРѕРј РєРѕРЅС†Рµ С‚РµРєСЃС‚Р°
 			sb = _rxNewLines.Replace(sb, "<br />$0");
 
 			sb = _inlineTagReplacers.Aggregate(sb, (cur, replacer) => replacer(cur));
 
-			// Ссылки на MSDN.
+			// РЎСЃС‹Р»РєРё РЅР° MSDN.
 			sb = _rxMsdn.Replace(sb, DoMSDNRef);
 
-			// Нужно для отмены тэгов и отмены смайликов.
+			// РќСѓР¶РЅРѕ РґР»СЏ РѕС‚РјРµРЅС‹ С‚СЌРіРѕРІ Рё РѕС‚РјРµРЅС‹ СЃРјР°Р№Р»РёРєРѕРІ.
 			sb = _rxPrep01.Replace(sb, "");
 			sb = _rxPrep02.Replace(sb, "");
 			sb = _rxPrep03.Replace(sb, "");
@@ -1262,7 +1262,7 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Проверяет на наличие модераторского текста в сообщении
+		/// РџСЂРѕРІРµСЂСЏРµС‚ РЅР° РЅР°Р»РёС‡РёРµ РјРѕРґРµСЂР°С‚РѕСЂСЃРєРѕРіРѕ С‚РµРєСЃС‚Р° РІ СЃРѕРѕР±С‰РµРЅРёРё
 		/// </summary>
 		public static bool IsThereModeratorTag(string text)
 		{
@@ -1270,7 +1270,7 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Возвращает список имен файлов смайликов, задействованных в сообщении.
+		/// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РёРјРµРЅ С„Р°Р№Р»РѕРІ СЃРјР°Р№Р»РёРєРѕРІ, Р·Р°РґРµР№СЃС‚РІРѕРІР°РЅРЅС‹С… РІ СЃРѕРѕР±С‰РµРЅРёРё.
 		/// </summary>
 		public static string[] GetSmileFiles(string text)
 		{
@@ -1283,7 +1283,7 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Отпарсить URL.
+		/// РћС‚РїР°СЂСЃРёС‚СЊ URL.
 		/// </summary>
 		protected static Match ParseUrl(string url)
 		{
@@ -1291,7 +1291,7 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Заменить теги IMG на URL.
+		/// Р—Р°РјРµРЅРёС‚СЊ С‚РµРіРё IMG РЅР° URL.
 		/// </summary>
 		public static string ReplaceImgWithUrl(string text)
 		{
@@ -1303,7 +1303,7 @@ namespace Rsdn.Framework.Formatting
 			RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		/// <summary>
-		/// Обработка ISBN
+		/// РћР±СЂР°Р±РѕС‚РєР° ISBN
 		/// </summary>
 		public virtual string ProcessISBN(Match match, string isbn)
 		{
