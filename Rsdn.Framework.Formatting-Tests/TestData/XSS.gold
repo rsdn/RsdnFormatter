@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<body>
 [img]vbscript:msgbox(document.title)[/img]<br />
 <img border='0' src='msgbox(document.title)' />
