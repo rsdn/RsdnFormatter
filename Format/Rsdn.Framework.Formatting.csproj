@@ -127,6 +127,7 @@
     <Compile Include="Format.Forum.cs" />
     <Compile Include="FormatterException.cs" />
     <Compile Include="FormatterHelper.cs" />
+    <Compile Include="HtmlAnchor.cs" />
     <Compile Include="Lazy.cs" />
     <Compile Include="Matcher.cs">
       <SubType>Code</SubType>

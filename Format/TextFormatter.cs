@@ -1,19 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-
 using Rsdn.Framework.Formatting.Resources;
 
 namespace Rsdn.Framework.Formatting
 {
-	/// <summary>
+    /// <summary>
 	/// Форматирование сообщение и расцветка кода.
 	/// </summary>
 	public class TextFormatter
@@ -512,7 +508,7 @@ namespace Rsdn.Framework.Formatting
 				link.Target = "_blank";
 			}
 
-			return RenderControl(link);
+			return RenderHtmlAnchor(link);
 		}
 
 		/// <summary>
@@ -523,26 +519,36 @@ namespace Rsdn.Framework.Formatting
 		/// <returns></returns>
 		protected static HtmlAnchor AddClass(HtmlAnchor link, string className)
 		{
-			var cssClass = link.Attributes["class"];
+		    const string @class = "class";
+            
+		    if(!link.Attributes.ContainsKey(@class))
+		        link.Attributes[@class] = "";
+
+			var cssClass = link.Attributes[@class];
 			if (!string.IsNullOrEmpty(cssClass))
 				cssClass += " ";
-			link.Attributes["class"] = cssClass + className;
+			link.Attributes[@class] = cssClass + className;
 			return link;
 		}
 
-		/// <summary>
-		/// Render server control to string
-		/// </summary>
-		/// <param name="control">Control</param>
-		/// <returns>Rendered control</returns>
-		protected static string RenderControl(Control control)
+		protected static string RenderHtmlAnchor(HtmlAnchor htmlAnchor)
 		{
-			using (var builder = new StringWriter())
-			using (var htmlWriter = new XhtmlTextWriter(builder))
-			{
-				control.RenderControl(htmlWriter);
-				return builder.ToString();
-			}
+		    var stringBuilder = new StringBuilder();
+		    stringBuilder.Append("<a");
+
+		    foreach(var attribute in htmlAnchor.Attributes.OrderBy(a => a.Key))
+		        stringBuilder.AppendFormat(" {0}=\"{1}\"", attribute.Key, attribute.Value);
+
+		    var inner = htmlAnchor.InnerHtml;
+		    if(string.IsNullOrWhiteSpace(inner))
+		        inner = htmlAnchor.InnerText;
+
+		    if(!string.IsNullOrWhiteSpace(inner))
+		        stringBuilder.AppendFormat(">{0}</a>", inner);
+		    else
+		        stringBuilder.Append(" />");
+
+		    return stringBuilder.ToString();
 		}
 
 		/// <summary>
@@ -952,7 +958,7 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Formatted link as plain string (by default calls ProcessRsdnLinkAsAnchor)</returns>
 		protected virtual string ProcessRsdnLink(Match name)
 		{
-			return RenderControl(ProcessRsdnLinkAsAnchor(name));
+			return RenderHtmlAnchor(ProcessRsdnLinkAsAnchor(name));
 		}
 
 		/// <summary>
