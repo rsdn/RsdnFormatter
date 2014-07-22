@@ -9,7 +9,7 @@ namespace Rsdn.Framework.Formatting.Tests
 	public class FormatterTest
 	{
         [Test, TestCaseSource(typeof(FormatterTestCaseSource))]
-	    public string[] Format(string markup)
+        public string[] Format(string markup)
         {
             var formatter = new TextFormatter();
 
