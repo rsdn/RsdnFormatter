@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 
-using Rsdn.Framework.Formatting.JetBrains.Annotations;
+using JetBrains.Annotations;
 
 namespace Rsdn.Framework.Formatting
 {
@@ -12,8 +12,8 @@ namespace Rsdn.Framework.Formatting
 	{
 		private static readonly Dictionary<string, CodeLangInfo> _langInfos =
 			new Dictionary<string, CodeLangInfo>();
-		private static readonly Dictionary<string, System.Lazy<CodeFormatter>> _codeFormatters =
-			new Dictionary<string, System.Lazy<CodeFormatter>>(StringComparer.OrdinalIgnoreCase);
+		private static readonly Dictionary<string, Lazy<CodeFormatter>> _codeFormatters =
+			new Dictionary<string, Lazy<CodeFormatter>>(StringComparer.OrdinalIgnoreCase);
 
 		private static readonly Dictionary<string, string> _codeTags =
 			new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -72,8 +72,8 @@ namespace Rsdn.Framework.Formatting
 
 					{"rb", "Ruby"},
 					{"ruby", "Ruby"},
-                    
-                    {"rust", "Rust"},
+										
+										{"rust", "Rust"},
 
 					{"code", null},
 					{"pre", null},
@@ -107,7 +107,7 @@ namespace Rsdn.Framework.Formatting
 				ms.Seek(0, SeekOrigin.Begin);
 				_codeFormatters.Add(
 					info.Name,
-					new System.Lazy<CodeFormatter>(() => new CodeFormatter(info.Name, ms)));
+					new Lazy<CodeFormatter>(() => new CodeFormatter(info.Name, ms)));
 			}
 		}
 
@@ -143,7 +143,7 @@ namespace Rsdn.Framework.Formatting
 		{
 			if (name == null) throw new ArgumentNullException("name");
 
-			System.Lazy<CodeFormatter> cf;
+			Lazy<CodeFormatter> cf;
 			if (!_codeFormatters.TryGetValue(name, out cf))
 				throw new ArgumentException("Unsupported language");
 			return cf.Value;

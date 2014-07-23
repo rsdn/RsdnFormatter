@@ -2,8 +2,8 @@
 {			
 	var tab = _this.parentNode; 	
 	var hid = tab.tBodies[1].style.display == "none";
-	var clsName = "";
-							
+	var clsName;
+
 	if (hid) {
 		clsName = "hidden_Minus";
 		tab.tBodies[1].style.display = "";

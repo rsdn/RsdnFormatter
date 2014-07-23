@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Rsdn.Framework.Formatting.JetBrains.Annotations;
+using JetBrains.Annotations;
 
 namespace Rsdn.Framework.Formatting
 {

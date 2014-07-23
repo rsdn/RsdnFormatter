@@ -12,7 +12,6 @@ namespace Rsdn.Framework.Formatting.Resources
 		}
 		#endregion
 
-
 		#region Methods
 		protected override object ObtainResource()
 		{

@@ -128,7 +128,6 @@
     <Compile Include="FormatterException.cs" />
     <Compile Include="FormatterHelper.cs" />
     <Compile Include="HtmlAnchor.cs" />
-    <Compile Include="Lazy.cs" />
     <Compile Include="Matcher.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -141,7 +140,6 @@
     <Compile Include="Resources\EnumExtensions.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\ResourceKind.cs" />
-    <Compile Include="Resources\ResourceNameAttribute.cs" />
     <Compile Include="Resources\ResourceProvider.cs" />
     <Compile Include="Resources\TextResource.cs" />
     <Compile Include="Resources\Text\_Dummy.cs" />

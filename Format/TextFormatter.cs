@@ -218,29 +218,28 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		private static readonly SmileReplacer[] _smileReplacers =
-			new[]
-			{
-				new SmileReplacer(@":up:", "<img border='0' width='15' height='15' src='{0}sup.gif' />", "sup"),
-				new SmileReplacer(@":down:", "<img border='0' width='15' height='15' src='{0}down.gif' />", "down"),
-				new SmileReplacer(@":super:", "<img border='0' width='26' height='28' src='{0}super.gif' />", "super"),
-				new SmileReplacer(@":shuffle:", "<img border='0' width='15' height='20' src='{0}shuffle.gif' />", "shuffle"),
-				new SmileReplacer(@":crash:", "<img border='0' width='30' height='30' src='{0}crash.gif'/ >", "crash"),
-				new SmileReplacer(@":maniac:", "<img border='0' width='70' height='25' src='{0}maniac.gif' />", "maniac"),
-				new SmileReplacer(@":user:", "<img border='0' width='40' height='20' src='{0}user.gif' />", "user"),
-				new SmileReplacer(@":wow:", "<img border='0' width='19' height='19' src='{0}wow.gif' />", "wow"),
-				new SmileReplacer(@":beer:", "<img border='0' width='57' height='16' src='{0}beer.gif' />", "beer"),
-				new SmileReplacer(@":team:", "<img border='0' width='110' height='107' src='{0}invasion.gif' />", "invasion"),
-				new SmileReplacer(@":no:", "<img border='0' width='15' height='15' src='{0}no.gif' />", "no"),
-				new SmileReplacer(@":nopont:", "<img border='0' width='35' height='35' src='{0}nopont.gif' />", "nopont"),
-				new SmileReplacer(@":xz:", "<img border='0' width='37' height='15' src='{0}xz.gif' />", "xz"),
-				new SmileReplacer(@"(?<!:):-?\)\)\)", "<img border='0' width='15' height='15' src='{0}lol.gif' />", "lol"),
-				new SmileReplacer(@"(?<!:):-?\)\)", "<img border='0' width='15' height='15' src='{0}biggrin.gif' />", "biggrin"),
-				new SmileReplacer(@"(?<!:):-?\)", "<img border='0' width='15' height='15' src='{0}smile.gif' />", "smile"),
-				new SmileReplacer(@"(?<!;|amp|gt|lt|quot);[-oO]?\)", "<img border='0' width='15' height='15' src='{0}wink.gif' />", "wink"),
-				new SmileReplacer(@"(?<!:):-?\(", "<img border='0' width='15' height='15' src='{0}frown.gif' />", "frown"),
-				new SmileReplacer(@"(?<!:):-[\\/]", "<img border='0' width='15' height='15' src='{0}smirk.gif' />", "smirk"),
-				new SmileReplacer(@":\?\?\?:", "<img border='0' width='15' height='22' src='{0}confused.gif' />", "confused")
-			};
+		{
+			new SmileReplacer(@":up:", "<img border='0' width='15' height='15' src='{0}sup.gif' />", "sup"),
+			new SmileReplacer(@":down:", "<img border='0' width='15' height='15' src='{0}down.gif' />", "down"),
+			new SmileReplacer(@":super:", "<img border='0' width='26' height='28' src='{0}super.gif' />", "super"),
+			new SmileReplacer(@":shuffle:", "<img border='0' width='15' height='20' src='{0}shuffle.gif' />", "shuffle"),
+			new SmileReplacer(@":crash:", "<img border='0' width='30' height='30' src='{0}crash.gif'/ >", "crash"),
+			new SmileReplacer(@":maniac:", "<img border='0' width='70' height='25' src='{0}maniac.gif' />", "maniac"),
+			new SmileReplacer(@":user:", "<img border='0' width='40' height='20' src='{0}user.gif' />", "user"),
+			new SmileReplacer(@":wow:", "<img border='0' width='19' height='19' src='{0}wow.gif' />", "wow"),
+			new SmileReplacer(@":beer:", "<img border='0' width='57' height='16' src='{0}beer.gif' />", "beer"),
+			new SmileReplacer(@":team:", "<img border='0' width='110' height='107' src='{0}invasion.gif' />", "invasion"),
+			new SmileReplacer(@":no:", "<img border='0' width='15' height='15' src='{0}no.gif' />", "no"),
+			new SmileReplacer(@":nopont:", "<img border='0' width='35' height='35' src='{0}nopont.gif' />", "nopont"),
+			new SmileReplacer(@":xz:", "<img border='0' width='37' height='15' src='{0}xz.gif' />", "xz"),
+			new SmileReplacer(@"(?<!:):-?\)\)\)", "<img border='0' width='15' height='15' src='{0}lol.gif' />", "lol"),
+			new SmileReplacer(@"(?<!:):-?\)\)", "<img border='0' width='15' height='15' src='{0}biggrin.gif' />", "biggrin"),
+			new SmileReplacer(@"(?<!:):-?\)", "<img border='0' width='15' height='15' src='{0}smile.gif' />", "smile"),
+			new SmileReplacer(@"(?<!;|amp|gt|lt|quot);[-oO]?\)", "<img border='0' width='15' height='15' src='{0}wink.gif' />", "wink"),
+			new SmileReplacer(@"(?<!:):-?\(", "<img border='0' width='15' height='15' src='{0}frown.gif' />", "frown"),
+			new SmileReplacer(@"(?<!:):-[\\/]", "<img border='0' width='15' height='15' src='{0}smirk.gif' />", "smirk"),
+			new SmileReplacer(@":\?\?\?:", "<img border='0' width='15' height='22' src='{0}confused.gif' />", "confused")
+		};
 		#endregion
 
 		#region IMG processing
@@ -410,11 +409,12 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Process Amazon.com links
 		/// </summary>
-		/// <param name="urlMatch"></param>
-		/// <param name="link"></param>
 		private static bool ProcessAmazonLink(Match urlMatch, HtmlAnchor link)
 		{
-			var asinMatch = _asinDetector.Match(HttpUtility.UrlDecode(link.HRef));
+			var url = HttpUtility.UrlDecode(link.HRef);
+			if (url == null)
+				return false;
+			var asinMatch = _asinDetector.Match(url);
 			if (asinMatch.Success)
 				link.HRef = string.Format(_directAmazonUrl, asinMatch.Groups["asin"].Value);
 			else
@@ -515,9 +515,6 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Add css class to HtmlAnchor
 		/// </summary>
-		/// <param name="link"></param>
-		/// <param name="className"></param>
-		/// <returns></returns>
 		protected static HtmlAnchor AddClass(HtmlAnchor link, string className)
 		{
 				const string @class = "class";
@@ -532,6 +529,9 @@ namespace Rsdn.Framework.Formatting
 			return link;
 		}
 
+		/// <summary>
+		/// Renders HTML for url.
+		/// </summary>
 		protected static string RenderHtmlAnchor(HtmlAnchor htmlAnchor)
 		{
 				var stringBuilder = new StringBuilder();
@@ -851,7 +851,7 @@ namespace Rsdn.Framework.Formatting
 		private static readonly Regex _rxPrep02 = new Regex(@":(?=:-?[\)\(\\/])");
 		private static readonly Regex _rxPrep03 = new Regex(@";(?=;[-oO]?\))");
 
-		private static readonly string[] _inlineTags = new[] {"b", "i", "u", "s", "sub", "sup", "tt"};
+		private static readonly string[] _inlineTags = {"b", "i", "u", "s", "sub", "sup", "tt"};
 
 		private static readonly IList<Func<StringBuilder, StringBuilder>> _inlineTagReplacers =
 			CreateInlineTagReplacers(_inlineTags, true);
@@ -988,7 +988,7 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Массив символов для отсечения ведущих и концевых пробельных строк сообщений.
 		/// </summary>
-		public static readonly char[] TrimArray = new[] {' ', '\r', '\n', '\t'};
+		public static readonly char[] TrimArray = {' ', '\r', '\n', '\t'};
 
 		/// <summary>
 		/// Форматирование текста.
