@@ -6,7 +6,7 @@
 <span class='lineQuote'>К&gt;и содержанье по краям</span><br />
 <span class='lineQuote'>К&gt;не надо только мне вот это</span><br />
 <span class='lineQuote'>К&gt;<table style="margin-top:5px;margin-bottom:5px" cellpadding="0" cellspacing="0"> 	<tbody onclick="toggleExpand(this)" style="cursor:pointer"> 		<tr> 			<td style="width:10px" class="hidden_Plus">				&nbsp;			</td>			<td style="font-weight:bold;padding-left:2px;font-family:Verdana,Arial;font-size:9pt;">								Скрытый текст			</td> 		</tr> 	</tbody> 	<tbody style="display:none"> 		<tr>			<td style="background-image:url(line.gif);background-repeat:repeat-y;background-position:center">							</td>			<td style="padding-left:3px;font-family:Verdana,Arial;font-size:8pt">баян<br />
-<span class='lineQuote'>К&gt;<a href="http://poroshokuhodi.ru/pictures.html" class="m" target="_blank">http://poroshokuhodi.ru/pictures.html</a></span><br />
+<span class='lineQuote'>К&gt;<a class="m" href="http://poroshokuhodi.ru/pictures.html" target="_blank">http://poroshokuhodi.ru/pictures.html</a></span><br />
 </td> 		</tr> 		<tr>			<td style="height:1px;background-image:url(corner.gif);background-repeat:no-repeat;background-position:center">							</td>			<td></td>		</tr>	</tbody> </table> </span>
 	</body>
 </html>

@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-
 using Rsdn.Framework.Formatting.Resources;
 
 namespace Rsdn.Framework.Formatting
 {
+
 	/// <summary>
 	/// Форматирование сообщение и расцветка кода.
 	/// </summary>
@@ -102,19 +99,19 @@ namespace Rsdn.Framework.Formatting
 		{
 			// fill partners IDs
 			_partnresIDs["www.ozon.ru"] = _partnresIDs["ozon.ru"] =
-			                              _partnresIDs["www.books.ru"] = _partnresIDs["books.ru"] =
-			                                                             new PartnerRecord("partner", "rsdn");
+																		_partnresIDs["www.books.ru"] = _partnresIDs["books.ru"] =
+																																	 new PartnerRecord("partner", "rsdn");
 			_partnresIDs["www.bolero.ru"] = _partnresIDs["bolero.ru"] =
-			                                new PartnerRecord("partner", "rsdnru");
+																			new PartnerRecord("partner", "rsdnru");
 			_partnresIDs["www.piter.com"] = _partnresIDs["piter.com"] =
-			                                _partnresIDs["shop.piter.com"] =
-			                                new PartnerRecord("refer", "3600");
+																			_partnresIDs["shop.piter.com"] =
+																			new PartnerRecord("refer", "3600");
 			_partnresIDs["www.my-shop.ru"] = _partnresIDs["my-shop.ru"] =
-			                                 new PartnerRecord("partner", "00776");
+																			 new PartnerRecord("partner", "00776");
 			_partnresIDs["www.biblion.ru"] = _partnresIDs["biblion.ru"] =
-			                                 new PartnerRecord("pid", "791");
+																			 new PartnerRecord("pid", "791");
 			_partnresIDs["www.zone-x.ru"] = _partnresIDs["zone-x.ru"] =
-			                                new PartnerRecord("Partner", "248");
+																			new PartnerRecord("Partner", "248");
 
 
 			var codeTags = FormatterHelper.GetCodeTagNames().ToArray();
@@ -123,11 +120,11 @@ namespace Rsdn.Framework.Formatting
 			_rxCodeFormatting =
 				//|(code=(?<tag>{0})\](?<body>.*?)\s*\[/code)
 				new Regex(string.Format(
-				          	@"(?isn)(?<!\[)\["
-				          	+ @"(((?<tag>{0})\](?<body>.*?)\s*\[/\k<tag>)"
-				          	+ @"|(code=(?<tag>{0})\](?<body>.*?)\s*\[/code))"
-				          	+ @"\]",
-				          	string.Join("|", codeTags)));
+										@"(?isn)(?<!\[)\["
+										+ @"(((?<tag>{0})\](?<body>.*?)\s*\[/\k<tag>)"
+										+ @"|(code=(?<tag>{0})\](?<body>.*?)\s*\[/code))"
+										+ @"\]",
+										string.Join("|", codeTags)));
 		}
 		#endregion
 
@@ -273,7 +270,7 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		private static readonly Regex _imgTagRegex =
 			new Regex(@"(?i)(?<!\[)\[img\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
-			          RegexOptions.Compiled);
+								RegexOptions.Compiled);
 
 		/// <summary>
 		/// Process RSDN IMG tag
@@ -283,7 +280,7 @@ namespace Rsdn.Framework.Formatting
 		public virtual string ProcessImages(Match image)
 		{
 			return string.Format("<img border='0' src='{0}' />",
-			                     image.Groups["url"].Value.EncodeAgainstXSS());
+													 image.Groups["url"].Value.EncodeAgainstXSS());
 		}
 		#endregion
 
@@ -400,7 +397,7 @@ namespace Rsdn.Framework.Formatting
 
 		private static readonly Regex _asinDetector =
 			new Regex(@"gp/product/(?<asin>\d+)|detail/-/(?<asin>\d+)/|obidos/ASIN/(?<asin>\d+)",
-			          RegexOptions.IgnoreCase | RegexOptions.Compiled);
+								RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
 		private const string _amazonUrl =
 			"http://www.amazon.com/exec/obidos/redirect?link_code=ur2&camp=1789&tag=russiansoftwa-20&creative=9325&path=";
@@ -512,7 +509,7 @@ namespace Rsdn.Framework.Formatting
 				link.Target = "_blank";
 			}
 
-			return RenderControl(link);
+			return RenderHtmlAnchor(link);
 		}
 
 		/// <summary>
@@ -523,26 +520,36 @@ namespace Rsdn.Framework.Formatting
 		/// <returns></returns>
 		protected static HtmlAnchor AddClass(HtmlAnchor link, string className)
 		{
-			var cssClass = link.Attributes["class"];
+				const string @class = "class";
+						
+				if(!link.Attributes.ContainsKey(@class))
+						link.Attributes[@class] = "";
+
+			var cssClass = link.Attributes[@class];
 			if (!string.IsNullOrEmpty(cssClass))
 				cssClass += " ";
-			link.Attributes["class"] = cssClass + className;
+			link.Attributes[@class] = cssClass + className;
 			return link;
 		}
 
-		/// <summary>
-		/// Render server control to string
-		/// </summary>
-		/// <param name="control">Control</param>
-		/// <returns>Rendered control</returns>
-		protected static string RenderControl(Control control)
+		protected static string RenderHtmlAnchor(HtmlAnchor htmlAnchor)
 		{
-			using (var builder = new StringWriter())
-			using (var htmlWriter = new XhtmlTextWriter(builder))
-			{
-				control.RenderControl(htmlWriter);
-				return builder.ToString();
-			}
+				var stringBuilder = new StringBuilder();
+				stringBuilder.Append("<a");
+
+				foreach(var attribute in htmlAnchor.Attributes.OrderBy(a => a.Key))
+						stringBuilder.AppendFormat(" {0}=\"{1}\"", attribute.Key, attribute.Value);
+
+				var inner = htmlAnchor.InnerHtml;
+				if(string.IsNullOrWhiteSpace(inner))
+						inner = htmlAnchor.InnerText;
+
+				if(!string.IsNullOrWhiteSpace(inner))
+						stringBuilder.AppendFormat(">{0}</a>", inner);
+				else
+						stringBuilder.Append(" />");
+
+				return stringBuilder.ToString();
 		}
 
 		/// <summary>
@@ -564,11 +571,11 @@ namespace Rsdn.Framework.Formatting
 						var schemeMatchStart = (urlScheme.Success ? urlScheme.Index : urlMatch.Index);
 						link.HRef =
 							(((HttpContext.Current != null) && HttpContext.Current.Request.IsSecureConnection)
-							 	?
-							 		Uri.UriSchemeHttps
-							 	: originalScheme) + (urlScheme.Success ? null : "://") +
+								?
+									Uri.UriSchemeHttps
+								: originalScheme) + (urlScheme.Success ? null : "://") +
 							link.HRef.Substring(schemeMatchStart - urlMatch.Index + urlScheme.Length,
-							                    urlHostname.Index - schemeMatchStart - urlScheme.Length) +
+																	urlHostname.Index - schemeMatchStart - urlScheme.Length) +
 							urlHost +
 							link.HRef.Substring(urlHostname.Index - urlMatch.Index + urlHostname.Length);
 					};
@@ -621,7 +628,7 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/*
-    static readonly string digit = "[0-9]";
+		static readonly string digit = "[0-9]";
 		static readonly string upalpha = "[A-Z]";
 		static readonly string lowalpha = "[a-z]";
 		static readonly string alpha = "[a-zA-Z]";
@@ -664,7 +671,7 @@ namespace Rsdn.Framework.Formatting
 		private const string _domainLabel = "[a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z0-9]";
 		// hostname = * ( domainlabel "." ) toplabel ["."]
 		private static readonly string _hostName = string.Format(@"(({0})\.)*({1})\.?", _domainLabel,
-		                                                         _topLabel);
+																														 _topLabel);
 
 		// host = hostname | IPv4address
 		private static readonly string _host = string.Format("({0})|({1})", _hostName, _ipv4Address);
@@ -694,7 +701,7 @@ namespace Rsdn.Framework.Formatting
 		private static readonly string _opaquePart = string.Format("({0})({1})*", _uricNoSlash, _uric);
 		// hier_part = ( net_path | abs_path ) [ "?" query ]
 		private static readonly string _hierPart = string.Format(@"(({0})|({1}))(\?{2})?", _netPath,
-		                                                         _absPath, _query);
+																														 _absPath, _query);
 
 		// relativeURI = ( net_path | abs_path | rel_path ) [ "?" query ]
 		//static readonly string relativeURI = string.Format(@"(({0})|({1})|({2}))(\?{3})?",
@@ -730,18 +737,18 @@ namespace Rsdn.Framework.Formatting
 
 		// links only (lighted version, for details see rfc 2396)
 		private static readonly Regex _urlOnlyRegex = new Regex(string.Format("^{0}$", _uriReference),
-		                                                        RegexOptions.Compiled |
-		                                                        RegexOptions.ExplicitCapture);
+																														RegexOptions.Compiled |
+																														RegexOptions.ExplicitCapture);
 
 		// implicit links (lighted version, for details see rfc 2396)
 		private static readonly Regex _urlRegex =
 			new Regex(@"(?<=\A|\b)" + _uriReference + @"(?<!['.,""?>\]\)])",
-			          RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+								RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
 		// [email]
 		private static readonly Regex _emailTagRegex =
 			new Regex(@"(?<!\[)\[email\](?:mailto:)?(\S+?\@\S+?)\[[\\/]email\]",
-			          RegexOptions.Compiled | RegexOptions.IgnoreCase);
+								RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		/// <summary>
 		/// Detect [tagline] tag.
@@ -952,7 +959,7 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Formatted link as plain string (by default calls ProcessRsdnLinkAsAnchor)</returns>
 		protected virtual string ProcessRsdnLink(Match name)
 		{
-			return RenderControl(ProcessRsdnLinkAsAnchor(name));
+			return RenderHtmlAnchor(ProcessRsdnLinkAsAnchor(name));
 		}
 
 		/// <summary>
@@ -974,8 +981,8 @@ namespace Rsdn.Framework.Formatting
 		{
 			return
 				string.Format(@"<a class='m' href='mailto:{0}'>{1}</a>",
-				              email.EncodeAgainstXSS(),
-				              email.ReplaceTags());
+											email.EncodeAgainstXSS(),
+											email.ReplaceTags());
 		}
 
 		/// <summary>
