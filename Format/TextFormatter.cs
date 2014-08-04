@@ -1302,7 +1302,21 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		public static string ReplaceImgWithUrl(string text)
 		{
-			return _imgTagRegex.Replace(text, "[url]$2[/url]");
+			return
+				_imgTagRegex.Replace(
+					text,
+					m =>
+					{
+						var uriText = m.Groups["url"].Value;
+						Uri uri;
+						return
+							string.Format(
+								"[url={0}]Image: {1}[/url]",
+								uriText,
+								Uri.TryCreate(uriText, UriKind.Absolute, out uri)
+									? Uri.UnescapeDataString(Path.GetFileName(uri.AbsolutePath))
+									: uriText);
+					});
 		}
 
 		private static readonly Regex _isbnDetector = new Regex(
