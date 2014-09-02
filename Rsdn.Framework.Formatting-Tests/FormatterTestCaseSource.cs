@@ -31,6 +31,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			yield return GetTestCaseData("SubSup");
 			yield return GetTestCaseData("Urls");
 			yield return GetTestCaseData("XSS");
+			yield return GetTestCaseData("LinkJSInjection");
 		}
 
 		private static TestCaseData GetTestCaseData(string name)

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
+using System.Web.Security.AntiXss;
+
 using Rsdn.Framework.Formatting.Resources;
 
 namespace Rsdn.Framework.Formatting
@@ -517,10 +520,10 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		protected static HtmlAnchor AddClass(HtmlAnchor link, string className)
 		{
-				const string @class = "class";
-						
-				if(!link.Attributes.ContainsKey(@class))
-						link.Attributes[@class] = "";
+			const string @class = "class";
+
+			if(!link.Attributes.ContainsKey(@class))
+					link.Attributes[@class] = "";
 
 			var cssClass = link.Attributes[@class];
 			if (!string.IsNullOrEmpty(cssClass))
@@ -534,22 +537,25 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		protected static string RenderHtmlAnchor(HtmlAnchor htmlAnchor)
 		{
-				var stringBuilder = new StringBuilder();
-				stringBuilder.Append("<a");
+			var stringBuilder = new StringBuilder();
+			stringBuilder.Append("<a");
 
-				foreach(var attribute in htmlAnchor.Attributes.OrderBy(a => a.Key))
-						stringBuilder.AppendFormat(" {0}=\"{1}\"", attribute.Key, attribute.Value);
+			foreach(var attribute in htmlAnchor.Attributes.OrderBy(a => a.Key))
+				stringBuilder.AppendFormat(
+					" {0}=\"{1}\"",
+					attribute.Key,
+					AntiXssEncoder.XmlAttributeEncode(attribute.Value));
 
-				var inner = htmlAnchor.InnerHtml;
-				if(string.IsNullOrWhiteSpace(inner))
-						inner = htmlAnchor.InnerText;
+			var inner = htmlAnchor.InnerHtml;
+			if(string.IsNullOrWhiteSpace(inner))
+					inner = htmlAnchor.InnerText;
 
-				if(!string.IsNullOrWhiteSpace(inner))
-						stringBuilder.AppendFormat(">{0}</a>", inner);
-				else
-						stringBuilder.Append(" />");
+			if(!string.IsNullOrWhiteSpace(inner))
+					stringBuilder.AppendFormat(">{0}</a>", inner);
+			else
+					stringBuilder.Append(" />");
 
-				return stringBuilder.ToString();
+			return stringBuilder.ToString();
 		}
 
 		/// <summary>

