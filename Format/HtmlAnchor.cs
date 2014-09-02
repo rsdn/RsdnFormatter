@@ -2,37 +2,55 @@ using System.Collections.Generic;
 
 namespace Rsdn.Framework.Formatting
 {
-    public class HtmlAnchor
-    {
-        public string HRef
-        {
-            get { return GetAttribute("href"); } 
-            set { Attributes["href"] = value; }
-        }
+	public class HtmlAnchor
+	{
+		public HtmlAnchor()
+		{
+			Attributes = new Dictionary<string, string>();
+		}
 
-        public string InnerHtml { get; set; }
+		public string HRef
+		{
+			get { return GetAttribute("href"); }
+			set { Attributes["href"] = value; }
+		}
 
-        public string InnerText { get; set; }
+		public string InnerHtml { get; set; }
 
-        public string Target
-        {
-            get { return GetAttribute("target"); }
-            set { Attributes["target"] = value; }
-        }
+		public string InnerText { get; set; }
 
-        public IDictionary<string, string> Attributes { get; set; }
+		public string Target
+		{
+			get { return GetAttribute("target"); }
+			set { Attributes["target"] = value; }
+		}
 
-        public HtmlAnchor()
-        {
-            Attributes = new Dictionary<string, string>();
-        }
+		public string Title
+		{
+			get { return GetAttribute("title"); }
+			set { Attributes["title"] = value; }
+		}
 
-        private string GetAttribute(string name)
-        {
-            if(!Attributes.ContainsKey(name))
-                Attributes[name] = null;
+		public string Class
+		{
+			get { return GetAttribute("class"); }
+			set { Attributes["class"] = value; }
+		}
 
-            return Attributes[name];
-        }
-    }
+		public string Rel
+		{
+			get { return GetAttribute("rel"); }
+			set { Attributes["rel"] = value; }
+		}
+
+		public IDictionary<string, string> Attributes { get; set; }
+
+		private string GetAttribute(string name)
+		{
+			if (!Attributes.ContainsKey(name))
+				Attributes[name] = null;
+
+			return Attributes[name];
+		}
+	}
 }

@@ -860,9 +860,9 @@ namespace Rsdn.Framework.Formatting
 		private static readonly string[] _inlineTags = {"b", "i", "u", "s", "sub", "sup", "tt"};
 
 		private static readonly IList<Func<StringBuilder, StringBuilder>> _inlineTagReplacers =
-			CreateInlineTagReplacers(_inlineTags, true);
+			CreateInlineTagReplacers(true);
 		private static readonly IList<Func<StringBuilder, StringBuilder>> _inlineTagReplacersNoChecks =
-			CreateInlineTagReplacers(_inlineTags, false);
+			CreateInlineTagReplacers(false);
 
 		// [list]
 		private static readonly Regex _rxPrep06 =
@@ -892,7 +892,7 @@ namespace Rsdn.Framework.Formatting
 
 		// Headers
 		// [hx]
-		private static readonly Regex _rxHeaders =
+		public static readonly Regex HeadersRegex =
 			new Regex(@"(?is)(?<!\[)\[h(?<num>[1-6])\](.*?)\[[\\/]h\k<num>\]");
 
 		private static readonly Regex _rxNewLines =
@@ -916,12 +916,12 @@ namespace Rsdn.Framework.Formatting
 		private static readonly Regex _dashDetector =
 			new Regex(@"(?<=[\n\s])-(?=[\n\s])", RegexOptions.Compiled);
 
-		private static IList<Func<StringBuilder, StringBuilder>> CreateInlineTagReplacers(
-			IEnumerable<string> names,
-			bool checking)
+		public static IList<Func<StringBuilder, StringBuilder>> CreateInlineTagReplacers(
+			bool checking,
+			Func<string, string> tagNameGetter = null)
 		{
 			return
-				names
+				_inlineTags
 					.Select(
 						n =>
 						new
@@ -931,11 +931,12 @@ namespace Rsdn.Framework.Formatting
 								checking
 									? new Regex(string.Format(@"(?is)(?<!\[)\[{0}\](.*?)\[[\\/]{0}\]", n))
 									: new Regex(string.Format(@"(?is)\[{0}\](.*?)\[[\\/]{0}\]", n)),
-							ReplaceMask = string.Format("<{0}>$1</{0}>", n)
+							ReplaceMask = string.Format("<{0}>$1</{0}>", tagNameGetter != null ? tagNameGetter(n) : n)
 						})
 					.Select(p => (Func<StringBuilder, StringBuilder>)(sb => p.Rx.Replace(sb, p.ReplaceMask)))
 					.ToList();
 		}
+
 
 		/// <summary>
 		/// Process RSDN link tag
@@ -1221,7 +1222,7 @@ namespace Rsdn.Framework.Formatting
 			sb = _rxTableColumn.Replace(sb, "<td class='formatter'>$1</td>");
 
 			// Headers
-			sb = _rxHeaders.Replace(sb, "<h$2 class='formatter'>$1</h$2>");
+			sb = HeadersRegex.Replace(sb, "<h$2 class='formatter'>$1</h$2>");
 
 			// Добавляем в конец каждой строки <br />,
 			// но не после </table>, </div>, </ol>, </ul>, <blockquote> (возможно внутри <span>)
