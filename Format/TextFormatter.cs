@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -153,11 +154,17 @@ namespace Rsdn.Framework.Formatting
 				text = SetFont(text);
 			}
 
+			// Переносы непосредственно перед и после тега удаляем
+			if (text.StartsWith("\n"))
+				text = text.Substring(1, text.Length - 1);
+			if (text.EndsWith("\n"))
+				text = text.Substring(0, text.Length - 1);
+
 			// обрамляем html
 			text =
-				"<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>"
+				"<div class='c'><p>"
 				+ text
-				+ "</pre></td></tr></table>";
+				+ "</p></div>";
 
 			return new StringBuilder(text);
 		}
@@ -397,6 +404,21 @@ namespace Rsdn.Framework.Formatting
 		protected IDictionary<string, ProcessUrl> HostFormatting =
 			new Dictionary<string, ProcessUrl>(StringComparer.OrdinalIgnoreCase);
 
+		private readonly IDictionary<string, string> _wellKnownHosts =
+			new Dictionary<string, string>
+			{
+				{".wikipedia.org", "wikipedia"},
+				{"livejournal.com", "livejournal"},
+				{"bitbucket.org", "bitbucket"},
+				{"facebook.com", "facebook"},
+				{"github.com", "github"},
+				{"google.com", "google"},
+				{"google.ru", "google"},
+				{"stackoverflow.com", "stackoverflow"},
+				{"twitter.com", "twitter"},
+				{"vk.com", "vk"}
+			};
+
 		private static readonly Regex _asinDetector =
 			new Regex(@"gp/product/(?<asin>\d+)|detail/-/(?<asin>\d+)/|obidos/ASIN/(?<asin>\d+)",
 								RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -499,10 +521,16 @@ namespace Rsdn.Framework.Formatting
 
 				if (!processesedItself)
 				{
-					var matchedHostname = urlMatch.Groups["hostname"];
+					var matchedHostname = urlMatch.Groups["hostname"].Value;
 					ProcessUrl hostFormatter;
-					if (HostFormatting.TryGetValue(matchedHostname.Value, out hostFormatter))
+					if (HostFormatting.TryGetValue(matchedHostname, out hostFormatter))
 						processesedItself = hostFormatter(urlMatch, link);
+					else
+					{
+						foreach (var host in _wellKnownHosts)
+							if (matchedHostname.EndsWith(host.Key))
+								AddClass(link, host.Value);
+					}
 				}
 			}
 
@@ -825,7 +853,7 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Start of line citation.
 		/// </summary>
-		public const string StartCitation = @"^\s*[-\w\.]{0,5}(&gt;)+";
+		public const string StartCitation = @"^\s*[-\w\.]{0,5}(?'lev'(&gt;)+)";
 
 		// Цитирование.
 		private static readonly Regex _rxTextUrl09 =
@@ -896,7 +924,7 @@ namespace Rsdn.Framework.Formatting
 			new Regex(@"(?is)(?<!\[)\[h(?<num>[1-6])\](.*?)\[[\\/]h\k<num>\]");
 
 		private static readonly Regex _rxNewLines =
-			new Regex(@"(?imn)(?<!</(ul|ol|div|blockquote)>(</span>)?)$(?<!\Z)");
+			new Regex(@"(?imn)(?<!(</(ul|ol|div|blockquote|h1|h2|h3|h4|h5|h6)>)(</span>)?)$(?<!\Z)");
 
 		/// <summary>
 		/// Detect [moderator] tag.
@@ -1092,7 +1120,12 @@ namespace Rsdn.Framework.Formatting
 				sb = _rxPrep13.Replace(sb, cutMatcher.Match);
 
 				// Цитирование.
-				sb = _rxTextUrl09.Replace(sb, "<span class='lineQuote'>$&</span>");
+				sb = _rxTextUrl09.Replace(sb,
+					m =>
+						string.Format(
+							"<span class='lineQuote level{0}'>{1}</span>",
+							WebUtility.HtmlDecode(m.Groups["lev"].Value).Length,
+							m.Groups[0].Value));
 
 				// restore & transform [cut] tags
 				for (var i = 0; i < cutMatcher.Count; i++)
