@@ -230,9 +230,6 @@
     <EmbeddedResource Include="Resources\Binary\line.gif" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Text\Formatter.css" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="CodeFormat\Patterns\Nemerle.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +237,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeFormat\Patterns\Rust.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Text\Formatter.css" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
