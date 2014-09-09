@@ -23,7 +23,7 @@ namespace Rsdn.Framework.Formatting.Resources
 		public static Resource ReadResource(string res)
 		{
 			var rk = DetermineResourceKind(res);
-			var bin = rk == ResourceKind.Gif || rk == ResourceKind.Jpeg || rk == ResourceKind.Png;
+			var bin = rk == ResourceKind.Gif || rk == ResourceKind.Jpeg || rk == ResourceKind.Png || rk == ResourceKind.None;
 			var fullName = GetFullName(res, bin);
 			var ret = default(Resource);
 

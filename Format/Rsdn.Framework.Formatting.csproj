@@ -170,6 +170,13 @@
       <DependentUpon>PatternSchema.xsd</DependentUpon>
     </None>
     <None Include="Formatter.snk" />
+    <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.eot" />
+    <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.ttf" />
+    <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.woff" />
+    <EmbeddedResource Include="Resources\Binary\FontAwesome.otf" />
+    <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.eot" />
+    <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.ttf" />
+    <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.woff" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeFormat\Patterns\Erlang.xml" />
@@ -240,6 +247,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Text\Formatter.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.svg" />
+    <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

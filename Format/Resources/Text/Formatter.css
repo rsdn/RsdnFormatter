@@ -1,4 +1,20 @@
-﻿.m a {
+﻿@font-face {
+  font-family: 'FontAwesome';
+  src: url('%URL%fontawesome-webfont.eot');
+  src: url('%URL%fontawesome-webfont.eot') format('embedded-opentype'), url('%URL%fontawesome-webfont.svg') format('svg'), url('%URL%fontawesome-webfont.woff') format('woff'), url('%URL%fontawesome-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'zocial';
+  font-style: normal;
+  font-weight: normal;
+  src: url('%URL%zocial-regular-webfont.eot');
+  src: url('%URL%zocial-regular-webfont.eot') format('embedded-opentype'), url('%URL%zocial-regular-webfont.svg') format('svg'), url('%URL%zocial-regular-webfont.woff') format('woff'), url('%URL%zocial-regular-webfont.ttf') format('truetype');
+}
+
+.m a {
   -ms-word-break: break-all;
   word-break: break-all;
 }

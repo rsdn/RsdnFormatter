@@ -162,9 +162,9 @@ namespace Rsdn.Framework.Formatting
 
 			// обрамляем html
 			text =
-				"<div class='c'><p>"
+				"<code class='c'><p>"
 				+ text
-				+ "</p></div>";
+				+ "</p></code>";
 
 			return new StringBuilder(text);
 		}
@@ -500,7 +500,7 @@ namespace Rsdn.Framework.Formatting
 				new HtmlAnchor
 				{
 					HRef = urlAdsress.EncodeAgainstXSS(),
-					InnerHtml = urlName
+					InnerHtml = AntiXssEncoder.HtmlEncode(WebUtility.UrlDecode(urlName), true)
 				};
 
 			var processesedItself = false;
@@ -576,12 +576,12 @@ namespace Rsdn.Framework.Formatting
 
 			var inner = htmlAnchor.InnerHtml;
 			if(string.IsNullOrWhiteSpace(inner))
-					inner = htmlAnchor.InnerText;
+				inner = htmlAnchor.InnerText;
 
 			if(!string.IsNullOrWhiteSpace(inner))
-					stringBuilder.AppendFormat(">{0}</a>", inner);
+				stringBuilder.AppendFormat(">{0}</a>", inner);
 			else
-					stringBuilder.Append(" />");
+				stringBuilder.Append(" />");
 
 			return stringBuilder.ToString();
 		}
