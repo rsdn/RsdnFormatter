@@ -63,9 +63,11 @@
 		<entry>internal</entry>
 		<entry>is</entry>
 		<entry>lock</entry>
+		<entry>keyword</entry>
 		<entry>long</entry>
 		<entry>macro</entry>
 		<entry>match</entry>
+		<entry>marker</entry>
 		<entry>namespace</entry>
 		<entry>new</entry>
 		<entry>null</entry>
@@ -76,17 +78,20 @@
 		<entry>private</entry>
 		<entry>protected</entry>
 		<entry>public</entry>
+		<entry>regex</entry>
 		<entry>ref</entry>
 		<entry>return</entry>
 		<entry>sbyte</entry>
 		<entry>sealed</entry>
 		<entry>short</entry>
+		<entry>span</entry>
 		<entry>static</entry>
 		<entry>string</entry>
 		<entry>struct</entry>
 		<entry>syntax</entry>
 		<entry>this</entry>
 		<entry>throw</entry>
+		<entry>token</entry>
 		<entry>true</entry>
 		<entry>try</entry>
 		<entry>typeof</entry>
