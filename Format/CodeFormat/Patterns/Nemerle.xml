@@ -10,8 +10,8 @@
 		<entry>'([^'\\]|\\['"\\0abfnrtv]|\\x[0-9aAbBcCdDeEfF]{1,4})'</entry>
 		<entry><![CDATA[(?<!@)"((?<!\\)\\"|[^"])*"]]></entry>
 		<entry>(?s)@"(""|[^"])*"</entry>
-    <!--entry>(?s)\&lt;#(#\&gt;)*#\&gt;</entry-->
-  </pattern>
+		<!--entry>(?s)\&lt;#(#\&gt;)*#\&gt;</entry-->
+	</pattern>
 	<!-- preprocessor definitions -->
 	<pattern name="kw" prefix="#\s*" postfix="\b">
 		<entry>if</entry>
@@ -118,12 +118,12 @@
 		<entry>partial</entry>
 		<entry>remove</entry>
 		<entry>set</entry>
-    <entry>mutable</entry>
+		<entry>mutable</entry>
 		<entry>value</entry>
 		<entry>yield</entry>
 
 		<!-- attribte targets -->
-    <entry>assembly</entry>
+		<entry>assembly</entry>
 		<entry>field</entry>
 		<entry>method</entry>
 		<entry>module</entry>
