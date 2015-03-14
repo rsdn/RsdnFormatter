@@ -6,11 +6,10 @@ Normal text<br />
 <s>Strikeout text</s><br />
 <u>Underlined text</u><br />
 <br />
-<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>
-<span class='kw'>public static</span> text <span class='str'>"qqq"</span>
+<pre><code class='c'><span class='kw'>public static</span> text <span class='str'>"qqq"</span>
 <b><span class='kw'>public static</span> text <span class='str'>"qqq"</span></b>
 <i><span class='kw'>public static</span> text <span class='str'>"qqq"</span></i>
 <s><span class='kw'>public static</span> text <span class='str'>"qqq"</span></s>
-<u><span class='kw'>public static</span> text <span class='str'>"qqq"</span></u></pre></td></tr></table>
+<u><span class='kw'>public static</span> text <span class='str'>"qqq"</span></u></code></pre>
 	</body>
 </html>

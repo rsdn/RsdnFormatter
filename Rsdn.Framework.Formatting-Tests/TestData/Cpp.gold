@@ -1,7 +1,6 @@
 <html>
 	<body>
-<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>
-<span class='kw'>typedef void</span> *(*some_func)(<span class='kw'>void</span>);
-((some_func)data)();</pre></td></tr></table>
+<pre><code class='c'><span class='kw'>typedef void</span> *(*some_func)(<span class='kw'>void</span>);
+((some_func)data)();</code></pre>
 	</body>
 </html>

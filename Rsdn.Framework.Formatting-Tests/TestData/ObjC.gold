@@ -1,8 +1,7 @@
 <html>
 	<body>
-<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>
-<span class='str'>"Str"</span>
+<pre><code class='c'><span class='str'>"Str"</span>
 interface
-123</pre></td></tr></table>
+123</code></pre>
 	</body>
 </html>

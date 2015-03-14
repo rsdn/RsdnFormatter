@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
-using System.Web.Security.AntiXss;
 
 using Rsdn.Framework.Formatting.Resources;
 
@@ -162,9 +161,9 @@ namespace Rsdn.Framework.Formatting
 
 			// обрамляем html
 			text =
-				"<code class='c'><p>"
+				"<pre><code class='c'>"
 				+ text
-				+ "</p></code>";
+				+ "</code></pre>";
 
 			return new StringBuilder(text);
 		}
@@ -501,7 +500,7 @@ namespace Rsdn.Framework.Formatting
 				new HtmlAnchor
 				{
 					HRef = urlAdsress.EncodeAgainstXSS(),
-					InnerHtml = urlName
+					InnerHtml = urlName.EncodeAgainstXSS()
 				};
 
 			var processesedItself = false;
@@ -573,7 +572,7 @@ namespace Rsdn.Framework.Formatting
 				stringBuilder.AppendFormat(
 					" {0}=\"{1}\"",
 					attribute.Key,
-					attribute.Value.EncodeAgainstXSS());
+					attribute.Value);
 
 			var inner = htmlAnchor.InnerHtml;
 			if(string.IsNullOrWhiteSpace(inner))

@@ -1,12 +1,11 @@
 <html>
 	<body>
-<table width='96%'><tr><td nowrap='nowrap' class='c'><pre>
-<span class='kw'>select</span> x
+<pre><code class='c'><span class='kw'>select</span> x
     <span class='kw'>from</span> y
         <span class='kw'>inner join</span> z <span class='kw'>on</span> z.f = y.f
         <span class='kw'>left outer join</span> z <span class='kw'>on</span> z.f = y.f
     <span class='kw'>where</span> a = b
     <span class='kw'>group by</span> c
-    <span class='kw'>order by</span> d <span class='kw'>asc</span>, e <span class='kw'>desc</span></pre></td></tr></table>
+    <span class='kw'>order by</span> d <span class='kw'>asc</span>, e <span class='kw'>desc</span></code></pre>
 	</body>
 </html>

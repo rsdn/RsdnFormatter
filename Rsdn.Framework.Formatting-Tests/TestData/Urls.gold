@@ -1,7 +1,7 @@
 <html>
 	<body>
+﻿Text <a class="m" href="http://rsdn.ru" target="_blank">Здесь</a><br />
 Text <a class="m" href="http://rsdn.ru" target="_blank">Здесь</a><br />
-Text <a class="m" href="http://rsdn.ru" target="_blank">Здесь</a><br />
-Amp <a class="m" href="http://rsdn.ru?x=1&amp;amp;y=2" target="_blank">Здесь</a>
+Amp <a class="m" href="http://rsdn.ru?x=1&y=2" target="_blank">Здесь</a>
 	</body>
 </html>
