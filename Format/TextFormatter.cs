@@ -248,7 +248,8 @@ namespace Rsdn.Framework.Formatting
 			new SmileReplacer(@"(?<!;|amp|gt|lt|quot);[-oO]?\)", "<img border='0' width='15' height='15' src='{0}wink.gif' />", "wink"),
 			new SmileReplacer(@"(?<!:):-?\(", "<img border='0' width='15' height='15' src='{0}frown.gif' />", "frown"),
 			new SmileReplacer(@"(?<!:):-[\\/]", "<img border='0' width='15' height='15' src='{0}smirk.gif' />", "smirk"),
-			new SmileReplacer(@":\?\?\?:", "<img border='0' width='15' height='22' src='{0}confused.gif' />", "confused")
+			new SmileReplacer(@":\?\?\?:", "<img border='0' width='15' height='22' src='{0}confused.gif' />", "confused"),
+			new SmileReplacer(@":facepalm:", "<img border='0' width='15' height='22' src='{0}facepalm.gif' />", "facepalm")
 		};
 		#endregion
 
