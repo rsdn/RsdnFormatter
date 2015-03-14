@@ -501,7 +501,7 @@ namespace Rsdn.Framework.Formatting
 				new HtmlAnchor
 				{
 					HRef = urlAdsress.EncodeAgainstXSS(),
-					InnerHtml = AntiXssEncoder.HtmlEncode(WebUtility.UrlDecode(urlName), true)
+					InnerHtml = urlName
 				};
 
 			var processesedItself = false;
@@ -573,7 +573,7 @@ namespace Rsdn.Framework.Formatting
 				stringBuilder.AppendFormat(
 					" {0}=\"{1}\"",
 					attribute.Key,
-					AntiXssEncoder.XmlAttributeEncode(attribute.Value));
+					attribute.Value.EncodeAgainstXSS());
 
 			var inner = htmlAnchor.InnerHtml;
 			if(string.IsNullOrWhiteSpace(inner))
@@ -1178,7 +1178,10 @@ namespace Rsdn.Framework.Formatting
 			// restore & transform [url] and [purl] tags
 			for (var i = 0; i < urlMatcher.Count; i++)
 			{
-				var url = urlMatcher[i].Groups["url"].Value;
+				var url =
+					urlMatcher[i]
+						.Groups["url"]
+						.Value;
 				var tag = urlMatcher[i].Groups["tag"].Value;
 
 				// если url и tag перепутаны:
@@ -1197,6 +1200,8 @@ namespace Rsdn.Framework.Formatting
 							tag = url;
 							url = temp;
 						}
+
+				url = url.Replace("&amp;", "&"); // Returns escaped ampersands
 
 				sb = sb.Replace(
 					string.Format(urlExpression, i),
