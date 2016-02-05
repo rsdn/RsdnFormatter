@@ -853,7 +853,7 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Start of line citation.
 		/// </summary>
-		public const string StartCitation = @"^\s*[-\w\.]{0,5}(?'lev'(&gt;)+)";
+		public const string StartCitation = @"^\s*[-\w\.\·]{0,5}(?'lev'(&gt;)+)";
 
 		// Цитирование.
 		private static readonly Regex _rxTextUrl09 =
