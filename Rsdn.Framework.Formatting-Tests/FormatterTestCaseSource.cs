@@ -23,6 +23,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			yield return GetTestCaseData("Msg2408361");
 			yield return GetTestCaseData("ObjC");
 			yield return GetTestCaseData("Quotation");
+			yield return GetTestCaseData("Quotation2");
 			yield return GetTestCaseData("RsdnLink");
 			yield return GetTestCaseData("Rust");
 			yield return GetTestCaseData("SimpleFormatting");
