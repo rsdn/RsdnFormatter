@@ -118,6 +118,16 @@
   <ItemGroup>
     <EmbeddedResource Include="TestData\Quotation2.gold" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\Nemerle.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\Nitra.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\Nemerle.gold" />
+    <EmbeddedResource Include="TestData\Nitra.gold" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

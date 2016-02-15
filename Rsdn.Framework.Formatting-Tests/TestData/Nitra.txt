@@ -1,0 +1,32 @@
+﻿[Nitra]
+declaration VariantDefinition : Container // Container - добавляет out MemberTable : TableScope
+{
+  symbol
+  {
+    Scope = MemberTable;
+  }  
+
+  Options.DeclaredIn      = Symbol;
+  Options.ContainingTable = Symbol.MemberTable; // это приведет к тому что вложенные записи создадутся и поместятся в эту таблицу имен
+
+  Options : VariantOptionDefinition*; // структурное поле в которое нужно "отмапить" список вложенных записей
+}
+
+abstract declaration BaseRecordDefinition
+{
+  // тут определяем все общее для независимых записей и для записей являющихся вхождениями варианта
+}
+
+declaration RecordDefinition : BaseRecordDefinition
+{
+  // тут определяем частные вещи для независимой записи (или ничего не определяем)
+}
+
+declaration VariantOptionDefinition : BaseRecordDefinition
+{
+  symbol
+  {
+    in DeclaredIn : VariantDefinitionSymbol;
+  }
+}
+[/Nitra]

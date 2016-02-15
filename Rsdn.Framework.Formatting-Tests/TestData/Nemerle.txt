@@ -1,0 +1,23 @@
+﻿[Nemerle]
+variant Scalar {
+    | Int { v: int }
+    | String { v: string }
+    | TimeSpan { v: System.TimeSpan }
+    | Bool { v: bool }
+    | Uri { v: System.Uri }
+    | Float { v: double; }
+    
+    public BoxedValue: object {
+        get {
+            match (this) {
+            | Int(v) with x = v : object
+            | String(x)
+            | Bool(x)
+            | TimeSpan(x)
+            | Uri(x)
+            | Float(x) => x
+            }
+        }
+    }
+}
+[/Nemerle]
