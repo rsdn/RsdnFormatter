@@ -31,8 +31,8 @@
 	<pattern name="kw" prefix="\b" postfix="\b">
 		<entry>_</entry>
 		<entry>abstract</entry>
-		<entry>as</entry>
 		<entry>alias</entry>
+		<entry>as</entry>
 		<entry>await</entry>
 		<entry>base</entry>
 		<entry>bool</entry>
@@ -42,6 +42,7 @@
 		<entry>char</entry>
 		<entry>checked</entry>
 		<entry>class</entry>
+		<entry>company</entry>
 		<entry>continue</entry>
 		<entry>decimal</entry>
 		<entry>declaration</entry>
@@ -55,6 +56,7 @@
 		<entry>enum</entry>
 		<entry>event</entry>
 		<entry>extend</entry>
+		<entry>extension</entry>
 		<entry>extern</entry>
 		<entry>false</entry>
 		<entry>finally</entry>
@@ -68,13 +70,14 @@
 		<entry>interface</entry>
 		<entry>internal</entry>
 		<entry>is</entry>
-		<entry>lock</entry>
 		<entry>keyword</entry>
+		<entry>language</entry>
+		<entry>lock</entry>
 		<entry>long</entry>
 		<entry>macro</entry>
 		<entry>map</entry>
-		<entry>match</entry>
 		<entry>marker</entry>
+		<entry>match</entry>
 		<entry>namespace</entry>
 		<entry>new</entry>
 		<entry>null</entry>
@@ -82,24 +85,26 @@
 		<entry>out</entry>
 		<entry>override</entry>
 		<entry>params</entry>
+		<entry>precedence</entry>
 		<entry>private</entry>
 		<entry>protected</entry>
-		<entry>precedence</entry>
 		<entry>public</entry>
-		<entry>regex</entry>
 		<entry>ref</entry>
+		<entry>regex</entry>
 		<entry>return</entry>
 		<entry>right-associative</entry>
+		<entry>rule</entry>
 		<entry>sbyte</entry>
 		<entry>sealed</entry>
 		<entry>short</entry>
 		<entry>span</entry>
 		<entry>SpanClass</entry>
+		<entry>start</entry>
 		<entry>StartRule</entry>
-		<entry>style</entry>
 		<entry>static</entry>
 		<entry>string</entry>
 		<entry>struct</entry>
+		<entry>style</entry>
 		<entry>syntax</entry>
 		<entry>this</entry>
 		<entry>throw</entry>
@@ -121,7 +126,6 @@
 		<entry>where</entry>
 		<entry>while</entry>
 		<entry>with</entry>
-
 
 		<!-- contextual keywords -->
 		<entry>add</entry>
