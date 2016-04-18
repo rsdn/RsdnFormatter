@@ -252,6 +252,10 @@
     <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.svg" />
     <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.svg" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Binary\Facepalm.gif" />
+    <EmbeddedResource Include="Resources\Binary\sarcasm.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
