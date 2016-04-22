@@ -1,6 +1,6 @@
 ﻿<html>
 	<body>
-<pre><code class='c'><span class='kw'>fn</span> foo() -&gt; <span class='kw'>i32
+<pre class='c'><code><span class='kw'>fn</span> foo() -&gt; <span class='kw'>i32
 assert!</span>(<span class='str'>"error!"</span>);
 <span class='kw'>let</span> assert = 10;</code></pre>
 	</body>

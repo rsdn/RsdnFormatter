@@ -1,6 +1,6 @@
 <html>
 	<body>
-<pre><code class='c'><span class='str'>"Str"</span>
+<pre class='c'><code><span class='str'>"Str"</span>
 interface
 123</code></pre>
 	</body>

@@ -214,7 +214,8 @@ namespace Rsdn.Framework.Formatting
 					: value
 						.Replace(" ", "%20")
 						.Replace("\t", "%09")
-						.Replace("\'", "%27");
+						.Replace("\'", "%27")
+						.Replace("\"", "&quot;");
 		}
 
 		/// <summary>

@@ -81,12 +81,9 @@ namespace Rsdn.Framework.Formatting
 			// (с учетом лишнего NAME> цитирования).
 			_rxCodeFormatting =
 				//|(code=(?<tag>{0})\](?<body>.*?)\s*\[/code)
-				new Regex(string.Format(
-										@"(?isn)(?<!\[)\["
-										+ @"(((?<tag>{0})\](?<body>.*?)\s*\[/\k<tag>)"
-										+ @"|(code=(?<tag>{0})\](?<body>.*?)\s*\[/code))"
-										+ @"\]",
-										string.Join("|", codeTags)));
+				new Regex(
+					@"(?isn)(?<!\[)\[" + $@"(((?<tag>{string.Join("|", codeTags)})\](?<body>.*?)\s*\[/\k<tag>)" +
+					$@"|(code=(?<tag>{string.Join("|", codeTags)})\](?<body>.*?)\s*\[/code))" + @"\]");
 		}
 		#endregion
 
@@ -818,7 +815,6 @@ namespace Rsdn.Framework.Formatting
 					.ToList();
 		}
 
-
 		/// <summary>
 		/// Process RSDN link tag
 		/// </summary>
@@ -830,7 +826,7 @@ namespace Rsdn.Framework.Formatting
 				new HtmlAnchor
 				{
 					Target = "_blank",
-					HRef = $"{GetPathToRoot()}/Forum/Info/{name.Groups[1].Value}.aspx",
+					HRef = $"{GetPathToRoot()}/Forum/Info/{name.Groups[1].Value.EncodeAgainstXSS()}.aspx",
 					InnerText = name.Groups[1].Value
 				};
 			return AddClass(link, "m");

@@ -260,6 +260,9 @@
     <EmbeddedResource Include="Resources\Binary\Facepalm.gif" />
     <EmbeddedResource Include="Resources\Binary\sarcasm.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CodeFormat\Patterns\Nitra.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

@@ -1,6 +1,6 @@
 <html>
 	<body>
-<pre><code class='c'><span class='kw'>select</span> x
+<pre class='c'><code><span class='kw'>select</span> x
     <span class='kw'>from</span> y
         <span class='kw'>inner join</span> z <span class='kw'>on</span> z.f = y.f
         <span class='kw'>left outer join</span> z <span class='kw'>on</span> z.f = y.f

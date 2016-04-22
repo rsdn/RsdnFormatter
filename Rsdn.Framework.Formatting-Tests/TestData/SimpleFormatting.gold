@@ -6,7 +6,7 @@ Normal text<br />
 <s>Strikeout text</s><br />
 <u>Underlined text</u><br />
 <br />
-<pre><code class='c'><span class='kw'>public static</span> text <span class='str'>"qqq"</span>
+<pre class='c'><code><span class='kw'>public static</span> text <span class='str'>"qqq"</span>
 <b><span class='kw'>public static</span> text <span class='str'>"qqq"</span></b>
 <i><span class='kw'>public static</span> text <span class='str'>"qqq"</span></i>
 <s><span class='kw'>public static</span> text <span class='str'>"qqq"</span></s>

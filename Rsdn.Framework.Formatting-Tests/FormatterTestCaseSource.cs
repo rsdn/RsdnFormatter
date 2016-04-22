@@ -39,8 +39,9 @@ namespace Rsdn.Framework.Formatting.Tests
 
 		private static TestCaseData GetTestCaseData(string name)
 		{
-			var originalStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof (_Dummy), name + ".txt");
-			var goldStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof (_Dummy), name + ".gold");
+			var asm = Assembly.GetExecutingAssembly();
+			var originalStream = asm.GetManifestResourceStream(typeof (_Dummy), name + ".txt");
+			var goldStream = asm.GetManifestResourceStream(typeof (_Dummy), name + ".gold");
 
 			Debug.Assert(originalStream != null, "originalStream != null");
 			Debug.Assert(goldStream != null, "goldStream != null");

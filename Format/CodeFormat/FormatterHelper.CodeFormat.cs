@@ -24,6 +24,7 @@ namespace Rsdn.Framework.Formatting
 					{"c#", "CSharp"},
 
 					{"nemerle", "Nemerle"},
+					{"nitra", "Nitra"},
 
 					{"asm", "Assembler"},
 
@@ -77,7 +78,7 @@ namespace Rsdn.Framework.Formatting
 										{"rust", "Rust"},
 
 					{"code", null},
-					{"pre", null},
+					{"pre", null}
 				};
 
 		static FormatterHelper()
