@@ -8,6 +8,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
+using JetBrains.Annotations;
+
 using Rsdn.Framework.Formatting.Resources;
 
 namespace Rsdn.Framework.Formatting
@@ -16,6 +18,7 @@ namespace Rsdn.Framework.Formatting
 	/// <summary>
 	/// Форматирование сообщение и расцветка кода.
 	/// </summary>
+	[PublicAPI]
 	public class TextFormatter
 	{
 		private readonly string _hiddenTextSnippet;
@@ -201,19 +204,15 @@ namespace Rsdn.Framework.Formatting
 		{
 			private readonly Regex _regex;
 			private readonly string _replacer;
-			private readonly string _fileName;
 
 			public SmileReplacer(string pattern, string replacer, string fileName)
 			{
 				_replacer = replacer;
-				_fileName = fileName;
+				FileName = fileName;
 				_regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 			}
 
-			public string FileName
-			{
-				get { return _fileName; }
-			}
+			public string FileName { get; }
 
 			public StringBuilder Replace(StringBuilder input, string imagePrefix)
 			{
@@ -288,8 +287,7 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Formatted image value</returns>
 		public virtual string ProcessImages(Match image)
 		{
-			return string.Format("<img border='0' src='{0}' />",
-													 image.Groups["url"].Value.EncodeAgainstXSS());
+			return $"<img border='0' src='{image.Groups["url"].Value.EncodeAgainstXSS()}' />";
 		}
 		#endregion
 
@@ -328,39 +326,6 @@ namespace Rsdn.Framework.Formatting
 		/// Delegate to process URLs
 		/// </summary>
 		public delegate string ProcessUrlItself(Match urlMatch, string urlAdsress, string urlName);
-
-		/// <summary>
-		/// Structure to contain necessary info about link for processing.
-		/// </summary>
-		public struct URL
-		{
-			/// <summary>
-			/// Address of link.
-			/// </summary>
-			public string Href;
-
-			/// <summary>
-			/// Name of link
-			/// </summary>
-			public string Name;
-
-			/// <summary>
-			/// Additional info for link
-			/// </summary>
-			public string Title;
-
-			/// <summary>
-			/// Create URL object.
-			/// </summary>
-			/// <param name="href">Adress of link</param>
-			/// <param name="name">Name of link</param>
-			public URL(string href, string name)
-			{
-				Href = href;
-				Name = name;
-				Title = null;
-			}
-		}
 
 		/// <summary>
 		/// Delegate to process URLs.
@@ -682,15 +647,15 @@ namespace Rsdn.Framework.Formatting
 			@"[;/\?:@&=\+\$,a-zA-Z0-9\-_\.!~\*'\(\)\\]|%[0-9A-Fa-f]{2}";
 
 		// fragment = *uric
-		private static readonly string _fragment = string.Format("({0})*", _uric);
+		private static readonly string _fragment = $"({_uric})*";
 		// fragment = *query
-		private static readonly string _query = string.Format("(?<query>({0})*)", _uric);
+		private static readonly string _query = $"(?<query>({_uric})*)";
 		// pchar = unreserved | ecaped | ....
 		private const string _pchar = @"[a-zA-Z0-9\-_\.!~\*'\(\):@&=\+\$,]|%[0-9A-Fa-f]{2}";
 		// param = *pchar
-		private static readonly string _param = string.Format("({0})*", _pchar);
+		private static readonly string _param = $"({_pchar})*";
 		// segment = *pchar *( ";" param)
-		private static readonly string _segment = string.Format("({0})*(;({1}))*", _pchar, _param);
+		private static readonly string _segment = $"({_pchar})*(;({_param}))*";
 		// path_segments = segment *( "/" segment)
 		private static readonly string _pathSegments = string.Format("{0}(/({0}))*", _segment);
 		/*
@@ -704,38 +669,36 @@ namespace Rsdn.Framework.Formatting
 		// domainlabel = alphanum | alphanum *( alphanum | "-" ) alphanum 
 		private const string _domainLabel = "[a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z0-9]";
 		// hostname = * ( domainlabel "." ) toplabel ["."]
-		private static readonly string _hostName = string.Format(@"(({0})\.)*({1})\.?", _domainLabel,
-																														 _topLabel);
+		private static readonly string _hostName = $@"(({_domainLabel})\.)*({_topLabel})\.?";
 
 		// host = hostname | IPv4address
-		private static readonly string _host = string.Format("({0})|({1})", _hostName, _ipv4Address);
+		private static readonly string _host = $"({_hostName})|({_ipv4Address})";
 		// hostport = host [ ":" port ]
-		private static readonly string _hostPort = string.Format("(?<hostname>{0})(:[0-9]*)?", _host);
+		private static readonly string _hostPort = $"(?<hostname>{_host})(:[0-9]*)?";
 		// userinfo = * (unreserved | escaped | ";" | ":" | "&" | "=" | "+" | "$" | "," )
 		private const string _userInfo = @"([a-zA-Z0-9\-_\.!~\*'\(\);:&=\+\$,]|%[0-9A-Fa-f]{2})*";
 		// server = [ [ userinfo "@" ] hostport ]
-		private static readonly string _server = string.Format("({0}@)?({1})?", _userInfo, _hostPort);
+		private static readonly string _server = $"({_userInfo}@)?({_hostPort})?";
 		// regname = 1*( unreserved | ecaped | "$" | "," | ";" | ":" | "@" | "&" | "=" | "+" )
 		private const string _regName = @"([a-zA-Z0-9\-_\.!~\*'\(\)\$,;:@&=\+]|%[0-9A-Fa-f]{2})+";
 		// authority = server | reg_name
-		private static readonly string _authority = string.Format("({0})|({1})", _server, _regName);
+		private static readonly string _authority = $"({_server})|({_regName})";
 		// scheme alpha *( alpha | digit | "+" | "-" | "." )
 		private const string _scheme = @"(?<scheme>[a-zA-Z][a-zA-Z0-9\+\-\.]*)";
 		// rel_segment = 1*( unreserved | escaped | ";" | "@" | "&" | "=" | "+" | "$" | "," )
 		//static readonly string rel_segment = @"([a-zA-Z0-9\-_\.!~\*'\(\);@&=\+\$,]|%[0-9A-Fa-f]{2})+";
 		// abs_path = "/" path_segments
-		private static readonly string _absPath = string.Format("/({0})", _pathSegments);
+		private static readonly string _absPath = $"/({_pathSegments})";
 		// rel_path = rel_segment [abs_path]	
 		//static readonly string rel_path = string.Format("{0}({1})?", rel_segment, abs_path);
 		// net_path = "//" authority [abs_path]
-		private static readonly string _netPath = string.Format("//({0})({1})?", _authority, _absPath);
+		private static readonly string _netPath = $"//({_authority})({_absPath})?";
 		// uric_no_slash = unreserved | escaped | ";" | "?" | ":" | "@" | "&" | "=" | "+" | "$" | ","
 		private const string _uricNoSlash = @"[a-zA-Z0-9\-_\.!~\*'\(\);\?:@&=\+\$,]|%[0-9A-Fa-f]{2}";
 		// opaque_part = uric_no_slash *uric
-		private static readonly string _opaquePart = string.Format("({0})({1})*", _uricNoSlash, _uric);
+		private static readonly string _opaquePart = $"({_uricNoSlash})({_uric})*";
 		// hier_part = ( net_path | abs_path ) [ "?" query ]
-		private static readonly string _hierPart = string.Format(@"(({0})|({1}))(\?{2})?", _netPath,
-																														 _absPath, _query);
+		private static readonly string _hierPart = $@"(({_netPath})|({_absPath}))(\?{_query})?";
 
 		// relativeURI = ( net_path | abs_path | rel_path ) [ "?" query ]
 		//static readonly string relativeURI = string.Format(@"(({0})|({1})|({2}))(\?{3})?",
@@ -744,9 +707,7 @@ namespace Rsdn.Framework.Formatting
 		// But for our purposes restrict schemes of opaque part
 		// and include special cases (currently ms-help and mk schemes).
 		private static readonly string _absoluteURI =
-			string.Format(
-				"(?<scheme>cid|mid|pop|news|urn|imap|mailto):({0})|(?<scheme>ms-help):({1})+|(?<scheme>mk):@({2})+|({3}):({4})",
-				_opaquePart, _uric, _uricDirectSlash, _scheme, _hierPart);
+			$"(?<scheme>cid|mid|pop|news|urn|imap|mailto):({_opaquePart})|(?<scheme>ms-help):({_uric})+|(?<scheme>mk):@({_uricDirectSlash})+|({_scheme}):({_hierPart})";
 
 		// URI-reference = [ absoluteURI | relativeURI ] [ "#" fragment ]
 		// protected static readonly string URIreference = string.Format("({0})(#{2})?",
@@ -755,24 +716,21 @@ namespace Rsdn.Framework.Formatting
 		// addon for detecting http url starts with www or gzip (second, special for rsdn)
 		// without scheme
 		// wwwhostport = ( "www." | "gzip." ) hostport
-		private static readonly string _wwwHostPort =
-			string.Format(@"(?<hostname>(?:www|gzip)\.({0}))(:[0-9]*)?", _host);
+		private static readonly string _wwwHostPort = $@"(?<hostname>(?:www|gzip)\.({_host}))(:[0-9]*)?";
 
 		// www_path = wwwhostport  [ abs_path ]
-		private static readonly string _wwwPath = string.Format(@"({0})({1})?", _wwwHostPort, _absPath);
+		private static readonly string _wwwPath = $@"({_wwwHostPort})({_absPath})?";
 		// wwwrelativeURI = www_path [ "?" query ]
-		private static readonly string _wwwRelativeURI = string.Format(@"({0})(\?{1})?", _wwwPath, _query);
+		private static readonly string _wwwRelativeURI = $@"({_wwwPath})(\?{_query})?";
 
 		// URI-reference = [ absoluteURI | wwwrelativeURI ] [ "#" fragment ]
-		private static readonly string _uriReference = string.Format(
-			@"(({0})|({1}))(#{2})?",
-			_absoluteURI, _wwwRelativeURI,
-			_fragment);
+		private static readonly string _uriReference = $@"(({_absoluteURI})|({_wwwRelativeURI}))(#{_fragment})?";
 
 		// links only (lighted version, for details see rfc 2396)
-		private static readonly Regex _urlOnlyRegex = new Regex(string.Format("^{0}$", _uriReference),
-																														RegexOptions.Compiled |
-																														RegexOptions.ExplicitCapture);
+		private static readonly Regex _urlOnlyRegex =
+			new Regex(
+				$"^{_uriReference}$",
+				RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
 		// implicit links (lighted version, for details see rfc 2396)
 		private static readonly Regex _urlRegex =
@@ -799,9 +757,7 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Ссылка.</returns>
 		public virtual string GetMSDNRef(string keyword)
 		{
-			return string.Format(
-				@"http://search.microsoft.com/ru-RU/results.aspx?q={0}",
-				HttpUtility.UrlEncode(keyword));
+			return $@"http://search.microsoft.com/ru-RU/results.aspx?q={HttpUtility.UrlEncode(keyword)}";
 		}
 
 		/// <summary>
@@ -818,9 +774,7 @@ namespace Rsdn.Framework.Formatting
 		{
 			var msdnKeyword = match.Groups[1].Value;
 			return
-				string.Format(
-					@"<a target='_blank' class='m' href='{0}'>{1}</a>",
-					GetMSDNRef(msdnKeyword), msdnKeyword);
+				$@"<a target='_blank' class='m' href='{GetMSDNRef(msdnKeyword)}'>{msdnKeyword}</a>";
 		}
 		#endregion
 
@@ -838,16 +792,8 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="match"></param>
 		/// <returns></returns>
-		protected static string ListEvaluator(Match match)
-		{
-			return string.Format(
-				"<ol type='{0}' {1} style='margin-top:0; margin-bottom:0;'>{2}</ol>",
-				match.Groups["number"].Success ? "1" : match.Groups["style"].Value,
-				match.Groups["number"].Success
-					? string.Format("start='{0}'", int.Parse(match.Groups["number"].Value))
-					: null,
-				match.Groups["content"].Value);
-		}
+		protected static string ListEvaluator(Match match) =>
+			$"<ol type='{(match.Groups["number"].Success ? "1" : match.Groups["style"].Value)}' {(match.Groups["number"].Success ? $"start='{int.Parse(match.Groups["number"].Value)}'" : null)} style='margin-top:0; margin-bottom:0;'>{match.Groups["content"].Value}</ol>";
 
 		#region Цитирование
 		/// <summary>
@@ -857,12 +803,12 @@ namespace Rsdn.Framework.Formatting
 
 		// Цитирование.
 		private static readonly Regex _rxTextUrl09 =
-			new Regex(string.Format("(?mn)({0}.*?$)+", StartCitation), RegexOptions.Multiline | RegexOptions.ExplicitCapture);
+			new Regex($"(?mn)({StartCitation}.*?$)+", RegexOptions.Multiline | RegexOptions.ExplicitCapture);
 
 		// [q] цитирование
 		// (с учетом лишнего NAME> цитирования).
 		private static readonly Regex _rxPrep12 =
-			new Regex(string.Format(@"(?is)(?<!\[)\[q\]\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]q\]", StartCitation));
+			new Regex($@"(?is)(?<!\[)\[q\]\s*(.*?)(?m:{StartCitation}\s*)*\s*\[[\\/]q\]");
 
 		// [q] цитирование
 		// (с учетом лишнего NAME> цитирования).
@@ -872,7 +818,7 @@ namespace Rsdn.Framework.Formatting
 
 		// [cut=caption] with optional caption block
 		private static readonly Regex _rxPrep13 =
-			new Regex(string.Format(@"(?is)(?<!\[)(\[cut\]|\[cut(\=([^\]]*))\])\s*(.*?)(?m:{0}\s*)*\s*\[[\\/]cut\]", StartCitation));
+			new Regex($@"(?is)(?<!\[)(\[cut\]|\[cut(\=([^\]]*))\])\s*(.*?)(?m:{StartCitation}\s*)*\s*\[[\\/]cut\]");
 	
 		#endregion
 
@@ -920,6 +866,9 @@ namespace Rsdn.Framework.Formatting
 
 		// Headers
 		// [hx]
+		/// <summary>
+		/// Headers
+		/// </summary>
 		public static readonly Regex HeadersRegex =
 			new Regex(@"(?is)(?<!\[)\[h(?<num>[1-6])\](.*?)\[[\\/]h\k<num>\]");
 
@@ -944,6 +893,9 @@ namespace Rsdn.Framework.Formatting
 		private static readonly Regex _dashDetector =
 			new Regex(@"(?<=[\n\s])-(?=[\n\s])", RegexOptions.Compiled);
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public static IList<Func<StringBuilder, StringBuilder>> CreateInlineTagReplacers(
 			bool checking,
 			Func<string, string> tagNameGetter = null)
@@ -977,11 +929,7 @@ namespace Rsdn.Framework.Formatting
 				new HtmlAnchor
 				{
 					Target = "_blank",
-					HRef =
-						string.Format(
-							"{0}/Forum/Info/{1}.aspx",
-							GetPathToRoot(),
-							name.Groups[1].Value),
+					HRef = $"{GetPathToRoot()}/Forum/Info/{name.Groups[1].Value}.aspx",
 					InnerText = name.Groups[1].Value
 				};
 			return AddClass(link, "m");
@@ -1012,13 +960,8 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="email"></param>
 		/// <returns></returns>
-		public virtual string FormatEmail(string email)
-		{
-			return
-				string.Format(@"<a class='m' href='mailto:{0}'>{1}</a>",
-											email.EncodeAgainstXSS(),
-											email.ReplaceTags());
-		}
+		public virtual string FormatEmail(string email) =>
+			$@"<a class='m' href='mailto:{email.EncodeAgainstXSS()}'>{email.ReplaceTags()}</a>";
 
 		/// <summary>
 		/// Массив символов для отсечения ведущих и концевых пробельных строк сообщений.
@@ -1121,11 +1064,7 @@ namespace Rsdn.Framework.Formatting
 
 				// Цитирование.
 				sb = _rxTextUrl09.Replace(sb,
-					m =>
-						string.Format(
-							"<span class='lineQuote level{0}'>{1}</span>",
-							WebUtility.HtmlDecode(m.Groups["lev"].Value).Length,
-							m.Groups[0].Value));
+					m => $"<span class='lineQuote level{WebUtility.HtmlDecode(m.Groups["lev"].Value).Length}'>{m.Groups[0].Value}</span>");
 
 				// restore & transform [cut] tags
 				for (var i = 0; i < cutMatcher.Count; i++)
@@ -1145,9 +1084,7 @@ namespace Rsdn.Framework.Formatting
 				sb =
 					sb.Replace(
 						string.Format(quoteExpression, i),
-						string.Format(
-							"<blockquote class='q'><p>{0}</p></blockquote>",
-							quoteMatcher[i].Groups[1]));
+						$"<blockquote class='q'><p>{quoteMatcher[i].Groups[1]}</p></blockquote>");
 
 			// Обработка смайликов с учетом отмены и http://www.rsdn.ru/forum/?mid=184751
 			if (smile)
@@ -1355,12 +1292,7 @@ namespace Rsdn.Framework.Formatting
 						var uriText = m.Groups["url"].Value;
 						Uri uri;
 						return
-							string.Format(
-								"[url={0}]Image: {1}[/url]",
-								uriText,
-								Uri.TryCreate(uriText, UriKind.Absolute, out uri)
-									? Uri.UnescapeDataString(Path.GetFileName(uri.AbsolutePath))
-									: uriText);
+							$"[url={uriText}]Image: {(Uri.TryCreate(uriText, UriKind.Absolute, out uri) ? Uri.UnescapeDataString(Path.GetFileName(uri.AbsolutePath)) : uriText)}[/url]";
 					});
 		}
 
@@ -1374,9 +1306,7 @@ namespace Rsdn.Framework.Formatting
 		public virtual string ProcessISBN(Match match, string isbn)
 		{
 			return
-				string.Format(
-					"<a target=\"_blank\" href=\"http://findbook.ru/search/?isbn={0}&ozon=rsdn&bolero=rsdnru&biblion=791&booksru=rsdn&zonex=248&piter=3600&myshop=00776\">{1}</a>",
-					isbn, match.Value);
+				$"<a target=\"_blank\" href=\"http://findbook.ru/search/?isbn={isbn}&ozon=rsdn&bolero=rsdnru&biblion=791&booksru=rsdn&zonex=248&piter=3600&myshop=00776\">{match.Value}</a>";
 		}
 	}
 }

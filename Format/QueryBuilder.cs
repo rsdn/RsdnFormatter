@@ -2,11 +2,14 @@
 using System.Text;
 using System.Web;
 
+using JetBrains.Annotations;
+
 namespace Rsdn.Framework.Formatting
 {
 	/// <summary>
 	/// Summary description for QueryBuilder.
 	/// </summary>
+	[PublicAPI]
 	public class QueryBuilder : NameValueCollection
 	{
 		private readonly Encoding _encoding;

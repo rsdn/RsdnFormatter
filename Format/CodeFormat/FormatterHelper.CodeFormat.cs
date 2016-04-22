@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace Rsdn.Framework.Formatting
 {
+	[PublicAPI]
 	partial class FormatterHelper
 	{
 		private static readonly Dictionary<string, CodeLangInfo> _langInfos =
@@ -141,7 +142,7 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		public static CodeFormatter GetCodeFormatter([NotNull] string name)
 		{
-			if (name == null) throw new ArgumentNullException("name");
+			if (name == null) throw new ArgumentNullException(nameof(name));
 
 			Lazy<CodeFormatter> cf;
 			if (!_codeFormatters.TryGetValue(name, out cf))
@@ -155,7 +156,7 @@ namespace Rsdn.Framework.Formatting
 		[NotNull]
 		public static CodeFormatter GetCodeFormatter([NotNull] this CodeLangInfo info)
 		{
-			if (info == null) throw new ArgumentNullException("info");
+			if (info == null) throw new ArgumentNullException(nameof(info));
 			return GetCodeFormatter(info.Name);
 		}
 
@@ -165,7 +166,7 @@ namespace Rsdn.Framework.Formatting
 		[NotNull]
 		public static string MarkupCode([NotNull] string langName, [NotNull] string source)
 		{
-			if (source == null) throw new ArgumentNullException("source");
+			if (source == null) throw new ArgumentNullException(nameof(source));
 			return GetCodeFormatter(langName).Transform(source);
 		}
 
@@ -177,7 +178,7 @@ namespace Rsdn.Framework.Formatting
 			[NotNull] this CodeLangInfo langInfo,
 			[NotNull] string source)
 		{
-			if (source == null) throw new ArgumentNullException("source");
+			if (source == null) throw new ArgumentNullException(nameof(source));
 			return GetCodeFormatter(langInfo).Transform(source);
 		}
 
@@ -195,7 +196,7 @@ namespace Rsdn.Framework.Formatting
 		[CanBeNull]
 		public static CodeFormatter GetCodeFormatterByTag([NotNull] string tagName)
 		{
-			if (tagName == null) throw new ArgumentNullException("tagName");
+			if (tagName == null) throw new ArgumentNullException(nameof(tagName));
 			string name;
 			if (!_codeTags.TryGetValue(tagName, out name) || name == null)
 				return null;

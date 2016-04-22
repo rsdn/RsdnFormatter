@@ -92,6 +92,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=10.1.4.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.1.4\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -113,7 +117,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Annotations.cs" />
     <Compile Include="AppConstants.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -177,6 +180,7 @@
     <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.eot" />
     <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.ttf" />
     <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.woff" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeFormat\Patterns\Erlang.xml" />
