@@ -38,7 +38,7 @@ namespace Rsdn.Framework.Formatting
 		public TextFormatter(ProcessImagesDelegate imagesDelegate)
 		{
 			using (var r = ResourceProvider.ReadResource("hiddentext.htm"))
-				_hiddenTextSnippet = ((String)r.Read()).Replace("\r\n", String.Empty);
+				_hiddenTextSnippet = ((string)r.Read()).Replace("\r\n", string.Empty);
 
 			// initialize image handlers
 			ImagesDelegate = imagesDelegate ?? DefaultProcessImagesDelegate;
@@ -52,18 +52,6 @@ namespace Rsdn.Framework.Formatting
 				= HostFormatting["rsdn3.rsdn.ru"]
 				= HostFormatting["gzip.rsdn.ru"]
 				= FormatRsdnURLs;
-
-			HostFormatting["amazon.com"]
-				= HostFormatting["www.amazon.com"]
-				= ProcessAmazonLink;
-
-			foreach (var partnerHost in _partnresIDs.Keys)
-				HostFormatting[partnerHost] = ProcessPartnerLink;
-
-			HostFormatting["www.piter.com"]
-				= HostFormatting["piter.com"]
-				= HostFormatting["shop.piter.com"]
-				= ProcessPiterLink;
 		}
 
 		/// <summary>
@@ -83,43 +71,11 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		private static readonly Regex _rxCodeFormatting;
 
-		private static readonly IDictionary<string, PartnerRecord> _partnresIDs =
-			new Dictionary<string, PartnerRecord>(StringComparer.OrdinalIgnoreCase);
-
-		private class PartnerRecord
-		{
-			public readonly string QueryParameter;
-			public readonly string PartnerID;
-
-			public PartnerRecord(string quertParameter, string partnerID)
-			{
-				QueryParameter = quertParameter;
-				PartnerID = partnerID;
-			}
-		}
-
 		/// <summary>
 		/// Статическая инициализация форматтера.
 		/// </summary>
 		static TextFormatter()
 		{
-			// fill partners IDs
-			_partnresIDs["www.ozon.ru"] = _partnresIDs["ozon.ru"] =
-																		_partnresIDs["www.books.ru"] = _partnresIDs["books.ru"] =
-																																	 new PartnerRecord("partner", "rsdn");
-			_partnresIDs["www.bolero.ru"] = _partnresIDs["bolero.ru"] =
-																			new PartnerRecord("partner", "rsdnru");
-			_partnresIDs["www.piter.com"] = _partnresIDs["piter.com"] =
-																			_partnresIDs["shop.piter.com"] =
-																			new PartnerRecord("refer", "3600");
-			_partnresIDs["www.my-shop.ru"] = _partnresIDs["my-shop.ru"] =
-																			 new PartnerRecord("partner", "00776");
-			_partnresIDs["www.biblion.ru"] = _partnresIDs["biblion.ru"] =
-																			 new PartnerRecord("pid", "791");
-			_partnresIDs["www.zone-x.ru"] = _partnresIDs["zone-x.ru"] =
-																			new PartnerRecord("Partner", "248");
-
-
 			var codeTags = FormatterHelper.GetCodeTagNames().ToArray();
 			// Построение регулярного выражения для обнаружения кода
 			// (с учетом лишнего NAME> цитирования).
@@ -394,60 +350,6 @@ namespace Rsdn.Framework.Formatting
 			"http://www.amazon.com/exec/obidos/redirect?link_code=as2&path=ASIN/{0}&tag=russiansoftwa-20&camp=1789&creative=9325";
 
 		private const string _amazonPathPrefix = "/exec/obidos/";
-
-		/// <summary>
-		/// Process Amazon.com links
-		/// </summary>
-		private static bool ProcessAmazonLink(Match urlMatch, HtmlAnchor link)
-		{
-			var url = HttpUtility.UrlDecode(link.HRef);
-			if (url == null)
-				return false;
-			var asinMatch = _asinDetector.Match(url);
-			if (asinMatch.Success)
-				link.HRef = string.Format(_directAmazonUrl, asinMatch.Groups["asin"].Value);
-			else
-			{
-				var originalAmazonUri = new Uri(link.HRef);
-				if (originalAmazonUri.PathAndQuery.StartsWith(_amazonPathPrefix))
-					link.HRef = _amazonUrl + originalAmazonUri.PathAndQuery.Substring(_amazonPathPrefix.Length);
-				else
-					link.HRef = _amazonUrl + HttpUtility.UrlEncode(link.HRef);
-			}
-			return false;
-		}
-
-		private static bool ProcessPiterLink(Match urlMatch, HtmlAnchor link)
-		{
-			var uriBuilder = new UriBuilder(link.HRef);
-			var queryBuilder = new QueryBuilder(uriBuilder.Query);
-			// если есть анонимный параметр
-			if (!string.IsNullOrEmpty(queryBuilder[null]))
-			{
-				queryBuilder["id"] = queryBuilder[null];
-				queryBuilder.Remove(null);
-				uriBuilder.Query = HttpUtility.HtmlEncode(queryBuilder.ToString());
-				link.HRef = uriBuilder.Uri.AbsoluteUri;
-			}
-			// стандартная обработка
-			return ProcessPartnerLink(urlMatch, link);
-		}
-
-		/// <summary>
-		/// Process RSDN partneship links.
-		/// </summary>
-		/// <param name="urlMatch"></param>
-		/// <param name="link"></param>
-		protected static bool ProcessPartnerLink(Match urlMatch, HtmlAnchor link)
-		{
-			var uriBuilder = new UriBuilder(link.HRef);
-			var queryBuilder = new QueryBuilder(uriBuilder.Query);
-			var partnerRecord = _partnresIDs[uriBuilder.Host];
-			queryBuilder[partnerRecord.QueryParameter] = partnerRecord.PartnerID;
-			uriBuilder.Query = HttpUtility.HtmlEncode(queryBuilder.ToString());
-			link.HRef = uriBuilder.Uri.AbsoluteUri;
-			return false;
-		}
 
 		/// <summary>
 		/// Format URLs to hyperlinks.
