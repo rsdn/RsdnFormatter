@@ -11,8 +11,16 @@
 		<RepositoryUrl>https://github.com/rsdn/RsdnFormatter</RepositoryUrl>
 		<PackageTags>RSDN, formatting</PackageTags>
 		<PackageReleaseNotes>Initial package release.</PackageReleaseNotes>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<RepositoryType>Git</RepositoryType>
 	</PropertyGroup>
 	<ItemGroup>
 	  <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="..\LICENSE.md">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>
