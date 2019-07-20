@@ -879,7 +879,7 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="txt">Исходный текст.</param>
 		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
-		public virtual string Format(string txt, bool isHttps)
+		public virtual string Format(string txt, bool isHttps = true)
 		{
 			return Format(txt, true);
 		}

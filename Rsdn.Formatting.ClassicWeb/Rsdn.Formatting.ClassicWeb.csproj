@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <Authors>RSDN</Authors>
+    <Description>RSDN message formatting library, classic ASP.NET extensions.</Description>
+    <Version>5.0.0</Version>
+    <Copyright>SDN, 2001-2019</Copyright>
+    <PackageProjectUrl>https://github.com/rsdn/RsdnFormatter</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rsdn/RsdnFormatter</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageReleaseNotes>Initial package release.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Format\Rsdn.Framework.Formatting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+
+</Project>

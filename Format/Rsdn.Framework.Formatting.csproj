@@ -1,6 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Company>RSDN</Company>
+		<Authors>RSDN</Authors>
+		<Version>5.0.0</Version>
+		<Description>RSDN message formatting library.</Description>
+		<Copyright>RSDN, 2001-2019</Copyright>
+		<PackageProjectUrl>https://github.com/rsdn/RsdnFormatter</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/rsdn/RsdnFormatter</RepositoryUrl>
+		<PackageTags>RSDN, formatting</PackageTags>
+		<PackageReleaseNotes>Initial package release.</PackageReleaseNotes>
 	</PropertyGroup>
 	<ItemGroup>
 	  <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
