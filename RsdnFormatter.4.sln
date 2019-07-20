@@ -1,9 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsdn.Framework.Formatting", "Format\Rsdn.Framework.Formatting.csproj", "{5D93361E-3F17-4553-91F0-B6C24DEBB4CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsdn.Framework.Formatting-Tests", "Rsdn.Framework.Formatting-Tests\Rsdn.Framework.Formatting-Tests.csproj", "{4445C5D6-9879-4CF6-99D1-F2B6A13867E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsdn.Formatting.OldWeb", "Rsdn.Formatting.OldWeb\Rsdn.Formatting.OldWeb.csproj", "{6C85C1E1-239A-4001-A39A-34668AAE276E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,8 +28,17 @@ Global
 		{4445C5D6-9879-4CF6-99D1-F2B6A13867E0}.Deploy|Any CPU.Build.0 = Debug|Any CPU
 		{4445C5D6-9879-4CF6-99D1-F2B6A13867E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4445C5D6-9879-4CF6-99D1-F2B6A13867E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C85C1E1-239A-4001-A39A-34668AAE276E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C85C1E1-239A-4001-A39A-34668AAE276E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C85C1E1-239A-4001-A39A-34668AAE276E}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C85C1E1-239A-4001-A39A-34668AAE276E}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{6C85C1E1-239A-4001-A39A-34668AAE276E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C85C1E1-239A-4001-A39A-34668AAE276E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {485EE766-0578-43DA-B084-EFC8C9A2D126}
 	EndGlobalSection
 EndGlobal

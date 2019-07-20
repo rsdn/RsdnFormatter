@@ -255,22 +255,24 @@ namespace Rsdn.Framework.Formatting
 		/// Process RSDN URL tag
 		/// </summary>
 		/// <returns>Formatted url value</returns>
-		protected virtual string ProcessURLs(string url, string tag)
+		protected virtual string ProcessURLs(string url, string tag, bool isHttps)
 		{
 			return FormatURLs(
 				_urlOnlyRegex.Match(url),
 				url,
-				Format(tag, false, true, true));
+				Format(tag, false, true, true, isHttps),
+				isHttps);
 		}
 
 		/// <summary>
 		/// Process implicit URLs (not explicity specified by RSDN URL tag).
 		/// </summary>
 		/// <param name="match">URL match.</param>
+		/// <param name="isHttps"></param>
 		/// <returns>Formatted URL.</returns>
-		protected virtual string ProcessImplicitURLs(Match match)
+		protected virtual string ProcessImplicitURLs(Match match, bool isHttps)
 		{
-			return FormatURLs(match, match.Value, match.Value);
+			return FormatURLs(match, match.Value, match.Value, isHttps);
 		}
 
 		/// <summary>
@@ -281,7 +283,7 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Delegate to process URLs.
 		/// </summary>
-		public delegate bool ProcessUrl(Match urlMatch, HtmlAnchor link);
+		public delegate bool ProcessUrl(Match urlMatch, HtmlAnchor link, bool isHttps);
 
 		/// <summary>
 		/// Map of URI schemes and associated handlers.
@@ -299,7 +301,8 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="urlMatch">Input URL match</param>
 		/// <param name="link">Output formatted URL</param>
-		private static bool ProcessMsHelpLink(Match urlMatch, HtmlAnchor link)
+		/// <param name="isHttps"></param>
+		private static bool ProcessMsHelpLink(Match urlMatch, HtmlAnchor link, bool isHttps)
 		{
 			var guidMatch = _msdnGuidDetector.Match(urlMatch.Value);
 			if (guidMatch.Success)
@@ -355,8 +358,9 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="urlMatch">Regex match with URL address.</param>
 		/// <param name="urlAdsress">URL address.</param>
 		/// <param name="urlName">URL name. May be or may be not different from URL address.</param>
+		/// <param name="isHttps">Use HTTPS for rsdn links.</param>
 		/// <returns>Formatted link for specified URL.</returns>
-		protected virtual string FormatURLs(Match urlMatch, string urlAdsress, string urlName)
+		protected virtual string FormatURLs(Match urlMatch, string urlAdsress, string urlName, bool isHttps)
 		{
 			// by default pass url directly (just antiXSS processing)
 			var link =
@@ -379,7 +383,7 @@ namespace Rsdn.Framework.Formatting
 					// process custom scheme formatting, if exists
 					ProcessUrl schemeFormatter;
 					if (SchemeFormatting.TryGetValue(urlMatch.Groups["scheme"].Value, out schemeFormatter))
-						processesedItself = schemeFormatter(urlMatch, link);
+						processesedItself = schemeFormatter(urlMatch, link, isHttps);
 				}
 
 				if (!processesedItself)
@@ -387,7 +391,7 @@ namespace Rsdn.Framework.Formatting
 					var matchedHostname = urlMatch.Groups["hostname"].Value;
 					ProcessUrl hostFormatter;
 					if (HostFormatting.TryGetValue(matchedHostname, out hostFormatter))
-						processesedItself = hostFormatter(urlMatch, link);
+						processesedItself = hostFormatter(urlMatch, link, isHttps);
 					else
 					{
 						foreach (var host in _wellKnownHosts)
@@ -456,7 +460,10 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="urlMatch">Regex match with URL address.</param>
 		/// <param name="link">HtmlLink, initialized by default</param>
 		/// <returns>true - processed by formatter itself, no further processing</returns>
-		protected virtual bool FormatRsdnURLs(Match urlMatch, HtmlAnchor link)
+		protected virtual bool FormatRsdnURLs(
+			Match urlMatch,
+			HtmlAnchor link,
+			bool isHttps)
 		{
 			var urlScheme = urlMatch.Groups["scheme"];
 			var urlHostname = urlMatch.Groups["hostname"];
@@ -467,7 +474,7 @@ namespace Rsdn.Framework.Formatting
 					{
 						var schemeMatchStart = (urlScheme.Success ? urlScheme.Index : urlMatch.Index);
 						link.HRef =
-							(((HttpContext.Current != null) && HttpContext.Current.Request.IsSecureConnection)
+							(isHttps
 								?
 									Uri.UriSchemeHttps
 								: originalScheme) + (urlScheme.Success ? null : "://") +
@@ -870,8 +877,9 @@ namespace Rsdn.Framework.Formatting
 		/// <b>НЕПОТОКОБЕЗОПАСНЫЙ!</b>
 		/// </summary>
 		/// <param name="txt">Исходный текст.</param>
+		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
-		public virtual string Format(string txt)
+		public virtual string Format(string txt, bool isHttps)
 		{
 			return Format(txt, true);
 		}
@@ -882,10 +890,11 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="txt">Исходный текст.</param>
 		/// <param name="smile">Признак обработки смайликов.</param>
+		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
-		public virtual string Format(string txt, bool smile)
+		public virtual string Format(string txt, bool smile, bool isHttps)
 		{
-			return Format(txt, smile, false, false);
+			return Format(txt, smile, false, false, isHttps);
 		}
 
 		/// <summary>
@@ -896,12 +905,14 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="smile">Признак обработки смайликов.</param>
 		/// <param name="doNotReplaceTags">Не заменять служебные символы HTML.</param>
 		/// <param name="doNotFormatImplicitLinks">Не форматировать явно не указанные ссылки.</param>
+		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
 		public virtual string Format(
 			string txt,
 			bool smile,
 			bool doNotReplaceTags,
-			bool doNotFormatImplicitLinks)
+			bool doNotFormatImplicitLinks,
+			bool isHttps)
 		{
 			var sb = new StringBuilder(txt);
 
@@ -1038,14 +1049,14 @@ namespace Rsdn.Framework.Formatting
 
 				sb = sb.Replace(
 					string.Format(urlExpression, i),
-					ProcessURLs(url, tag));
+					ProcessURLs(url, tag, isHttps));
 			}
 
 			// restore & transform implicit links
 			for (var i = 0; i < implicitUrlMatcher.Count; i++)
 				sb = sb.Replace(
 					string.Format(implicitUrlExpression, i),
-					ProcessImplicitURLs(implicitUrlMatcher[i]));
+					ProcessImplicitURLs(implicitUrlMatcher[i], isHttps));
 
 			// restore & transform [img] tags
 			for (var i = 0; i < imgMatcher.Count; i++)

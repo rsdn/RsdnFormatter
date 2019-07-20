@@ -5,4 +5,5 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UR/@EntryIndexedValue">UR</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=URL/@EntryIndexedValue">URL</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=WQ/@EntryIndexedValue">WQ</s:String>
-	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=XSS/@EntryIndexedValue">XSS</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=XSS/@EntryIndexedValue">XSS</s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Rsdn/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
