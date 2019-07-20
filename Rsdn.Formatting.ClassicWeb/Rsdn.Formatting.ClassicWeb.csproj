@@ -4,12 +4,12 @@
     <TargetFramework>net472</TargetFramework>
     <Authors>RSDN</Authors>
     <Description>RSDN message formatting library, classic ASP.NET extensions.</Description>
-    <Version>5.0.0</Version>
+    <Version>5.0.1</Version>
     <Copyright>RSDN, 2001-2019</Copyright>
     <PackageProjectUrl>https://github.com/rsdn/RsdnFormatter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/rsdn/RsdnFormatter</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageReleaseNotes>Initial package release.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed formatter ref.</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>

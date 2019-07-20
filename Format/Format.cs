@@ -181,6 +181,6 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Top level RSDN domain name
 		/// </summary>
-		public static string RsdnDomainName = "rsdn.ru";
+		public static string RsdnDomainName = "rsdn.org";
 	}
 }

@@ -4,16 +4,144 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Company>RSDN</Company>
 		<Authors>RSDN</Authors>
-		<Version>5.0.0</Version>
+		<Version>5.0.1</Version>
 		<Description>RSDN message formatting library.</Description>
 		<Copyright>RSDN, 2001-2019</Copyright>
 		<PackageProjectUrl>https://github.com/rsdn/RsdnFormatter</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/rsdn/RsdnFormatter</RepositoryUrl>
 		<PackageTags>RSDN, formatting</PackageTags>
-		<PackageReleaseNotes>Initial package release.</PackageReleaseNotes>
+		<PackageReleaseNotes>Fixes</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<RepositoryType>Git</RepositoryType>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="CodeFormat\Patterns\Assembler.xml" />
+	  <None Remove="CodeFormat\Patterns\C.xml" />
+	  <None Remove="CodeFormat\Patterns\CSharp.xml" />
+	  <None Remove="CodeFormat\Patterns\Erlang.xml" />
+	  <None Remove="CodeFormat\Patterns\Haskell.xml" />
+	  <None Remove="CodeFormat\Patterns\IDL.xml" />
+	  <None Remove="CodeFormat\Patterns\Java.xml" />
+	  <None Remove="CodeFormat\Patterns\Lisp.xml" />
+	  <None Remove="CodeFormat\Patterns\MSIL.xml" />
+	  <None Remove="CodeFormat\Patterns\Nemerle.xml" />
+	  <None Remove="CodeFormat\Patterns\Nitra.xml" />
+	  <None Remove="CodeFormat\Patterns\ObjC.xml" />
+	  <None Remove="CodeFormat\Patterns\OCaml.xml" />
+	  <None Remove="CodeFormat\Patterns\Pascal.xml" />
+	  <None Remove="CodeFormat\Patterns\PatternSchema.xsd" />
+	  <None Remove="CodeFormat\Patterns\Perl.xml" />
+	  <None Remove="CodeFormat\Patterns\PHP.xml" />
+	  <None Remove="CodeFormat\Patterns\Prolog.xml" />
+	  <None Remove="CodeFormat\Patterns\Python.xml" />
+	  <None Remove="CodeFormat\Patterns\Ruby.xml" />
+	  <None Remove="CodeFormat\Patterns\Rust.xml" />
+	  <None Remove="CodeFormat\Patterns\SQL.xml" />
+	  <None Remove="CodeFormat\Patterns\VisualBasic.xml" />
+	  <None Remove="CodeFormat\Patterns\XSL.xml" />
+	  <None Remove="Resources\Binary\beer.gif" />
+	  <None Remove="Resources\Binary\biggrin.gif" />
+	  <None Remove="Resources\Binary\confused.gif" />
+	  <None Remove="Resources\Binary\corner.gif" />
+	  <None Remove="Resources\Binary\crash.gif" />
+	  <None Remove="Resources\Binary\down.gif" />
+	  <None Remove="Resources\Binary\Facepalm.gif" />
+	  <None Remove="Resources\Binary\fontawesome-webfont.eot" />
+	  <None Remove="Resources\Binary\fontawesome-webfont.svg" />
+	  <None Remove="Resources\Binary\fontawesome-webfont.ttf" />
+	  <None Remove="Resources\Binary\fontawesome-webfont.woff" />
+	  <None Remove="Resources\Binary\FontAwesome.otf" />
+	  <None Remove="Resources\Binary\frown.gif" />
+	  <None Remove="Resources\Binary\invasion.gif" />
+	  <None Remove="Resources\Binary\line.gif" />
+	  <None Remove="Resources\Binary\lol.gif" />
+	  <None Remove="Resources\Binary\maniac.gif" />
+	  <None Remove="Resources\Binary\minus.gif" />
+	  <None Remove="Resources\Binary\no.gif" />
+	  <None Remove="Resources\Binary\nopont.gif" />
+	  <None Remove="Resources\Binary\plus.gif" />
+	  <None Remove="Resources\Binary\sarcasm.gif" />
+	  <None Remove="Resources\Binary\shuffle.gif" />
+	  <None Remove="Resources\Binary\smile.gif" />
+	  <None Remove="Resources\Binary\smirk.gif" />
+	  <None Remove="Resources\Binary\sup.gif" />
+	  <None Remove="Resources\Binary\super.gif" />
+	  <None Remove="Resources\Binary\user.gif" />
+	  <None Remove="Resources\Binary\wink.gif" />
+	  <None Remove="Resources\Binary\wow.gif" />
+	  <None Remove="Resources\Binary\xz.gif" />
+	  <None Remove="Resources\Binary\zocial-regular-webfont.eot" />
+	  <None Remove="Resources\Binary\zocial-regular-webfont.svg" />
+	  <None Remove="Resources\Binary\zocial-regular-webfont.ttf" />
+	  <None Remove="Resources\Binary\zocial-regular-webfont.woff" />
+	  <None Remove="Resources\Text\Formatter.css" />
+	  <None Remove="Resources\Text\Formatter.js" />
+	  <None Remove="Resources\Text\HiddenText.htm" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="CodeFormat\Patterns\Assembler.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\C.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\CSharp.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Erlang.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Haskell.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\IDL.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Java.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Lisp.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\MSIL.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Nemerle.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Nitra.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\ObjC.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\OCaml.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Pascal.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\PatternSchema.xsd" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Perl.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\PHP.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Prolog.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Python.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Ruby.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\Rust.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\SQL.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\VisualBasic.xml" />
+	  <EmbeddedResource Include="CodeFormat\Patterns\XSL.xml" />
+	  <EmbeddedResource Include="Resources\Binary\beer.gif" />
+	  <EmbeddedResource Include="Resources\Binary\biggrin.gif" />
+	  <EmbeddedResource Include="Resources\Binary\confused.gif" />
+	  <EmbeddedResource Include="Resources\Binary\corner.gif" />
+	  <EmbeddedResource Include="Resources\Binary\crash.gif" />
+	  <EmbeddedResource Include="Resources\Binary\down.gif" />
+	  <EmbeddedResource Include="Resources\Binary\Facepalm.gif" />
+	  <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.eot" />
+	  <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.svg" />
+	  <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.ttf" />
+	  <EmbeddedResource Include="Resources\Binary\fontawesome-webfont.woff" />
+	  <EmbeddedResource Include="Resources\Binary\FontAwesome.otf" />
+	  <EmbeddedResource Include="Resources\Binary\frown.gif" />
+	  <EmbeddedResource Include="Resources\Binary\invasion.gif" />
+	  <EmbeddedResource Include="Resources\Binary\line.gif" />
+	  <EmbeddedResource Include="Resources\Binary\lol.gif" />
+	  <EmbeddedResource Include="Resources\Binary\maniac.gif" />
+	  <EmbeddedResource Include="Resources\Binary\minus.gif" />
+	  <EmbeddedResource Include="Resources\Binary\no.gif" />
+	  <EmbeddedResource Include="Resources\Binary\nopont.gif" />
+	  <EmbeddedResource Include="Resources\Binary\plus.gif" />
+	  <EmbeddedResource Include="Resources\Binary\sarcasm.gif" />
+	  <EmbeddedResource Include="Resources\Binary\shuffle.gif" />
+	  <EmbeddedResource Include="Resources\Binary\smile.gif" />
+	  <EmbeddedResource Include="Resources\Binary\smirk.gif" />
+	  <EmbeddedResource Include="Resources\Binary\sup.gif" />
+	  <EmbeddedResource Include="Resources\Binary\super.gif" />
+	  <EmbeddedResource Include="Resources\Binary\user.gif" />
+	  <EmbeddedResource Include="Resources\Binary\wink.gif" />
+	  <EmbeddedResource Include="Resources\Binary\wow.gif" />
+	  <EmbeddedResource Include="Resources\Binary\xz.gif" />
+	  <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.eot" />
+	  <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.svg" />
+	  <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.ttf" />
+	  <EmbeddedResource Include="Resources\Binary\zocial-regular-webfont.woff" />
+	  <EmbeddedResource Include="Resources\Text\Formatter.css" />
+	  <EmbeddedResource Include="Resources\Text\Formatter.js" />
+	  <EmbeddedResource Include="Resources\Text\HiddenText.htm" />
+	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
 	</ItemGroup>

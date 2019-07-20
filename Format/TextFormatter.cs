@@ -50,7 +50,8 @@ namespace Rsdn.Framework.Formatting
 				= HostFormatting["www.rsdn.ru"]
 				= HostFormatting["rsdn.rsdn.ru"]
 				= HostFormatting["rsdn3.rsdn.ru"]
-				= HostFormatting["gzip.rsdn.ru"]
+				= HostFormatting["gzip.rsdn.ru"] 
+				= HostFormatting["rsdn.org"]
 				= FormatRsdnURLs;
 		}
 
@@ -459,6 +460,7 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="urlMatch">Regex match with URL address.</param>
 		/// <param name="link">HtmlLink, initialized by default</param>
+		/// <param name="isHttps"></param>
 		/// <returns>true - processed by formatter itself, no further processing</returns>
 		protected virtual bool FormatRsdnURLs(
 			Match urlMatch,
@@ -472,7 +474,7 @@ namespace Rsdn.Framework.Formatting
 			Action<String> rsdnHostReplacer =
 				delegate(string urlHost)
 					{
-						var schemeMatchStart = (urlScheme.Success ? urlScheme.Index : urlMatch.Index);
+						var schemeMatchStart = urlScheme.Success ? urlScheme.Index : urlMatch.Index;
 						link.HRef =
 							(isHttps
 								?
@@ -879,9 +881,9 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="txt">Исходный текст.</param>
 		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
-		public virtual string Format(string txt, bool isHttps = true)
+		public virtual string Format(string txt)
 		{
-			return Format(txt, true);
+			return Format(txt, true, true);
 		}
 
 		/// <summary>
