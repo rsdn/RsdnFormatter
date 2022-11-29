@@ -367,6 +367,9 @@
   font-family: Verdana, Geneva, sans-serif;
   color: #003000;
 }
+.m img {
+    max-width:100%;
+}
 .m img.i,
 .m img.t,
 .m img.s,
