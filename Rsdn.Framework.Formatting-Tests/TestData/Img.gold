@@ -1,0 +1,12 @@
+<html>
+	<body>
+<img border='0' src='http://foo.jpg' /><br />
+<img border='0' width='100' src='http://foo.jpg' /><br />
+<img border='0' width='100' src='http://foo.jpg' /><br />
+<img border='0' width='100px' src='http://foo.jpg' /><br />
+<img border='0' width='100px' src='http://foo.jpg' /><br />
+<img border='0' width='10cm' src='http://foo.jpg' /><br />
+<img border='0' width='10px' height='20px' src='http://foo.jpg' /><br />
+<img border='0' src='http://foo.jpg' />
+	</body>
+</html>

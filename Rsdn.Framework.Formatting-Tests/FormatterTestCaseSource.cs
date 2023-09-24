@@ -15,7 +15,8 @@ namespace Rsdn.Framework.Formatting.Tests
 	{
 		public IEnumerator GetEnumerator()
 		{
-			yield return GetTestCaseData("Nitra");
+            yield return GetTestCaseData("Img");
+            yield return GetTestCaseData("Nitra");
 			yield return GetTestCaseData("Nemerle");
 			yield return GetTestCaseData("Cpp");
 			yield return GetTestCaseData("Cut");
@@ -35,7 +36,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			yield return GetTestCaseData("Urls");
 			yield return GetTestCaseData("XSS");
 			yield return GetTestCaseData("LinkJSInjection");
-		}
+        }
 
 		private static TestCaseData GetTestCaseData(string name)
 		{

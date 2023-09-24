@@ -1,0 +1,8 @@
+﻿[img]http://foo.jpg[/img]
+[img width=100]http://foo.jpg[/img]
+[img width = 100 ]http://foo.jpg[/img]
+[img width=100px]http://foo.jpg[/img]
+[img width="100px"]http://foo.jpg[/img]
+[img width='10cm']http://foo.jpg[/img]
+[img width=10px height=20px]http://foo.jpg[/img]
+[img unsupported="ignore"]http://foo.jpg[/img]

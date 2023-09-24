@@ -229,7 +229,7 @@ namespace Rsdn.Framework.Formatting
 		/// [img] тэг. С защитой от javascript.
 		/// </summary>
 		private static readonly Regex _imgTagRegex =
-			new Regex(@"(?i)(?<!\[)\[img\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
+			new Regex(@"(?i)(?<!\[)\[img(?<attributes>[^]]*?)\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
 								RegexOptions.Compiled);
 
 		/// <summary>
@@ -239,7 +239,13 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Formatted image value</returns>
 		public virtual string ProcessImages(Match image)
 		{
-			return $"<img border='0' src='{image.Groups["url"].Value.EncodeAgainstXSS()}' />";
+			var src = image.Groups["url"].Value.EncodeAgainstXSS();
+
+            var attributes = image.Groups["attributes"].Value;
+			var parsed = FormatterImageHelper.GetImageAttributes(attributes);
+			var combined = FormatterImageHelper.RenderImgAttributes(parsed);
+
+            return $"<img {combined} src='{src}' />";
 		}
 		#endregion
 
