@@ -241,11 +241,11 @@ namespace Rsdn.Framework.Formatting
 		{
 			var src = image.Groups["url"].Value.EncodeAgainstXSS();
 
-            var attributes = image.Groups["attributes"].Value;
+			var attributes = image.Groups["attributes"].Value;
 			var parsed = FormatterImageHelper.GetImageAttributes(attributes);
 			var combined = FormatterImageHelper.RenderImgAttributes(parsed);
 
-            return $"<img {combined} src='{src}' />";
+			return $"<img {combined} src='{src}' />";
 		}
 		#endregion
 
