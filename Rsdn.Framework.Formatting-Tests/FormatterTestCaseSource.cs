@@ -15,6 +15,7 @@ namespace Rsdn.Framework.Formatting.Tests
 	{
 		public IEnumerator GetEnumerator()
 		{
+			yield return GetTestCaseData("Img");
 			yield return GetTestCaseData("Nitra");
 			yield return GetTestCaseData("Nemerle");
 			yield return GetTestCaseData("Cpp");

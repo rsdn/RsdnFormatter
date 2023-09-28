@@ -370,6 +370,12 @@
 .m img {
     max-width:100%;
 }
+.m img.small {
+    max-width: 20vw;
+}
+.m img.large {
+    max-width: 90vw;
+}
 .m img.i,
 .m img.t,
 .m img.s,
