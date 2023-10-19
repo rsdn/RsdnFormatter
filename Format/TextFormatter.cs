@@ -232,6 +232,8 @@ namespace Rsdn.Framework.Formatting
 			new Regex(@"(?i)(?<!\[)\[img\s*(?<decorator>\w+)?\s*\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
 								RegexOptions.Compiled);
 
+		private static readonly Regex _validImgTagDecoratorRegex = new Regex(@"large|small", RegexOptions.Compiled);
+
 		/// <summary>
 		/// Process RSDN IMG tag
 		/// </summary>
@@ -242,7 +244,7 @@ namespace Rsdn.Framework.Formatting
 			var src = image.Groups["url"].Value.EncodeAgainstXSS();
 			var decorator = image.Groups["decorator"].Value;
 
-			if (!string.IsNullOrEmpty(decorator))
+			if (_validImgTagDecoratorRegex.IsMatch(decorator))
 				return $"<img border='0' class='{decorator}' src='{src}' />";
 			else
 				return $"<img border='0' src='{src}' />";
