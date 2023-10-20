@@ -1,0 +1,3 @@
+﻿[img]http://foo.jpg[/img]
+[img small]http://foo.jpg[/img]
+[img large]http://foo.jpg[/img]
