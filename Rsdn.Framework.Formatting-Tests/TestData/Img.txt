@@ -1,3 +1,7 @@
 ﻿[img]http://foo.jpg[/img]
+[img=small]http://foo.jpg[/img]
+[img=large]http://foo.jpg[/img]
 [img small]http://foo.jpg[/img]
 [img large]http://foo.jpg[/img]
+[img=sometext]http://foo.jpg[/img]
+[img sometext]http://foo.jpg[/img]
