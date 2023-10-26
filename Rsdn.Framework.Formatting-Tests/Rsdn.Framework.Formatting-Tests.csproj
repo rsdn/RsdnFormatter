@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rsdn.Framework.Formatting.Tests</RootNamespace>
     <AssemblyName>Rsdn.Framework.Formatting-Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>
     </StartupObject>
@@ -127,6 +127,10 @@
   <ItemGroup>
     <EmbeddedResource Include="TestData\Nemerle.gold" />
     <EmbeddedResource Include="TestData\Nitra.gold" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\Img.gold" />
+    <EmbeddedResource Include="TestData\Img.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

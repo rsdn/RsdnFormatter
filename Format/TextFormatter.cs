@@ -9,7 +9,6 @@ using System.Threading;
 using System.Web;
 
 using JetBrains.Annotations;
-
 using Rsdn.Framework.Formatting.Resources;
 
 namespace Rsdn.Framework.Formatting
@@ -241,13 +240,12 @@ namespace Rsdn.Framework.Formatting
 		/// <returns>Formatted image value</returns>
 		public virtual string ProcessImages(Match image)
 		{
-			var src = image.Groups["url"].Value.EncodeAgainstXSS();
+			var src = image.Groups["url"].Value.EncodeUriAgainstXSS();
 			var decorator = image.Groups["decorator"].Value;
 
-			if (_validImgTagDecoratorRegex.IsMatch(decorator))
-				return $"<img border='0' class='{decorator}' src='{src}' />";
-			else
-				return $"<img border='0' src='{src}' />";
+			return _validImgTagDecoratorRegex.IsMatch(decorator)
+				? $"<img border='0' class='{decorator}' src='{src}' />"
+				: $"<img border='0' src='{src}' />";
 		}
 		#endregion
 
@@ -365,21 +363,21 @@ namespace Rsdn.Framework.Formatting
 		/// Used in both, explicitly &amp; implicitly specified links.
 		/// </summary>
 		/// <param name="urlMatch">Regex match with URL address.</param>
-		/// <param name="urlAdsress">URL address.</param>
+		/// <param name="urlAddress">URL address.</param>
 		/// <param name="urlName">URL name. May be or may be not different from URL address.</param>
 		/// <param name="isHttps">Use HTTPS for rsdn links.</param>
 		/// <returns>Formatted link for specified URL.</returns>
-		protected virtual string FormatURLs(Match urlMatch, string urlAdsress, string urlName, bool isHttps)
+		protected virtual string FormatURLs(Match urlMatch, string urlAddress, string urlName, bool isHttps)
 		{
 			// by default pass url directly (just antiXSS processing)
 			var link =
 				new HtmlAnchor
 				{
-					HRef = urlAdsress.EncodeAgainstXSS(),
-					InnerHtml = urlName.EncodeAgainstXSS()
+					HRef = urlAddress.EncodeUriAgainstXSS(),
+					InnerHtml = urlName.EncodeTextAgainstXSS()
 				};
 
-			var processesedItself = false;
+			var processedItself = false;
 
 			// if valid url detected - do additional formatting
 			if (urlMatch.Success)
@@ -392,15 +390,14 @@ namespace Rsdn.Framework.Formatting
 					// process custom scheme formatting, if exists
 					ProcessUrl schemeFormatter;
 					if (SchemeFormatting.TryGetValue(urlMatch.Groups["scheme"].Value, out schemeFormatter))
-						processesedItself = schemeFormatter(urlMatch, link, isHttps);
+						processedItself = schemeFormatter(urlMatch, link, isHttps);
 				}
 
-				if (!processesedItself)
+				if (!processedItself)
 				{
 					var matchedHostname = urlMatch.Groups["hostname"].Value;
-					ProcessUrl hostFormatter;
-					if (HostFormatting.TryGetValue(matchedHostname, out hostFormatter))
-						processesedItself = hostFormatter(urlMatch, link, isHttps);
+					if (HostFormatting.TryGetValue(matchedHostname, out var hostFormatter))
+						processedItself = hostFormatter(urlMatch, link, isHttps);
 					else
 					{
 						foreach (var host in _wellKnownHosts)
@@ -410,7 +407,7 @@ namespace Rsdn.Framework.Formatting
 				}
 			}
 
-			if (!processesedItself)
+			if (!processedItself)
 			{
 				AddClass(link, "m");
 				link.Target = "_blank";
@@ -843,7 +840,7 @@ namespace Rsdn.Framework.Formatting
 				new HtmlAnchor
 				{
 					Target = "_blank",
-					HRef = $"{GetPathToRoot()}/Forum/Info/{name.Groups[1].Value.EncodeAgainstXSS()}.aspx",
+					HRef = $"{GetPathToRoot()}/Forum/Info/{name.Groups[1].Value.EncodeUriAgainstXSS()}.aspx",
 					InnerText = name.Groups[1].Value
 				};
 			return AddClass(link, "m");
@@ -875,7 +872,7 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="email"></param>
 		/// <returns></returns>
 		public virtual string FormatEmail(string email) =>
-			$@"<a class='m' href='mailto:{email.EncodeAgainstXSS()}'>{email.ReplaceTags()}</a>";
+			$@"<a class='m' href='mailto:{email.EncodeUriAgainstXSS()}'>{email.ReplaceTags()}</a>";
 
 		/// <summary>
 		/// Массив символов для отсечения ведущих и концевых пробельных строк сообщений.

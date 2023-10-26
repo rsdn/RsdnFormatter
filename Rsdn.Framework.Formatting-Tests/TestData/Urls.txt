@@ -1,3 +1,4 @@
 ﻿﻿Text [url=http://rsdn.ru]Здесь[/url]
 Text [url=Здесь]http://rsdn.ru[/url]
 Amp [url=http://rsdn.ru?x=1&y=2]Здесь[/url]
+Text [url=http://rsdn.ru]Ссылка с пробелом[/url]

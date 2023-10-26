@@ -44,7 +44,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			var originalStream = asm.GetManifestResourceStream(typeof (_Dummy), name + ".txt");
 			var goldStream = asm.GetManifestResourceStream(typeof (_Dummy), name + ".gold");
 
-			Debug.Assert(originalStream != null, "originalStream != null");
+			Debug.Assert(originalStream != null, $"originalStream != null for {name} test case");
 			Debug.Assert(goldStream != null, "goldStream != null");
 
 			string original;

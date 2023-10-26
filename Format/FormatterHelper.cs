@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -181,6 +182,17 @@ namespace Rsdn.Framework.Formatting
 			return str == null ? null : ReplaceTags(str.ToString());
 		}
 
+		private static string MultiReplacer(string src, Dictionary<char, string> replaceMap)
+		{
+			var result = new StringBuilder(src.Length);
+			foreach (var ch in src)
+				if (!replaceMap.TryGetValue(ch, out var repl))
+					result.Append(ch);
+				else
+					result.Append(repl);
+			return result.ToString();
+		}
+
 		/// <summary>
 		/// Подготавливает текст для JScript.
 		/// </summary>
@@ -200,22 +212,38 @@ namespace Rsdn.Framework.Formatting
 					.Replace(":apostroph:", @"\'");
 		}
 
+		// BASEDON: AngleSharp HtmlMarkupFormatter
+		private static Dictionary<char, string> _htmlDangerCharsReplacer = 
+			new Dictionary<char, string>
+			{
+				{'&', "&amp;"},
+				{'\u00A0', "&nbsp;"},
+				{'>', "&gt;"},
+				{'<', "&lt;"},
+				{'\"', "&quot;"}
+			};
+
+		public static string EncodeTextAgainstXSS(this string value) =>
+			MultiReplacer(value, _htmlDangerCharsReplacer);
+
+		private static Dictionary<char, string> _urlDangerCharsReplacer =
+			new Dictionary<char, string>
+			{
+				{ ' ', "%20" },
+				{ '\t', "%09" },
+				{ '\'', "%27" },
+				{ '\"', "%22" }
+			};
+		
 		/// <summary>
-		/// Подготавливает текст для предотовращения XSS (Cross Site Scripting)
-		/// Используется, в основном для кодирования адресов (ссылок, картинок).
+		/// Подготавливает url для предотовращения XSS (Cross Site Scripting)
+		/// Используется для кодирования адресов (ссылок, картинок).
 		/// </summary>
-		/// <param name="value">Исходный текст.</param>
-		/// <returns>Преобразованный текст.</returns>
-		public static string EncodeAgainstXSS(this string value)
+		/// <param name="value">Исходный url.</param>
+		/// <returns>Преобразованный url.</returns>
+		public static string EncodeUriAgainstXSS(this string value)
 		{
-			return
-				string.IsNullOrEmpty(value)
-					? value
-					: value
-						.Replace(" ", "%20")
-						.Replace("\t", "%09")
-						.Replace("\'", "%27")
-						.Replace("\"", "&quot;");
+			return MultiReplacer(value, _urlDangerCharsReplacer);
 		}
 
 		/// <summary>
