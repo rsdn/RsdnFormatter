@@ -371,10 +371,10 @@
     max-width:100%;
 }
 .m img.small {
-    max-width: 20vw;
+    max-width: 10vw;
 }
 .m img.large {
-    max-width: 90vw;
+    max-width: 50vw;
 }
 .m img.i,
 .m img.t,

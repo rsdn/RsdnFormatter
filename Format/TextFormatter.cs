@@ -228,7 +228,7 @@ namespace Rsdn.Framework.Formatting
 		/// [img] тэг. С защитой от javascript.
 		/// </summary>
 		private static readonly Regex _imgTagRegex =
-			new Regex(@"(?i)(?<!\[)\[img\s*(?<decorator>\w+)?\s*\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
+			new Regex(@"(?i)(?<!\[)\[img\s*(=?)\s*(?<decorator>\w+)?\s*\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
 								RegexOptions.Compiled);
 
 		private static readonly Regex _validImgTagDecoratorRegex = new Regex(@"large|small", RegexOptions.Compiled);

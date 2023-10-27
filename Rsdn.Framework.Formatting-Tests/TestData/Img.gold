@@ -2,6 +2,10 @@
 	<body>
 <img border='0' src='http://foo.jpg' /><br />
 <img border='0' class='small' src='http://foo.jpg' /><br />
-<img border='0' class='large' src='http://foo.jpg' />
+<img border='0' class='large' src='http://foo.jpg' /><br />
+<img border='0' class='small' src='http://foo.jpg' /><br />
+<img border='0' class='large' src='http://foo.jpg' /><br />
+<img border='0' src='http://foo.jpg' /><br />
+<img border='0' src='http://foo.jpg' />
 	</body>
 </html>
