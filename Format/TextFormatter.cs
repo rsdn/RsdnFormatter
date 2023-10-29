@@ -181,7 +181,7 @@ namespace Rsdn.Framework.Formatting
 			new SmileReplacer(@":down:", "<img border='0' width='15' height='15' src='{0}down.gif' />", "down"),
 			new SmileReplacer(@":super:", "<img border='0' width='26' height='28' src='{0}super.gif' />", "super"),
 			new SmileReplacer(@":shuffle:", "<img border='0' width='15' height='20' src='{0}shuffle.gif' />", "shuffle"),
-			new SmileReplacer(@":crash:", "<img border='0' width='30' height='30' src='{0}crash.gif'/ >", "crash"),
+			new SmileReplacer(@":crash:", "<img border='0' width='30' height='26' src='{0}crash.gif'/ >", "crash"),
 			new SmileReplacer(@":maniac:", "<img border='0' width='70' height='25' src='{0}maniac.gif' />", "maniac"),
 			new SmileReplacer(@":user:", "<img border='0' width='40' height='20' src='{0}user.gif' />", "user"),
 			new SmileReplacer(@":wow:", "<img border='0' width='19' height='19' src='{0}wow.gif' />", "wow"),
@@ -197,7 +197,7 @@ namespace Rsdn.Framework.Formatting
 			new SmileReplacer(@"(?<!:):-?\(", "<img border='0' width='15' height='15' src='{0}frown.gif' />", "frown"),
 			new SmileReplacer(@"(?<!:):-[\\/]", "<img border='0' width='15' height='15' src='{0}smirk.gif' />", "smirk"),
 			new SmileReplacer(@":\?\?\?:", "<img border='0' width='15' height='22' src='{0}confused.gif' />", "confused"),
-			new SmileReplacer(@":facepalm:", "<img border='0' width='15' height='22' src='{0}facepalm.gif' />", "facepalm"),
+			new SmileReplacer(@":facepalm:", "<img border='0' width='18' height='18' src='{0}facepalm.gif' />", "facepalm"),
 			new SmileReplacer(@":sarcasm:", "<img border='0' width='50' height='38' src='{0}sarcasm.gif' />", "sarcasm")
 		};
 		#endregion
