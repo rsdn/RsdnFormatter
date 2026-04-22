@@ -47,7 +47,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			var formatter = new TextFormatter();
 			string result;
 			using (var reader = new StreamReader(srcPath))
-				result = string.Format("<html>\r\n\t<body>\r\n{0}\r\n\t</body>\r\n</html>", formatter.Format(reader.ReadToEnd()));
+				result = $"<html>\r\n\t<body>\r\n{formatter.Format(reader.ReadToEnd())}\r\n\t</body>\r\n</html>";
 
 			CompareSamples(goldPath, result);
 		}

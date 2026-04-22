@@ -11,12 +11,12 @@ namespace Rsdn.Framework.Formatting.Tests
 		public void Trim()
 		{
 			var trimChars = new[] {' ', '\r', '\n', '\t'};
-			Assert.AreEqual("test", new StringBuilder("test").Trim(trimChars).ToString());
-			Assert.AreEqual("test", new StringBuilder("  test").Trim(trimChars).ToString());
-			Assert.AreEqual("test", new StringBuilder("test  ").Trim(trimChars).ToString());
-			Assert.AreEqual("test", new StringBuilder("  test  ").Trim(trimChars).ToString());
-			Assert.AreEqual("test", new StringBuilder(" \r\ntest\r\n").Trim(trimChars).ToString());
-			Assert.AreEqual("test", new StringBuilder("\ttest\t   ").Trim(trimChars).ToString());
+			Assert.That(new StringBuilder("test").Trim(trimChars).ToString(), Is.EqualTo("test"));
+			Assert.That(new StringBuilder("  test").Trim(trimChars).ToString(), Is.EqualTo("test"));
+			Assert.That(new StringBuilder("test  ").Trim(trimChars).ToString(), Is.EqualTo("test"));
+			Assert.That(new StringBuilder("  test  ").Trim(trimChars).ToString(), Is.EqualTo("test"));
+			Assert.That(new StringBuilder(" \r\ntest\r\n").Trim(trimChars).ToString(), Is.EqualTo("test"));
+			Assert.That(new StringBuilder("\ttest\t   ").Trim(trimChars).ToString(), Is.EqualTo("test"));
 		}
 	}
 }

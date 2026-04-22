@@ -15,7 +15,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			var output = formatter.Format(markup);
 			var result = $"<html>\r\n\t<body>\r\n{output}\r\n\t</body>\r\n</html>";
 
-			return result.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+			return result.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
 		}
 	}
 }

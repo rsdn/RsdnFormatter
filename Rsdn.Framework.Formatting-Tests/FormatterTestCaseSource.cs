@@ -45,7 +45,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			var goldStream = asm.GetManifestResourceStream(typeof (_Dummy), name + ".gold");
 
 			Debug.Assert(originalStream != null, $"originalStream != null for {name} test case");
-			Debug.Assert(goldStream != null, "goldStream != null");
+			Debug.Assert(goldStream != null);
 
 			string original;
 			string gold;
@@ -59,7 +59,7 @@ namespace Rsdn.Framework.Formatting.Tests
 			var testCaseData = new TestCaseData(original);
 
 			testCaseData.SetName(name);
-			testCaseData.Returns(gold.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries));
+			testCaseData.Returns(gold.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries));
 
 			return testCaseData;
 		}

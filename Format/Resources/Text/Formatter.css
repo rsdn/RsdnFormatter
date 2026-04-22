@@ -594,3 +594,28 @@
   font-size: 12px;
   background-color: #EEEEEE;
 }
+.m .spoiler {
+  margin: 10px 0;
+  position: relative;
+  padding-left: 12px;
+}
+.m .spoiler-title {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 2px 5px 2px 20px;
+  list-style: none;
+  background-image: url(%URL%plus.gif);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+}
+.m .spoiler-title::-webkit-details-marker {
+  display: none;
+}
+.m .spoiler[open] .spoiler-title {
+  background-image: url(%URL%minus.gif);
+}
+.m .spoiler-content {
+  padding: 5px 10px 5px 20px;
+  border-left: 1px dotted #999;
+  margin-left: 6px;
+}

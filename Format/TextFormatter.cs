@@ -37,7 +37,7 @@ namespace Rsdn.Framework.Formatting
 		public TextFormatter(ProcessImagesDelegate imagesDelegate)
 		{
 			using (var r = ResourceProvider.ReadResource("hiddentext.htm"))
-				_hiddenTextSnippet = ((string)r.Read()).Replace("\r\n", string.Empty);
+				_hiddenTextSnippet = (string)r.Read();
 
 			// initialize image handlers
 			ImagesDelegate = imagesDelegate ?? DefaultProcessImagesDelegate;
@@ -225,7 +225,7 @@ namespace Rsdn.Framework.Formatting
 		protected ProcessImagesDelegate ImagesDelegate;
 
 		/// <summary>
-		/// [img] тэг. С защитой от javascript.
+		/// [img] тэг. С защитой от JavaScript.
 		/// </summary>
 		private static readonly Regex _imgTagRegex =
 			new Regex(@"(?i)(?<!\[)\[img\s*(=?)\s*(?<decorator>\w+)?\s*\]\s*(?!(javascript|vbscript|jscript):)(?<url>.*?)\s*\[[\\/]img\]",
@@ -388,8 +388,7 @@ namespace Rsdn.Framework.Formatting
 				else
 				{
 					// process custom scheme formatting, if exists
-					ProcessUrl schemeFormatter;
-					if (SchemeFormatting.TryGetValue(urlMatch.Groups["scheme"].Value, out schemeFormatter))
+					if (SchemeFormatting.TryGetValue(urlMatch.Groups["scheme"].Value, out var schemeFormatter))
 						processedItself = schemeFormatter(urlMatch, link, isHttps);
 				}
 
@@ -417,7 +416,7 @@ namespace Rsdn.Framework.Formatting
 		}
 
 		/// <summary>
-		/// Add css class to HtmlAnchor
+		/// Add CSS class to HtmlAnchor
 		/// </summary>
 		protected static HtmlAnchor AddClass(HtmlAnchor link, string className)
 		{
@@ -476,53 +475,44 @@ namespace Rsdn.Framework.Formatting
 			var urlHostname = urlMatch.Groups["hostname"];
 			var originalScheme = urlScheme.Success ? urlScheme.Value : Uri.UriSchemeHttp;
 
-			Action<String> rsdnHostReplacer =
-				delegate(string urlHost)
-					{
-						var schemeMatchStart = urlScheme.Success ? urlScheme.Index : urlMatch.Index;
-						link.HRef =
-							(isHttps
-								?
-									Uri.UriSchemeHttps
-								: originalScheme) + (urlScheme.Success ? null : "://") +
-							link.HRef.Substring(schemeMatchStart - urlMatch.Index + urlScheme.Length,
-																	urlHostname.Index - schemeMatchStart - urlScheme.Length) +
-							urlHost +
-							link.HRef.Substring(urlHostname.Index - urlMatch.Index + urlHostname.Length);
-					};
-
 			IDictionary<string, ThreadStart> rsdnSchemesProcessing =
 				new Dictionary<string, ThreadStart>(3, StringComparer.OrdinalIgnoreCase);
 
 			// redirect rsdn svn
 			rsdnSchemesProcessing["svn"] =
-				(() => rsdnHostReplacer("svn.rsdn.ru"));
+				(() => RsdnHostReplacer("svn.rsdn.ru"));
 
 			// rebase only http or https links
 			rsdnSchemesProcessing[Uri.UriSchemeHttp] =
 				rsdnSchemesProcessing[Uri.UriSchemeHttps] =
-				(() => rsdnHostReplacer(CanonicalRsdnHostName));
+				(() => RsdnHostReplacer(CanonicalRsdnHostName));
 
 			if (rsdnSchemesProcessing.ContainsKey(originalScheme))
 				rsdnSchemesProcessing[originalScheme]();
 
 			AddClass(link, "m");
-			if (_openRsdnLinksInNewWindow)
+			if (OpenRsdnLinksInNewWindow)
 				link.Target = "_blank";
 
 			return true;
-		}
 
-		private bool _openRsdnLinksInNewWindow = true;
+			void RsdnHostReplacer(string urlHost)
+			{
+				var schemeMatchStart = urlScheme.Success ? urlScheme.Index : urlMatch.Index;
+				link.HRef = (isHttps
+						? Uri.UriSchemeHttps
+						: originalScheme) + (urlScheme.Success ? null : "://")
+						                  + link.HRef.Substring(
+							                  schemeMatchStart - urlMatch.Index + urlScheme.Length,
+							                  urlHostname.Index - schemeMatchStart - urlScheme.Length) + urlHost +
+						                  link.HRef.Substring(urlHostname.Index - urlMatch.Index + urlHostname.Length);
+			}
+		}
 
 		/// <summary>
 		/// How to open internal RSDN links.
 		/// </summary>
-		public bool OpenRsdnLinksInNewWindow
-		{
-			get { return _openRsdnLinksInNewWindow; }
-			set { _openRsdnLinksInNewWindow = value; }
-		}
+		public bool OpenRsdnLinksInNewWindow { get; set; } = true;
 
 		/// <summary>
 		/// Server's name for using in rsdn host replacing.
@@ -534,8 +524,8 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		public virtual string CanonicalRsdnHostName
 		{
-			get { return ServerName ?? Formatting.Format.RsdnDomainName; }
-			set { ServerName = value; }
+			get => ServerName ?? Formatting.Format.RsdnDomainName;
+			set => ServerName = value;
 		}
 
 		/*
@@ -884,7 +874,6 @@ namespace Rsdn.Framework.Formatting
 		/// <b>НЕПОТОКОБЕЗОПАСНЫЙ!</b>
 		/// </summary>
 		/// <param name="txt">Исходный текст.</param>
-		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
 		public virtual string Format(string txt)
 		{
@@ -911,7 +900,7 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="txt">Исходный текст.</param>
 		/// <param name="smile">Признак обработки смайликов.</param>
 		/// <param name="doNotReplaceTags">Не заменять служебные символы HTML.</param>
-		/// <param name="doNotFormatImplicitLinks">Не форматировать явно не указанные ссылки.</param>
+		/// <param name="doNotFormatImplicitLinks">Не форматировать явно неуказанные ссылки.</param>
 		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
 		public virtual string Format(
@@ -931,7 +920,7 @@ namespace Rsdn.Framework.Formatting
 			// Внимание! Порядок преобразования ВАЖЕН.
 			//
 
-			// Замена  небезопасных символов
+			// Замена небезопасных символов
 			if (!doNotReplaceTags)
 				sb = sb.ReplaceTagsWQ();
 
@@ -1047,9 +1036,7 @@ namespace Rsdn.Framework.Formatting
 						{
 							// 
 							//
-							var temp = tag;
-							tag = url;
-							url = temp;
+							(tag, url) = (url, tag);
 						}
 
 				url = url.Replace("&amp;", "&"); // Returns escaped ampersands
@@ -1205,9 +1192,8 @@ namespace Rsdn.Framework.Formatting
 					m =>
 					{
 						var uriText = m.Groups["url"].Value;
-						Uri uri;
 						return
-							$"[url={uriText}]Image: {(Uri.TryCreate(uriText, UriKind.Absolute, out uri) ? Uri.UnescapeDataString(Path.GetFileName(uri.AbsolutePath)) : uriText)}[/url]";
+							$"[url={uriText}]Image: {(Uri.TryCreate(uriText, UriKind.Absolute, out var uri) ? Uri.UnescapeDataString(Path.GetFileName(uri.AbsolutePath)) : uriText)}[/url]";
 					});
 		}
 
