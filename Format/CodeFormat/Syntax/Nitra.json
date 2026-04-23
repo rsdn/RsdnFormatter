@@ -1,0 +1,56 @@
+{
+  "name": "Nitra",
+  "displayName": "Nitra",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m://.*?$)",
+        "(?s:/\\*.*?\\*/)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "'([^'\\\\]|\\\\['\"\\\\0abfnrtv]|\\\\x[0-9aAbBcCdDeEfF]{1,4})'",
+        "(?<!@)\"((?<!\\\\)\\\\\"|[^\"])*\"",
+        "(?s)@\"(\"\"|[^\"])*\""
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "#\\s*",
+      "postfix": "\\b",
+      "keywords": [
+        "if", "elif", "else", "endif", "define", "undef", "warning", "error",
+        "line", "region", "endregion", "pragma"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "_", "abstract", "alias", "as", "await", "base", "bool", "break", "byte",
+        "catch", "char", "checked", "class", "company", "continue", "decimal",
+        "declaration", "declarations", "def", "default", "delegate", "do", "double",
+        "else", "enum", "event", "extend", "extension", "extern", "false", "finally",
+        "float", "for", "foreach", "if", "in", "inout", "int", "interface", "internal",
+        "is", "keyword", "language", "lock", "long", "macro", "map", "marker", "match",
+        "namespace", "new", "null", "object", "out", "override", "params", "precedence",
+        "private", "protected", "public", "ref", "regex", "return", "right-associative",
+        "rule", "sbyte", "sealed", "short", "span", "SpanClass", "start", "StartRule",
+        "static", "string", "struct", "style", "syntax", "this", "throw", "token", "true",
+        "try", "typeof", "uint", "ulong", "unchecked", "unless", "ushort", "using",
+        "variant", "virtual", "void", "volatile", "when", "where", "while", "with",
+        "add", "get", "partial", "remove", "set", "mutable", "value", "yield",
+        "assembly", "field", "method", "module", "param", "type", "typevar"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Erlang",
+  "displayName": "Erlang",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m:%.*?$)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"([^\"]|\\\\\")*\"",
+        "'([^\"]|\\\\')*'"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "after", "begin", "case", "catch", "cond", "end", "fun", "if", "let", "of",
+        "query", "receive", "try", "when"
+      ]
+    }
+  ]
+}

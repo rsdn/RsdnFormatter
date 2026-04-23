@@ -1,0 +1,45 @@
+{
+  "name": "VisualBasic",
+  "displayName": "Visual Basic",
+  "options": "(?in)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m:'.*?$)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"([^\"]|\"\")*\""
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "ignoreCase": true,
+      "keywords": [
+        "AddHandler", "AddressOf", "Alias", "And", "AndAlso", "Ansi", "As", "Assembly",
+        "Auto", "ByRef", "ByVal", "Call", "Case", "Catch", "Class", "Const", "Continue",
+        "Declare", "Default", "Delegate", "Dim", "DirectCast", "Do", "Each", "Else",
+        "ElseIf", "End", "Enum", "Erase", "Error", "Event", "Exit", "Finally", "For",
+        "Friend", "Function", "Get", "GetType", "GoSub", "GoTo", "Handles", "If",
+        "Implements", "Imports", "In", "Inherits", "Interface", "Is", "Let", "Lib",
+        "Like", "Loop", "Me", "Mod", "MustInherit", "MustOverride", "MyBase", "MyClass",
+        "Namespace", "New", "Next", "Not", "Nothing", "NotInheritable", "NotOverridable",
+        "Object", "On", "Option", "Optional", "Or", "OrElse", "Overloads", "Overridable",
+        "Overrides", "ParamArray", "Preserve", "Private", "Property", "Protected",
+        "Public", "RaiseEvent", "ReadOnly", "ReDim", "Rem", "RemoveHandler", "Resume",
+        "Return", "Select", "Set", "Shadows", "Shared", "Single", "Static", "Step",
+        "Stop", "String", "Structure", "Sub", "SyncLock", "Then", "Throw", "To", "Try",
+        "TypeOf", "Unicode", "Until", "Variant", "Wend", "When", "While", "With",
+        "WithEvents", "WriteOnly", "Xor"
+      ]
+    }
+  ]
+}

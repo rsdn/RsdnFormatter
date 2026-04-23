@@ -13,6 +13,8 @@
 		<PackageReleaseNotes>Fixes</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<RepositoryType>Git</RepositoryType>
+		<LangVersion>14</LangVersion>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="CodeFormat\Patterns\Assembler.xml" />
@@ -79,6 +81,9 @@
 	  <None Remove="Resources\Text\HiddenText.htm" />
 	</ItemGroup>
 	<ItemGroup>
+	  <!-- New JSON syntax definitions -->
+	  <EmbeddedResource Include="CodeFormat\Syntax\*.json" />
+	  <!-- Legacy XML patterns (kept for backward compatibility) -->
 	  <EmbeddedResource Include="CodeFormat\Patterns\Assembler.xml" />
 	  <EmbeddedResource Include="CodeFormat\Patterns\C.xml" />
 	  <EmbeddedResource Include="CodeFormat\Patterns\CSharp.xml" />
@@ -144,6 +149,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+	  <PackageReference Include="System.Text.Json" Version="8.0.5" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Include="..\LICENSE.md">

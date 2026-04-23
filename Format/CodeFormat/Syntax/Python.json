@@ -1,0 +1,35 @@
+{
+  "name": "Python",
+  "displayName": "Python",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m:\\#.*?$)",
+        "(?s:[uUrR]?\"\"\".*?\"\"\")",
+        "(?s:[uUrR]?'''.*?''')"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "[uUrR]?\"((?<!\\\\)\\\\\"|[^\"])*\"",
+        "[uUrR]?'((?<!\\\\)\\\\'|[^'])*'"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "and", "assert", "break", "class", "continue", "def", "del", "elif", "else",
+        "except", "exec", "finally", "for", "from", "global", "if", "import", "in",
+        "is", "not", "or", "pass", "print", "raise", "return", "try", "while", "yield"
+      ]
+    }
+  ]
+}

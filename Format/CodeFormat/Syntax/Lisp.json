@@ -1,0 +1,47 @@
+{
+  "name": "Lisp",
+  "displayName": "Lisp",
+  "options": "(?in)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m:;.*?$)",
+        "(?s:#\\|.*?\\|#)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"([^\"]|\\\\\")*\""
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\(",
+      "postfix": "\\b",
+      "ignoreCase": true,
+      "keywords": [
+        "defun", "defvar", "defparameter", "defconstant", "defmacro", "declaim",
+        "declare", "let", "let*", "lambda", "if", "when", "unless", "cond", "case",
+        "loop", "do", "dolist", "dotimes", "block", "return", "return-from",
+        "catch", "throw", "unwind-protect", "handler-case", "restart-case",
+        "progn", "prog1", "prog2", "tagbody", "go", "multiple-value-bind",
+        "multiple-value-call", "values", "function", "funcall", "apply", "mapcar",
+        "mapc", "mapcan", "maplist", "mapl", "mapcon", "reduce", "remove-if",
+        "remove-if-not", "find-if", "find-if-not", "count-if", "count-if-not",
+        "position-if", "position-if-not", "sort", "stable-sort", "merge",
+        "eval", "compile", "load", "require", "provide", "in-package", "defpackage",
+        "use-package", "import", "export", "intern", "find-symbol", "make-package",
+        "with-open-file", "with-input-from-string", "with-output-to-string",
+        "read", "read-line", "read-char", "write", "print", "prin1", "princ",
+        "format", "terpri", "fresh-line", "finish-output", "force-output",
+        "clear-output", "close", "open", "probe-file", "file-exists-p",
+        "directory", "ensure-directories-exist", "delete-file", "rename-file"
+      ]
+    }
+  ]
+}

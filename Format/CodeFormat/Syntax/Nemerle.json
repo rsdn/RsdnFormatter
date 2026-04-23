@@ -1,0 +1,54 @@
+{
+  "name": "Nemerle",
+  "displayName": "Nemerle",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m://.*?$)",
+        "(?s:/\\*.*?\\*/)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "'([^'\\\\]|\\\\['\"\\\\0abfnrtv]|\\\\x[0-9aAbBcCdDeEfF]{1,4})'",
+        "(?<!@)\"((?<!\\\\)\\\\\"|[^\"])*\"",
+        "(?s)@\"(\"\"|[^\"])*\""
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "#\\s*",
+      "postfix": "\\b",
+      "keywords": [
+        "if", "elif", "else", "endif", "define", "undef", "warning", "error",
+        "line", "region", "endregion", "pragma"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "_", "abstract", "as", "await", "base", "bool", "break", "byte", "catch",
+        "char", "checked", "class", "continue", "decimal", "def", "default", "delegate",
+        "do", "double", "else", "enum", "event", "extern", "false", "finally", "float",
+        "for", "foreach", "if", "in", "int", "interface", "internal", "is", "lock",
+        "keyword", "long", "macro", "match", "marker", "namespace", "new", "null",
+        "object", "out", "override", "params", "private", "protected", "public", "regex",
+        "ref", "return", "sbyte", "sealed", "short", "span", "static", "string", "struct",
+        "syntax", "this", "throw", "token", "true", "try", "typeof", "uint", "ulong",
+        "unchecked", "unless", "ushort", "using", "variant", "virtual", "void", "volatile",
+        "when", "where", "while", "with",
+        "add", "get", "partial", "remove", "set", "mutable", "value", "yield",
+        "assembly", "field", "method", "module", "param", "type", "typevar"
+      ]
+    }
+  ]
+}

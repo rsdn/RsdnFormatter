@@ -95,16 +95,16 @@ namespace Rsdn.Framework.Formatting
 		protected static StringBuilder PaintCode(Match codeMatch)
 		{
 			var tagName = codeMatch.Groups["tag"].Value;
-			var formatter = FormatterHelper.GetCodeFormatterByTag(tagName);
+			var highlighter = FormatterHelper.GetCodeHighlighterByTag(tagName);
 
 			// Заменяем табуляцию на 4 пробела.
 			var text = codeMatch.Groups["body"].Value.Replace("\t", "    ");
 
 			// Если есть такой тип кода
-			if (formatter != null)
+			if (highlighter != null)
 			{
 				// Расцветка синтаксиса.
-				text = formatter.Transform(text);
+				text = highlighter.Highlight(text);
 				// Замена временных тегов на html.
 				text = SetFont(text);
 			}

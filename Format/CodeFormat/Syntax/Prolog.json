@@ -1,0 +1,41 @@
+{
+  "name": "Prolog",
+  "displayName": "Prolog",
+  "options": "(?in)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m:%.*?$)",
+        "(?s:/\\*.*?\\*/)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"([^\"]|\\\\\")*\""
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "ignoreCase": true,
+      "keywords": [
+        "abolish", "abort", "arg", "asserta", "assertz", "atom", "atomic",
+        "bagof", "break", "call", "case", "catch", "clause", "close",
+        "concat", "consult", "dynamic", "else", "end", "fail", "false",
+        "findall", "float", "flush_output", "forall", "functor", "get",
+        "halt", "if", "integer", "is", "length", "listing", "mod", "multifile",
+        "nl", "nonvar", "not", "notrace", "number", "once", "op", "open",
+        "peek_char", "peek_code", "put", "read", "repeat", "retract",
+        "retractall", "see", "seeing", "seen", "setof", "skip", "static",
+        "sub_atom", "tell", "telling", "term", "throw", "trace", "true",
+        "ttyflush", "unify_with_occurs_check", "unknown", "var", "write"
+      ]
+    }
+  ]
+}

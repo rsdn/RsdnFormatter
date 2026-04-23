@@ -1,0 +1,48 @@
+{
+  "name": "Rust",
+  "displayName": "Rust",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m://.*?$)",
+        "(?s:/\\*.*?\\*/)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "'([^'\\\\]|\\\\['\"\\\\0abfnrtv]|\\\\x[0-9aAbBcCdDeEfF]{1,4})'",
+        "(?<!@)\"((?<!\\\\)\\\\\"|[^\"])*\"",
+        "@\"(\"\"|[^\"])*\""
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "!\\b",
+      "includePostfixInMatch": true,
+      "keywords": [
+        "assert",
+        "fail"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "break", "continue", "do", "extern", "for", "in", "if", "impl", "let", "loop",
+        "once", "priv", "pub", "return", "unsafe", "while", "use", "mod", "trait", "struct",
+        "enum", "type", "fn", "proc", "mut", "ref", "static", "const", "true", "false", "as",
+        "int", "uint", "float", "char", "bool", "u8", "u16", "u32", "u64", "f32", "f64",
+        "i8", "i16", "i32", "i64", "str", "Self"
+      ]
+    }
+  ]
+}

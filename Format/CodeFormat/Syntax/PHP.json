@@ -1,0 +1,40 @@
+{
+  "name": "PHP",
+  "displayName": "PHP",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m://.*?$)",
+        "(?m:\\#.*?$)",
+        "(?s:/\\*.*?\\*/)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"((?<!\\\\)\\\\\"|[^\"])*\"",
+        "'((?<!\\\\)\\\\'|[^'])*'"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "abstract", "and", "array", "as", "break", "case", "catch", "cfunction", "class",
+        "clone", "const", "continue", "declare", "default", "die", "do", "echo", "else",
+        "elseif", "empty", "enddeclare", "endfor", "endforeach", "endif", "endswitch",
+        "endwhile", "eval", "exception", "exit", "extends", "final", "for", "foreach",
+        "function", "global", "if", "implements", "include", "include_once", "interface",
+        "isset", "list", "new", "old_function", "or", "php_user_filter", "print", "private",
+        "protected", "public", "require", "require_once", "return", "static", "switch",
+        "this", "throw", "try", "unset", "use", "var", "while", "xor"
+      ]
+    }
+  ]
+}

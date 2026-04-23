@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Spoiler</title>
+    <link rel="stylesheet" href="Formatter.css">
+</head>
+<body>
+<div class="m">
+<p>Текст перед спойлером</p>
+<details class="spoiler"><summary class="spoiler-title">Тест скрытого текста</summary><div class="spoiler-content">Скрытое содержимое спойлера!
+
+Можно писать что угодно:
+- Список
+- Элементы
+
+[code=csharp]var x = 1;[/code]
+
+</div></details>
+<p>Текст после спойлера</p>
+
+<p>Вложенные спойлеры:</p>
+<details class="spoiler"><summary class="spoiler-title">Уровень 1</summary><div class="spoiler-content">Текст уровня 1
+<details class="spoiler"><summary class="spoiler-title">Уровень 2</summary><div class="spoiler-content">Текст уровня 2</div></details>
+Продолжение уровня 1
+</div></details>
+
+</div>
+</body>
+</html>

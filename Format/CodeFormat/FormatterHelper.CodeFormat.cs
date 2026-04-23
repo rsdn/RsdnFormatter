@@ -2,216 +2,292 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
 namespace Rsdn.Framework.Formatting
 {
-	[PublicAPI]
-	partial class FormatterHelper
-	{
-		private static readonly Dictionary<string, CodeLangInfo> _langInfos =
-			new Dictionary<string, CodeLangInfo>();
-		private static readonly Dictionary<string, Lazy<CodeFormatter>> _codeFormatters =
-			new Dictionary<string, Lazy<CodeFormatter>>(StringComparer.OrdinalIgnoreCase);
+    [PublicAPI]
+    partial class FormatterHelper
+    {
+        private static readonly Dictionary<string, CodeLangInfo> _langInfos =
+            new Dictionary<string, CodeLangInfo>();
+        
+        private static readonly Dictionary<string, Lazy<CodeHighlighter>> _codeHighlighters =
+            new Dictionary<string, Lazy<CodeHighlighter>>(StringComparer.OrdinalIgnoreCase);
 
-		private static readonly Dictionary<string, string> _codeTags =
-			new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-				{
-					{"csharp", "CSharp"},
-					{"cs", "CSharp"},
-					{"c#", "CSharp"},
+        private static readonly Dictionary<string, string> _codeTags =
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                {"csharp", "CSharp"},
+                {"cs", "CSharp"},
+                {"c#", "CSharp"},
 
-					{"nemerle", "Nemerle"},
-					{"nitra", "Nitra"},
+                {"nemerle", "Nemerle"},
+                {"nitra", "Nitra"},
 
-					{"asm", "Assembler"},
+                {"asm", "Assembler"},
 
-					{"ccode", "C"},
-					{"c", "C"},
-					{"cpp", "C"},
+                {"ccode", "C"},
+                {"c", "C"},
+                {"cpp", "C"},
 
-					{"objc", "objc"},
+                {"objc", "ObjC"},
 
-					{"idl", "IDL"},
-					{"midl", "IDL"},
+                {"idl", "IDL"},
+                {"midl", "IDL"},
 
-					{"java", "Java"},
+                {"java", "Java"},
 
-					{"il", "MSIL"},
-					{"msil", "MSIL"},
+                {"il", "MSIL"},
+                {"msil", "MSIL"},
 
-					{"pascal", "Pascal"},
-					{"delphi", "Pascal"},
+                {"pascal", "Pascal"},
+                {"delphi", "Pascal"},
 
-					{"vb", "VisualBasic"},
+                {"vb", "VisualBasic"},
 
-					{"sql", "SQL"},
+                {"sql", "SQL"},
 
-					{"perl", "Perl"},
+                {"perl", "Perl"},
 
-					{"php", "PHP"},
+                {"php", "PHP"},
 
-					{"xml", "XSL"},
-					{"xsl", "XSL"},
+                {"xml", "XSL"},
+                {"xsl", "XSL"},
 
-					{"erlang", "Erlang"},
-					{"erl", "Erlang"},
+                {"erlang", "Erlang"},
+                {"erl", "Erlang"},
 
-					{"haskell", "Haskell"},
-					{"hs", "Haskell"},
+                {"haskell", "Haskell"},
+                {"hs", "Haskell"},
 
-					{"lisp", "Lisp"},
+                {"lisp", "Lisp"},
 
-					{"ml", "Ocaml"},
-					{"ocaml", "Ocaml"},
+                {"ml", "Ocaml"},
+                {"ocaml", "Ocaml"},
 
-					{"prolog", "Prolog"},
+                {"prolog", "Prolog"},
 
-					{"py", "Python"},
-					{"python", "Python"},
+                {"py", "Python"},
+                {"python", "Python"},
 
-					{"rb", "Ruby"},
-					{"ruby", "Ruby"},
-										
-										{"rust", "Rust"},
+                {"rb", "Ruby"},
+                {"ruby", "Ruby"},
+                                
+                {"rust", "Rust"},
 
-					{"code", null},
-					{"pre", null}
-				};
+                {"code", null},
+                {"pre", null}
+            };
 
-		static FormatterHelper()
-		{
-			var asm = typeof (FormatterHelper).Assembly;
-			var resources =
-				asm
-					.GetManifestResourceNames()
-					.Where(
-						name =>
-							name.StartsWith("Rsdn.Framework.Formatting.CodeFormat.Patterns")
-							&& name.EndsWith(".xml"))
-					.Select(x => asm.GetManifestResourceStream(x));
-			foreach (var stream in resources)
-			{
-				var ms = new MemoryStream();
-				var buf = new byte[65536];
-				int readed;
-				while ((readed = stream.Read(buf, 0, buf.Length)) > 0)
-					ms.Write(buf, 0, readed);
-				ms.Seek(0, SeekOrigin.Begin);
+        static FormatterHelper()
+        {
+            // Загружаем JSON-файлы синтаксиса из встроенных ресурсов
+            var asm = typeof(FormatterHelper).Assembly;
+            var resourceNames = asm.GetManifestResourceNames();
+            
+            foreach (var resourceName in resourceNames)
+            {
+                if (!resourceName.Contains(".Syntax.") || !resourceName.EndsWith(".json"))
+                    continue;
 
-				var info = RetrieveLangInfo(ms);
-				if (_langInfos.ContainsKey(info.Name))
-					throw new ApplicationException("Duplicate language definition");
-				_langInfos.Add(info.Name, info);
+                using var stream = asm.GetManifestResourceStream(resourceName);
+                if (stream == null) continue;
 
-				ms.Seek(0, SeekOrigin.Begin);
-				_codeFormatters.Add(
-					info.Name,
-					new Lazy<CodeFormatter>(() => new CodeFormatter(info.Name, ms)));
-			}
-		}
+                using var reader = new StreamReader(stream);
+                var json = reader.ReadToEnd();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                options.Converters.Add(new JsonStringEnumConverter());
+                var syntax = JsonSerializer.Deserialize<SyntaxDefinition>(json, options);
+                
+                if (syntax == null || string.IsNullOrEmpty(syntax.Name))
+                    continue;
 
-		private static CodeLangInfo RetrieveLangInfo(Stream stream)
-		{
-			var reader = XmlReader.Create(stream);
-			reader.MoveToContent();
-			if (!reader.IsStartElement("language"))
-				throw new ApplicationException("invalid format");
-			var name = reader["name"];
-			if (string.IsNullOrEmpty(name))
-				throw new ApplicationException("name not specified");
-			var displayName = reader["display-name"];
-			return
-				new CodeLangInfo(
-					name,
-					!string.IsNullOrEmpty(displayName) ? displayName : name);
-		}
+                if (_langInfos.ContainsKey(syntax.Name))
+                    continue;
 
-		/// <summary>
-		/// Returns all supported language infos.
-		/// </summary>
-		[NotNull]
-		public static IEnumerable<CodeLangInfo> GetLangInfos()
-		{
-			return _langInfos.Values;
-		}
+                _langInfos.Add(syntax.Name, new CodeLangInfo(syntax.Name, syntax.DisplayNameOrName));
+                
+                // Создаём Lazy для отложенной инициализации
+                var capturedSyntax = syntax;
+                _codeHighlighters.Add(
+                    syntax.Name,
+                    new Lazy<CodeHighlighter>(() => new CodeHighlighter(capturedSyntax)));
+            }
+        }
 
-		/// <summary>
-		/// Returns code formatter by language name.
-		/// </summary>
-		public static CodeFormatter GetCodeFormatter([NotNull] string name)
-		{
-			if (name == null) throw new ArgumentNullException(nameof(name));
+        /// <summary>
+        /// Returns all supported language infos.
+        /// </summary>
+        [NotNull]
+        public static IEnumerable<CodeLangInfo> GetLangInfos()
+        {
+            return _langInfos.Values;
+        }
 
-			Lazy<CodeFormatter> cf;
-			if (!_codeFormatters.TryGetValue(name, out cf))
-				throw new ArgumentException("Unsupported language");
-			return cf.Value;
-		}
+        /// <summary>
+        /// Returns code highlighter by language name.
+        /// </summary>
+        public static CodeHighlighter GetCodeHighlighter([NotNull] string name)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
 
-		/// <summary>
-		/// Returns code formatter by language info.
-		/// </summary>
-		[NotNull]
-		public static CodeFormatter GetCodeFormatter([NotNull] this CodeLangInfo info)
-		{
-			if (info == null) throw new ArgumentNullException(nameof(info));
-			return GetCodeFormatter(info.Name);
-		}
+            if (!_codeHighlighters.TryGetValue(name, out var highlighter))
+                throw new ArgumentException("Unsupported language");
+            
+            return highlighter.Value;
+        }
 
-		/// <summary>
-		/// Markup code with xml.
-		/// </summary>
-		[NotNull]
-		public static string MarkupCode([NotNull] string langName, [NotNull] string source)
-		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			return GetCodeFormatter(langName).Transform(source);
-		}
+        /// <summary>
+        /// Returns code highlighter by language info.
+        /// </summary>
+        [NotNull]
+        public static CodeHighlighter GetCodeHighlighter([NotNull] this CodeLangInfo info)
+        {
+            if (info == null) throw new ArgumentNullException(nameof(info));
+            return GetCodeHighlighter(info.Name);
+        }
 
-		/// <summary>
-		/// Markup code with xml.
-		/// </summary>
-		[NotNull]
-		public static string MarkupCode(
-			[NotNull] this CodeLangInfo langInfo,
-			[NotNull] string source)
-		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			return GetCodeFormatter(langInfo).Transform(source);
-		}
+        /// <summary>
+        /// Markup code with html tags.
+        /// </summary>
+        [NotNull]
+        public static string MarkupCode([NotNull] string langName, [NotNull] string source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return GetCodeHighlighter(langName).Highlight(source);
+        }
 
-		/// <summary>
-		/// Returns all known tag names.
-		/// </summary>
-		public static IEnumerable<string> GetCodeTagNames()
-		{
-			return _codeTags.Keys;
-		}
+        /// <summary>
+        /// Markup code with html tags.
+        /// </summary>
+        [NotNull]
+        public static string MarkupCode(
+            [NotNull] this CodeLangInfo langInfo,
+            [NotNull] string source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return GetCodeHighlighter(langInfo).Highlight(source);
+        }
 
-		/// <summary>
-		/// Returns code formatter by tag name.
-		/// </summary>
-		[CanBeNull]
-		public static CodeFormatter GetCodeFormatterByTag([NotNull] string tagName)
-		{
-			if (tagName == null) throw new ArgumentNullException(nameof(tagName));
-			string name;
-			if (!_codeTags.TryGetValue(tagName, out name) || name == null)
-				return null;
-			return GetCodeFormatter(name);
-		}
+        /// <summary>
+        /// Returns all known tag names.
+        /// </summary>
+        public static IEnumerable<string> GetCodeTagNames()
+        {
+            return _codeTags.Keys;
+        }
 
-		/// <summary>
-		/// Markup code with xml.
-		/// </summary>
-		[NotNull]
-		public static string MarkupCodeByTag([NotNull] string tagName, [NotNull] string source)
-		{
-			var cf = GetCodeFormatterByTag(tagName);
-			return cf == null ? source : cf.Transform(source);
-		}
-	}
+        /// <summary>
+        /// Returns code highlighter by tag name.
+        /// </summary>
+        [CanBeNull]
+        public static CodeHighlighter GetCodeHighlighterByTag([NotNull] string tagName)
+        {
+            if (tagName == null) throw new ArgumentNullException(nameof(tagName));
+            
+            if (!_codeTags.TryGetValue(tagName, out var name) || name == null)
+                return null;
+            
+            return GetCodeHighlighter(name);
+        }
+
+        /// <summary>
+        /// Markup code with html tags.
+        /// </summary>
+        [NotNull]
+        public static string MarkupCodeByTag([NotNull] string tagName, [NotNull] string source)
+        {
+            var highlighter = GetCodeHighlighterByTag(tagName);
+            return highlighter == null ? source : highlighter.Highlight(source);
+        }
+
+        #region Backward Compatibility
+
+        // Для обратной совместимости со старым API
+        private static readonly Dictionary<string, Lazy<CodeFormatter>> _codeFormatters =
+            new Dictionary<string, Lazy<CodeFormatter>>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Returns code formatter by language name.
+        /// Deprecated: Use GetCodeHighlighter instead.
+        /// </summary>
+        [Obsolete("Use GetCodeHighlighter instead")]
+        public static CodeFormatter GetCodeFormatter([NotNull] string name)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            
+            if (!_codeFormatters.TryGetValue(name, out var formatter))
+            {
+                // Создаем адаптер, если есть новый highlighter
+                if (_codeHighlighters.TryGetValue(name, out var highlighter))
+                {
+                    formatter = new Lazy<CodeFormatter>(() => 
+                        new CodeFormatterAdapter(highlighter.Value));
+                    _codeFormatters[name] = formatter;
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported language");
+                }
+            }
+            
+            return formatter.Value;
+        }
+
+        /// <summary>
+        /// Returns code formatter by language info.
+        /// Deprecated: Use GetCodeHighlighter instead.
+        /// </summary>
+        [Obsolete("Use GetCodeHighlighter instead")]
+        [NotNull]
+        public static CodeFormatter GetCodeFormatter([NotNull] this CodeLangInfo info)
+        {
+            if (info == null) throw new ArgumentNullException(nameof(info));
+            return GetCodeFormatter(info.Name);
+        }
+
+        /// <summary>
+        /// Returns code formatter by tag name.
+        /// Deprecated: Use GetCodeHighlighterByTag instead.
+        /// </summary>
+        [Obsolete("Use GetCodeHighlighterByTag instead")]
+        [CanBeNull]
+        public static CodeFormatter GetCodeFormatterByTag([NotNull] string tagName)
+        {
+            if (tagName == null) throw new ArgumentNullException(nameof(tagName));
+            
+            if (!_codeTags.TryGetValue(tagName, out var name) || name == null)
+                return null;
+            
+            return GetCodeFormatter(name);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Адаптер для обратной совместимости между старым CodeFormatter и новым CodeHighlighter.
+    /// </summary>
+    [Obsolete("Internal adapter for backward compatibility")]
+    internal class CodeFormatterAdapter : CodeFormatter
+    {
+        private readonly CodeHighlighter _highlighter;
+
+        public CodeFormatterAdapter(CodeHighlighter highlighter)
+            : base("__adapter__", new MemoryStream())
+        {
+            _highlighter = highlighter;
+        }
+
+        public new string Transform(string sourceText)
+        {
+            return _highlighter.Highlight(sourceText);
+        }
+    }
 }

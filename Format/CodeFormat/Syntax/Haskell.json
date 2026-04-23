@@ -1,0 +1,36 @@
+{
+  "name": "Haskell",
+  "displayName": "Haskell",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m:--.*?$)",
+        "(?s:\\{-.*?-\\})"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"([^\"]|\\\\\")*\"",
+        "'([^']|\\\\')*'"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "as", "case", "class", "data", "default", "deriving", "do", "else", "foreign",
+        "hiding", "if", "import", "in", "infix", "infixl", "infixr", "instance", "let",
+        "module", "newtype", "of", "qualified", "then", "type", "where", "_",
+        "forall", "mdo", "family", "role", "pattern", "static", "stock", "anyclass",
+        "via", "deriving"
+      ]
+    }
+  ]
+}

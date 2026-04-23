@@ -1,0 +1,36 @@
+{
+  "name": "Java",
+  "displayName": "Java",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m://.*?$)",
+        "(?s:/\\*.*?\\*/)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"((?<!\\\\)\\\\\"|[^\"])*\""
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "break", "delete", "function", "return", "typeof", "case", "do", "if", "switch", "var",
+        "catch", "else", "in", "this", "void", "continue", "false", "instanceof", "throw", "while",
+        "debugger", "finally", "new", "true", "with", "default", "for", "null", "try",
+        "abstract", "double", "goto", "native", "static", "boolean", "enum", "implements", "package", "super",
+        "byte", "export", "import", "private", "synchronized", "char", "extends", "int", "protected", "throws",
+        "class", "final", "interface", "public", "transient", "const", "float", "long", "short", "volatile"
+      ]
+    }
+  ]
+}

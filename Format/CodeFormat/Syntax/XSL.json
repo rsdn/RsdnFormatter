@@ -1,0 +1,55 @@
+{
+  "name": "XSL",
+  "displayName": "XML/XSL",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?s:<!--.*?-->)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"[^\"]*\""
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": null,
+      "postfix": "\\b",
+      "keywords": [
+        "?xml"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "case-order", "current", "data-type", "disable-output-escaping", "document",
+        "elements", "encoding", "format-number", "generate-id", "indent", "key",
+        "lang", "match", "method", "mode", "name", "namespace", "order", "priority",
+        "result-prefix", "select", "stylesheet-prefix", "system-property", "terminate",
+        "test", "unparsed-entity-uri", "use-attribute-sets", "use", "version", "xmlns:xsl",
+        "xsl:analyze-string", "xsl:apply-imports", "xsl:apply-templates", "xsl:attribute",
+        "xsl:attribute-set", "xsl:call-template", "xsl:character-map", "xsl:choose",
+        "xsl:comment", "xsl:copy", "xsl:copy-of", "xsl:decimal-format", "xsl:document",
+        "xsl:element", "xsl:fallback", "xsl:for-each", "xsl:for-each-group", "xsl:function",
+        "xsl:if", "xsl:import", "xsl:import-schema", "xsl:include", "xsl:key",
+        "xsl:matching-substring", "xsl:message", "xsl:namespace", "xsl:namespace-alias",
+        "xsl:next-match", "xsl:non-matching-substring", "xsl:number", "xsl:otherwise",
+        "xsl:output", "xsl:output-character", "xsl:param", "xsl:perform-sort",
+        "xsl:preserve-space", "xsl:processing-instructions", "xsl:result-document",
+        "xsl:sequence", "xsl:script", "xsl:sort", "xsl:strip-space", "xsl:stylesheet",
+        "xsl:template", "xsl:text", "xsl:transform", "xsl:value-of", "xsl:variable",
+        "xsl:when", "xsl:with-param"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Ruby",
+  "displayName": "Ruby",
+  "options": "(?n)",
+  "patterns": [
+    {
+      "name": "com",
+      "type": "regex",
+      "expressions": [
+        "(?m:\\#.*?$)",
+        "(?s:=begin.*?=end)"
+      ]
+    },
+    {
+      "name": "str",
+      "type": "regex",
+      "expressions": [
+        "\"((?<!\\\\)\\\\\"|[^\"])*\"",
+        "'((?<!\\\\)\\\\'|[^'])*'"
+      ]
+    },
+    {
+      "name": "kw",
+      "type": "keyword",
+      "prefix": "\\b",
+      "postfix": "\\b",
+      "keywords": [
+        "alias", "and", "BEGIN", "begin", "break", "case", "class", "def", "defined",
+        "do", "else", "elsif", "END", "end", "ensure", "false", "for", "if", "in",
+        "module", "next", "nil", "not", "or", "redo", "rescue", "retry", "return",
+        "self", "super", "then", "true", "undef", "unless", "until", "when", "while",
+        "yield"
+      ]
+    }
+  ]
+}
