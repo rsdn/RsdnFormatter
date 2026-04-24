@@ -41,8 +41,8 @@ namespace Rsdn.Framework.Formatting.Tests
 		private static TestCaseData GetTestCaseData(string name)
 		{
 			var asm = Assembly.GetExecutingAssembly();
-			var originalStream = asm.GetManifestResourceStream(typeof (_Dummy), name + ".txt");
-			var goldStream = asm.GetManifestResourceStream(typeof (_Dummy), name + ".gold");
+			var originalStream = asm.GetManifestResourceStream(typeof(_Dummy), name + ".txt");
+			var goldStream = asm.GetManifestResourceStream(typeof(_Dummy), name + ".gold");
 
 			Debug.Assert(originalStream != null, $"originalStream != null for {name} test case");
 			Debug.Assert(goldStream != null);
@@ -56,10 +56,9 @@ namespace Rsdn.Framework.Formatting.Tests
 			using (var streamReader = new StreamReader(goldStream, Encoding.UTF8))
 				gold = streamReader.ReadToEnd();
 
-			var testCaseData = new TestCaseData(original);
-
+			// Возвращаем два параметра: markup и expectedHtml
+			var testCaseData = new TestCaseData(original, gold);
 			testCaseData.SetName(name);
-			testCaseData.Returns(gold.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries));
 
 			return testCaseData;
 		}

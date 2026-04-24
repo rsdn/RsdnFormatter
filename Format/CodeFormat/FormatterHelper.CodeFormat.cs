@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
@@ -11,14 +10,13 @@ namespace Rsdn.Framework.Formatting
     [PublicAPI]
     partial class FormatterHelper
     {
-        private static readonly Dictionary<string, CodeLangInfo> _langInfos =
-            new Dictionary<string, CodeLangInfo>();
+        private static readonly Dictionary<string, CodeLangInfo> _langInfos = new();
         
         private static readonly Dictionary<string, Lazy<CodeHighlighter>> _codeHighlighters =
-            new Dictionary<string, Lazy<CodeHighlighter>>(StringComparer.OrdinalIgnoreCase);
+            new(StringComparer.OrdinalIgnoreCase);
 
-        private static readonly Dictionary<string, string> _codeTags =
-            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Dictionary<string, string?> _codeTags =
+            new(StringComparer.OrdinalIgnoreCase)
             {
                 {"csharp", "CSharp"},
                 {"cs", "CSharp"},
@@ -124,7 +122,6 @@ namespace Rsdn.Framework.Formatting
         /// <summary>
         /// Returns all supported language infos.
         /// </summary>
-        [NotNull]
         public static IEnumerable<CodeLangInfo> GetLangInfos()
         {
             return _langInfos.Values;
@@ -133,7 +130,7 @@ namespace Rsdn.Framework.Formatting
         /// <summary>
         /// Returns code highlighter by language name.
         /// </summary>
-        public static CodeHighlighter GetCodeHighlighter([NotNull] string name)
+        public static CodeHighlighter GetCodeHighlighter(string name)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
 
@@ -146,8 +143,7 @@ namespace Rsdn.Framework.Formatting
         /// <summary>
         /// Returns code highlighter by language info.
         /// </summary>
-        [NotNull]
-        public static CodeHighlighter GetCodeHighlighter([NotNull] this CodeLangInfo info)
+        public static CodeHighlighter GetCodeHighlighter(this CodeLangInfo info)
         {
             if (info == null) throw new ArgumentNullException(nameof(info));
             return GetCodeHighlighter(info.Name);
@@ -156,8 +152,7 @@ namespace Rsdn.Framework.Formatting
         /// <summary>
         /// Markup code with html tags.
         /// </summary>
-        [NotNull]
-        public static string MarkupCode([NotNull] string langName, [NotNull] string source)
+        public static string MarkupCode(string langName, string source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             return GetCodeHighlighter(langName).Highlight(source);
@@ -166,10 +161,9 @@ namespace Rsdn.Framework.Formatting
         /// <summary>
         /// Markup code with html tags.
         /// </summary>
-        [NotNull]
         public static string MarkupCode(
-            [NotNull] this CodeLangInfo langInfo,
-            [NotNull] string source)
+            this CodeLangInfo langInfo,
+            string source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             return GetCodeHighlighter(langInfo).Highlight(source);
@@ -186,8 +180,7 @@ namespace Rsdn.Framework.Formatting
         /// <summary>
         /// Returns code highlighter by tag name.
         /// </summary>
-        [CanBeNull]
-        public static CodeHighlighter GetCodeHighlighterByTag([NotNull] string tagName)
+        public static CodeHighlighter? GetCodeHighlighterByTag(string tagName)
         {
             if (tagName == null) throw new ArgumentNullException(nameof(tagName));
             
@@ -200,8 +193,7 @@ namespace Rsdn.Framework.Formatting
         /// <summary>
         /// Markup code with html tags.
         /// </summary>
-        [NotNull]
-        public static string MarkupCodeByTag([NotNull] string tagName, [NotNull] string source)
+        public static string MarkupCodeByTag(string tagName, string source)
         {
             var highlighter = GetCodeHighlighterByTag(tagName);
             return highlighter == null ? source : highlighter.Highlight(source);
@@ -218,7 +210,7 @@ namespace Rsdn.Framework.Formatting
         /// Deprecated: Use GetCodeHighlighter instead.
         /// </summary>
         [Obsolete("Use GetCodeHighlighter instead")]
-        public static CodeFormatter GetCodeFormatter([NotNull] string name)
+        public static CodeFormatter GetCodeFormatter(string name)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
             
@@ -245,11 +237,9 @@ namespace Rsdn.Framework.Formatting
         /// Deprecated: Use GetCodeHighlighter instead.
         /// </summary>
         [Obsolete("Use GetCodeHighlighter instead")]
-        [NotNull]
         public static CodeFormatter GetCodeFormatter([NotNull] this CodeLangInfo info)
         {
-            if (info == null) throw new ArgumentNullException(nameof(info));
-            return GetCodeFormatter(info.Name);
+            return info == null ? throw new ArgumentNullException(nameof(info)) : GetCodeFormatter(info.Name);
         }
 
         /// <summary>
@@ -257,8 +247,7 @@ namespace Rsdn.Framework.Formatting
         /// Deprecated: Use GetCodeHighlighterByTag instead.
         /// </summary>
         [Obsolete("Use GetCodeHighlighterByTag instead")]
-        [CanBeNull]
-        public static CodeFormatter GetCodeFormatterByTag([NotNull] string tagName)
+        public static CodeFormatter? GetCodeFormatterByTag(string tagName)
         {
             if (tagName == null) throw new ArgumentNullException(nameof(tagName));
             

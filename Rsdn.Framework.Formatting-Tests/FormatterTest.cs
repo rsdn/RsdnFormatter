@@ -7,15 +7,40 @@ namespace Rsdn.Framework.Formatting.Tests
 	[TestFixture]
 	public class FormatterTest
 	{
-		[Test, TestCaseSource(typeof (FormatterTestCaseSource))]
-		public string[] Format(string markup)
+		private static readonly HtmlComparer.HtmlComparer _htmlComparer = new();
+
+		[Test, TestCaseSource(typeof(FormatterTestCaseSource))]
+		public void Format(string markup, string expectedHtml)
 		{
 			var formatter = new TextFormatter();
 
 			var output = formatter.Format(markup);
-			var result = $"<html>\r\n\t<body>\r\n{output}\r\n\t</body>\r\n</html>";
+			var actualHtml = $"<html>\r\n\t<body>\r\n{output}\r\n\t</body>\r\n</html>";
 
-			return result.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
+			var result = _htmlComparer.Compare(expectedHtml, actualHtml);
+			Assert.That(result.AreEqual, () => result.ToString());
+		}
+	}
+
+	/// <summary>
+	/// Тесты для нового BBCode парсера (FormatBBCode)
+	/// Используют те же тестовые данные что и старые тесты
+	/// </summary>
+	[TestFixture]
+	public class BBCodeFormatterTest
+	{
+		private static readonly HtmlComparer.HtmlComparer _htmlComparer = new();
+
+		[Test, TestCaseSource(typeof(BBCodeFormatterTestCaseSource))]
+		public void FormatBBCode(string markup, string expectedHtml)
+		{
+			var formatter = new TextFormatter();
+
+			var output = formatter.FormatBBCode(markup);
+			var actualHtml = $"<html>\r\n\t<body>\r\n{output}\r\n\t</body>\r\n</html>";
+
+			var result = _htmlComparer.Compare(expectedHtml, actualHtml);
+			Assert.That(result.AreEqual, () => result.ToString());
 		}
 	}
 }

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Web;
 
 using JetBrains.Annotations;
+using Rsdn.Framework.Formatting.BBCode;
 using Rsdn.Framework.Formatting.Resources;
 
 namespace Rsdn.Framework.Formatting
@@ -1209,5 +1210,29 @@ namespace Rsdn.Framework.Formatting
 			return
 				$"<a target=\"_blank\" href=\"http://findbook.ru/search/?isbn={isbn}&ozon=rsdn&bolero=rsdnru&biblion=791&booksru=rsdn&zonex=248&piter=3600&myshop=00776\">{match.Value}</a>";
 		}
+
+		#region Новый BBCode парсер
+
+		/// <summary>
+		/// Форматирование текста с использованием нового BBCode парсера.
+		/// Экспериментальный метод для тестирования производительности.
+		/// </summary>
+		/// <param name="txt">Исходный текст в BBCode формате.</param>
+		/// <returns>Сформатированный HTML.</returns>
+		public virtual string FormatBBCode(string? txt)
+		{
+			if (string.IsNullOrWhiteSpace(txt))
+				return "";
+
+			// Парсим BBCode в AST
+			var parser = new Parser(txt!);
+			var doc = parser.Parse();
+
+			// Рендерим в HTML
+			var renderer = new HtmlRenderer();
+			return renderer.Render(doc);
+		}
+
+		#endregion
 	}
 }
