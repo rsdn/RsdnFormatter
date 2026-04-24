@@ -20,12 +20,19 @@ public class QuoteLineNode : Node
 	/// Текст строки (без префикса)
 	/// </summary>
 	public string Text { get; }
+	
+	/// <summary>
+	/// Была ли пустая строка перед этой цитатой
+	/// (нужно для добавления <br /> внутри span)
+	/// </summary>
+	public bool HasLeadingNewline { get; set; }
 
 	public QuoteLineNode(int level, string prefix, string text)
 	{
 		Level = level;
 		Prefix = prefix;
 		Text = text;
+		HasLeadingNewline = false;
 	}
 
 	public override void Accept<TContext>(INodeVisitor<TContext> visitor, TContext ctx)

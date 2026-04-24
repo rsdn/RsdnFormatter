@@ -10,7 +10,7 @@ public class TextNode(string text) : Node
 	/// <summary>
 	/// Текстовое содержимое
 	/// </summary>
-	public string Text { get; } = text ?? throw new ArgumentNullException(nameof(text));
+	public string Text { get; set; } = text ?? throw new ArgumentNullException(nameof(text));
 
 	public override void Accept<TContext>(INodeVisitor<TContext> visitor, TContext ctx)
 	{

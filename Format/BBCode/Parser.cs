@@ -20,7 +20,8 @@ namespace Rsdn.Framework.Formatting.BBCode
             "code", "c", "cs", "csharp", "vb", "vbnet", "cpp", "c++",
             "java", "js", "javascript", "ts", "typescript", "python", "py",
             "sql", "xml", "html", "css", "php", "ruby", "go", "rust",
-            "asm", "assembly"
+            "asm", "assembly",
+            "ccode", "cscode", "vbcode", "pascal", "delphi"
         };
 
         public Parser(string text)
@@ -136,6 +137,40 @@ namespace Rsdn.Framework.Formatting.BBCode
             
             _position++; // потребляем токен префикса
             
+            // Проверяем, был ли предыдущий элемент TextNode с только пустой строкой
+            // (это означает, что перед цитатой была пустая строка)
+            var hasLeadingNewline = false;
+            if (nodes.Count > 0 && nodes[nodes.Count - 1] is TextNode lastTextNode)
+            {
+                var lastText = lastTextNode.Text;
+                // Если предыдущий текст заканчивается на \n\n или \r\n\r\n, 
+                // значит перед цитатой была пустая строка
+                if (lastText != null)
+                {
+                    // Проверяем, заканчивается ли текст на двойной перенос
+                    if (lastText.EndsWith("\n\n"))
+                    {
+                        hasLeadingNewline = true;
+                        // Удаляем последний \n из текста
+                        lastTextNode.Text = lastText.Substring(0, lastText.Length - 1);
+                    }
+                    else if (lastText.EndsWith("\r\n\r\n"))
+                    {
+                        hasLeadingNewline = true;
+                        // Удаляем последний \r\n из текста
+                        lastTextNode.Text = lastText.Substring(0, lastText.Length - 2);
+                    }
+                    // Также проверяем случай когда текст = "\n" или "\r\n"
+                    else if (lastText == "\n" || lastText == "\r\n" || 
+                             lastText.Trim() == "")
+                    {
+                        hasLeadingNewline = true;
+                        // Удаляем пустой TextNode
+                        nodes.RemoveAt(nodes.Count - 1);
+                    }
+                }
+            }
+            
             // Читаем текст до конца строки (до первого \n)
             var lineText = new System.Text.StringBuilder();
             
@@ -168,7 +203,9 @@ namespace Rsdn.Framework.Formatting.BBCode
                         _position++;
                         
                         // Создаём узел строки цитирования
-                        nodes.Add(new QuoteLineNode(level, prefix, lineText.ToString()));
+                        var quoteNode = new QuoteLineNode(level, prefix, lineText.ToString());
+                        quoteNode.HasLeadingNewline = hasLeadingNewline;
+                        nodes.Add(quoteNode);
                         
                         // Добавляем оставшийся текст
                         if (!string.IsNullOrEmpty(remaining))
@@ -192,7 +229,9 @@ namespace Rsdn.Framework.Formatting.BBCode
             }
             
             // Создаём узел строки цитирования
-            nodes.Add(new QuoteLineNode(level, prefix, lineText.ToString()));
+            var node = new QuoteLineNode(level, prefix, lineText.ToString());
+            node.HasLeadingNewline = hasLeadingNewline;
+            nodes.Add(node);
         }
 
         /// <summary>

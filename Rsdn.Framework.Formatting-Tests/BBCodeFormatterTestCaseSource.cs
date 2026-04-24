@@ -26,9 +26,9 @@ namespace Rsdn.Framework.Formatting.Tests
 			// Urls - требует постобработки URL (замена rsdn.ru на rsdn.org, class="m")
 			// yield return GetTestCaseData("Urls");
 			yield return GetTestCaseData("Img");
-			// Quotation - требует отдельной обработки цитирования (A>, BB>>)
-			// yield return GetTestCaseData("Quotation");
+			yield return GetTestCaseData("Quotation");
 			yield return GetTestCaseData("Heading");
+			yield return GetTestCaseData("Cpp");
 		}
 
 		private static TestCaseData GetTestCaseData(string name)

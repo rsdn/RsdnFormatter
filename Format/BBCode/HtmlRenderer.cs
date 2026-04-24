@@ -39,6 +39,11 @@ namespace Rsdn.Framework.Formatting.BBCode
 			{ "rust", "code" },
 			{ "asm", "code" },
 			{ "assembly", "code" },
+			{ "ccode", "code" },
+			{ "cscode", "code" },
+			{ "vbcode", "code" },
+			{ "pascal", "code" },
+			{ "delphi", "code" },
 		};
 
 		/// <summary>
@@ -63,9 +68,54 @@ namespace Rsdn.Framework.Formatting.BBCode
 
 		public void Visit(DocumentNode node, HtmlRenderContext ctx)
 		{
-			foreach (var child in node.Children)
+			// Обрабатываем детей с учётом контекста (для цитат)
+			var children = node.Children;
+			for (int i = 0; i < children.Count; i++)
 			{
-				child.Accept(this, ctx);
+				var child = children[i];
+				
+				if (child is QuoteLineNode quoteNode)
+				{
+					// Проверяем, что идёт после цитаты
+					var nextIsQuote = (i + 1 < children.Count && children[i + 1] is QuoteLineNode);
+					RenderQuoteLineWithContext(quoteNode, ctx, nextIsQuote);
+				}
+				else
+				{
+					child.Accept(this, ctx);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Отрендерить строку цитирования с учётом контекста
+		/// </summary>
+		private void RenderQuoteLineWithContext(QuoteLineNode node, HtmlRenderContext ctx, bool nextIsQuote)
+		{
+			var level = node.Level;
+			var prefix = node.Prefix;
+			var text = node.Text;
+			var hasLeadingNewline = node.HasLeadingNewline;
+			
+			// Убираем перенос строки в конце текста
+			text = text?.TrimEnd('\r', '\n') ?? "";
+			
+			// Если перед цитатой была пустая строка, добавляем <br /> внутри span
+			if (hasLeadingNewline)
+			{
+				// <span class='lineQuote levelN'><br />A> text</span><br />
+				ctx.Output.AppendFormat("<span class='lineQuote level{0}'><br />\n{1}{2}</span><br />\n", 
+					level,
+					HttpUtility.HtmlEncode(prefix),
+					HttpUtility.HtmlEncode(text));
+			}
+			else
+			{
+				// <span class='lineQuote levelN'>A> text</span><br />
+				ctx.Output.AppendFormat("<span class='lineQuote level{0}'>{1}{2}</span><br />\n", 
+					level,
+					HttpUtility.HtmlEncode(prefix),
+					HttpUtility.HtmlEncode(text));
 			}
 		}
 
@@ -501,7 +551,7 @@ namespace Rsdn.Framework.Formatting.BBCode
 
 		/// <summary>
 		/// Отрендерить строку цитирования
-		/// Формат: <span class="lineQuote levelN">A> text</span>
+		/// Формат: <span class="lineQuote levelN">A> text</span><br />
 		/// </summary>
 		public void VisitQuoteLine(QuoteLineNode node, object ctx)
 		{
@@ -513,10 +563,10 @@ namespace Rsdn.Framework.Formatting.BBCode
 			// Убираем перенос строки в конце текста
 			text = text?.TrimEnd('\r', '\n') ?? "";
 			
-			// <span class='lineQuote levelN'>A> text</span>
+			// <span class='lineQuote levelN'>A> text</span><br />
 			// prefix уже содержит '>' (например "A>" или "BB>>")
 			// text уже содержит ведущий пробел (после A>)
-			context.Output.AppendFormat("<span class='lineQuote level{0}'>{1}{2}</span>", 
+			context.Output.AppendFormat("<span class='lineQuote level{0}'>{1}{2}</span><br />\n", 
 				level,
 				HttpUtility.HtmlEncode(prefix),
 				HttpUtility.HtmlEncode(text));
