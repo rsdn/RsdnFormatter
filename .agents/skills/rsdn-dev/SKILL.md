@@ -5,10 +5,15 @@ description: Правила разработки RsdnFormatter
 
 # Правила разработки
 
+## Форматирование
+- Для отступов спользуется табуляция. Размер табуляции - 2 символа.
+
 ## Организация файлов
 
 - **Один тип верхнего уровня — один файл** — каждый публичный класс, структура, интерфейс, enum в отдельном файле
-- **File-scoped namespaces** для всех новых файлов
+- **File-scoped namespaces** для всех файлов
+- ** Namespace файла должен соответствовать структуре каталогов проекта
+- Для нескольких методов-расширений в одном классе используем синтаксис extension
 
 ```csharp
 // ✅ Правильно
@@ -73,6 +78,17 @@ public override string ToString() => Type switch
 if (child is TextNode textNode)
 {
     var text = textNode.Text;
+}
+```
+
+### File scoped namespace
+
+```csharp
+namespace Rsdn.Framework.Formatting.CodeFormat;
+
+public class CodeFormatter
+{
+    //...
 }
 ```
 

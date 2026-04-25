@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rsdn.Framework.Formatting-T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rsdn.Formatting.ClassicWeb", "Rsdn.Formatting.ClassicWeb\Rsdn.Formatting.ClassicWeb.csproj", "{6C85C1E1-239A-4001-A39A-34668AAE276E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B8D29450-449C-4582-910F-03AC1072F0E4}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

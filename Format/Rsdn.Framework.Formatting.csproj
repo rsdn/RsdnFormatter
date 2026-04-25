@@ -148,14 +148,8 @@
 	  <EmbeddedResource Include="Resources\Text\HiddenText.htm" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="CodeJam" Version="4.1.0" />
+	  <PackageReference Include="CodeJam" Version="5.0.0" />
 	  <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
 	  <PackageReference Include="System.Text.Json" Version="8.0.5" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Include="..\LICENSE.md">
-	    <Pack>True</Pack>
-	    <PackagePath></PackagePath>
-	  </None>
 	</ItemGroup>
 </Project>

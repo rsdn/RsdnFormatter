@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 
 namespace Rsdn.Framework.Formatting
 {
@@ -51,11 +50,9 @@ namespace Rsdn.Framework.Formatting
 			/// <returns></returns>
 			public static DateTime Correct(object serverTime, double clientTimezoneOffsetMinutes)
 			{
-				return (serverTime is DateTime)
-				       	?
-				       		((DateTime) serverTime).ToUniversalTime().AddMinutes(clientTimezoneOffsetMinutes)
-				       	:
-				       		new DateTime(0);
+				return (serverTime is DateTime time)
+					? time.ToUniversalTime().AddMinutes(clientTimezoneOffsetMinutes)
+					: new DateTime(0);
 			}
 
 			/// <summary>
@@ -134,9 +131,8 @@ namespace Rsdn.Framework.Formatting
 			public static string ToDependString(DateTime dateTime)
 			{
 				return (dateTime > DateTime.Now.AddMonths(-6))
-				       	?
-				       		ToShortString(dateTime)
-				       	: ToLongString(dateTime);
+					? ToShortString(dateTime)
+					: ToLongString(dateTime);
 			}
 
 			/// <summary>

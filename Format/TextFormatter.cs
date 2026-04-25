@@ -1138,28 +1138,19 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="text">Original text.</param>
 		/// <returns>Modified text.</returns>
-		public static string RemoveTaglineTag(string text)
-		{
-			return _taglineDetector.Replace(text, "");
-		}
+		public static string RemoveTaglineTag(string text) => _taglineDetector.Replace(text, "");
 
 		/// <summary>
 		/// Remove [moderator] tag from text.
 		/// </summary>
 		/// <param name="text">Original text.</param>
 		/// <returns>Modified text.</returns>
-		public static string RemoveModeratorTag(string text)
-		{
-			return _moderatorDetector.Replace(text, "");
-		}
+		public static string RemoveModeratorTag(string text) => _moderatorDetector.Replace(text, "");
 
 		/// <summary>
 		/// Проверяет на наличие модераторского текста в сообщении
 		/// </summary>
-		public static bool IsThereModeratorTag(string text)
-		{
-			return _moderatorDetector.IsMatch(text);
-		}
+		public static bool IsThereModeratorTag(string text) => _moderatorDetector.IsMatch(text);
 
 		/// <summary>
 		/// Возвращает список имен файлов смайликов, задействованных в сообщении.

@@ -1,0 +1,838 @@
+[h1]Справочник по языку разметки RSDN Formatter[/h1]
+
+[h2]Краткая справочная таблица[/h2]
+
+[h3]Теги форматирования[/h3]
+
+[t]
+[tr]
+[th]Категория[/th]
+[th]Тег[/th]
+[th]Описание[/th]
+[/tr]
+[tr]
+[td][b]Форматирование текста[/b][/td]
+[td][c]&#91;b]...&#91;/b][/c][/td]
+[td][b]Жирный текст[/b][/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;i]...&#91;/i][/c][/td]
+[td][i]Курсив[/i][/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;u]...&#91;/u][/c][/td]
+[td][u]Подчёркнутый текст[/u][/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;s]...&#91;/s][/c][/td]
+[td][s]Зачёркнутый текст[/s][/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;sub]...&#91;/sub][/c][/td]
+[td]Подстрочный индекс (H[sub]2[/sub]O)[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;sup]...&#91;/sup][/c][/td]
+[td]Надстрочный индекс (E=mc[sup]2[/sup])[/td]
+[/tr]
+[tr]
+[td][b]Ссылки[/b][/td]
+[td][c]&#91;url]URL&#91;/url][/c][/td]
+[td]Ссылка[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;url=URL]текст&#91;/url][/c][/td]
+[td]Ссылка с текстом[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;email]email&#91;/email][/c][/td]
+[td]Email-ссылка[/td]
+[/tr]
+[tr]
+[td][b]Изображения[/b][/td]
+[td][c]&#91;img]URL&#91;/img][/c][/td]
+[td]Изображение[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;img=small]URL&#91;/img][/c][/td]
+[td]Маленькое изображение[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;img=large]URL&#91;/img][/c][/td]
+[td]Большое изображение[/td]
+[/tr]
+[tr]
+[td][b]Цитирование[/b][/td]
+[td][c]&#91;quote]...&#91;/quote][/c][/td]
+[td]Блочная цитата[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;quote=автор]...&#91;/quote][/c][/td]
+[td]Цитата с указанием автора[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;q]...&#91;/q][/c][/td]
+[td]Inline-цитата[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]A> текст[/c][/td]
+[td]Префикс цитирования (одиночный)[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]B>> текст[/c][/td]
+[td]Префикс цитирования (вложенный)[/td]
+[/tr]
+[tr]
+[td][b]Структура[/b][/td]
+[td][c]&#91;cut]...&#91;/cut][/c][/td]
+[td]Скрытый текст (спойлер)[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;cut=заголовок]...&#91;/cut][/c][/td]
+[td]Спойлер с заголовком[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;hr][/c][/td]
+[td]Горизонтальная линия[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;h1]...&#91;/h1][/c] – [c]&#91;h6]...&#91;/h6][/c][/td]
+[td]Заголовки 1–6 уровня[/td]
+[/tr]
+[tr]
+[td][b]Списки[/b][/td]
+[td][c]&#91;list]&#91;*]пункт...&#91;/list][/c][/td]
+[td]Маркированный список[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;list=1]&#91;*]пункт...&#91;/list][/c][/td]
+[td]Нумерованный (арабские цифры)[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;list=a]&#91;*]пункт...&#91;/list][/c][/td]
+[td]Нумерованный (строчные буквы)[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;list=A]&#91;*]пункт...&#91;/list][/c][/td]
+[td]Нумерованный (прописные буквы)[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;list=i]&#91;*]пункт...&#91;/list][/c][/td]
+[td]Нумерованный (римские цифры)[/td]
+[/tr]
+[tr]
+[td][b]Таблицы[/b][/td]
+[td][c]&#91;t]&#91;tr]&#91;td]...&#91;/td]&#91;/tr]&#91;/t][/c][/td]
+[td]Таблица[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;th]...&#91;/th][/c][/td]
+[td]Ячейка заголовка таблицы[/td]
+[/tr]
+[tr]
+[td][b]Код[/b][/td]
+[td][c]&#91;code]...&#91;/code][/c][/td]
+[td]Блок кода без подсветки[/td]
+[/tr]
+[tr]
+[td][/td]
+[td][c]&#91;code=язык]...&#91;/code][/c][/td]
+[td]Блок кода с подсветкой[/td]
+[/tr]
+[/t]
+
+[h3]Поддерживаемые языки для подсветки[/h3]
+
+[t]
+[tr]
+[th]Язык[/th]
+[th]Синонимы тегов[/th]
+[/tr]
+[tr]
+[td]C#[/td]
+[td][c]c#[/c], [c]cs[/c], [c]csharp[/c][/td]
+[/tr]
+[tr]
+[td]C/C++[/td]
+[td][c]c[/c], [c]cpp[/c], [c]c++[/c], [c]ccode[/c][/td]
+[/tr]
+[tr]
+[td]Visual Basic[/td]
+[td][c]vb[/c], [c]vbnet[/c], [c]vbcode[/c][/td]
+[/tr]
+[tr]
+[td]Java[/td]
+[td][c]java[/c][/td]
+[/tr]
+[tr]
+[td]JavaScript[/td]
+[td][c]js[/c], [c]javascript[/c][/td]
+[/tr]
+[tr]
+[td]TypeScript[/td]
+[td][c]ts[/c], [c]typescript[/c][/td]
+[/tr]
+[tr]
+[td]Python[/td]
+[td][c]python[/c], [c]py[/c][/td]
+[/tr]
+[tr]
+[td]SQL[/td]
+[td][c]sql[/c][/td]
+[/tr]
+[tr]
+[td]XML/HTML[/td]
+[td][c]xml[/c], [c]html[/c][/td]
+[/tr]
+[tr]
+[td]CSS[/td]
+[td][c]css[/c][/td]
+[/tr]
+[tr]
+[td]PHP[/td]
+[td][c]php[/c][/td]
+[/tr]
+[tr]
+[td]Ruby[/td]
+[td][c]ruby[/c][/td]
+[/tr]
+[tr]
+[td]Go[/td]
+[td][c]go[/c][/td]
+[/tr]
+[tr]
+[td]Rust[/td]
+[td][c]rust[/c][/td]
+[/tr]
+[tr]
+[td]Assembler[/td]
+[td][c]asm[/c], [c]assembly[/c][/td]
+[/tr]
+[tr]
+[td]Pascal/Delphi[/td]
+[td][c]pascal[/c], [c]delphi[/c][/td]
+[/tr]
+[tr]
+[td]Nemerle[/td]
+[td][c]nemerle[/c][/td]
+[/tr]
+[tr]
+[td]Nitra[/td]
+[td][c]nitra[/c][/td]
+[/tr]
+[tr]
+[td]Objective-C[/td]
+[td][c]objc[/c], [c]objectivec[/c][/td]
+[/tr]
+[/t]
+
+[h3]Смайлики[/h3]
+
+[t]
+[tr]
+[th]Код[/th]
+[th]Описание[/th]
+[th]Образец[/th]
+[/tr]
+[tr]
+[td][c]:-)[/c] или [c]:)[/c][/td]
+[td]Улыбка[/td]
+[td][img]../Format/Resources/Binary/smile.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:-([/c] или [c]:([/c][/td]
+[td]Грусть[/td]
+[td][img]../Format/Resources/Binary/frown.gif[/img][/td]
+[/tr]
+[tr]
+[td][c];-)[/c] или [c];)[/c][/td]
+[td]Подмигивание[/td]
+[td][img]../Format/Resources/Binary/wink.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:-D[/c] или [c]:D[/c][/td]
+[td]Широкая улыбка[/td]
+[td][img]../Format/Resources/Binary/biggrin.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:-/[/c] или [c]:-\[/c][/td]
+[td]Скептицизм[/td]
+[td][img]../Format/Resources/Binary/smirk.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:-))[/c][/td]
+[td]Широкая улыбка[/td]
+[td][img]../Format/Resources/Binary/biggrin.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:-)))[/c][/td]
+[td]LOL (громкий смех)[/td]
+[td][img]../Format/Resources/Binary/lol.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:up:[/c][/td]
+[td]Палец вверх[/td]
+[td][img]../Format/Resources/Binary/sup.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:down:[/c][/td]
+[td]Палец вниз[/td]
+[td][img]../Format/Resources/Binary/down.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:super:[/c][/td]
+[td]Супер![/td]
+[td][img]../Format/Resources/Binary/super.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:shuffle:[/c][/td]
+[td]Перетасовка[/td]
+[td][img]../Format/Resources/Binary/shuffle.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:crash:[/c][/td]
+[td]Крах/падение[/td]
+[td][img]../Format/Resources/Binary/crash.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:maniac:[/c][/td]
+[td]Маньяк[/td]
+[td][img]../Format/Resources/Binary/maniac.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:user:[/c][/td]
+[td]Пользователь[/td]
+[td][img]../Format/Resources/Binary/user.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:wow:[/c][/td]
+[td]Вау![/td]
+[td][img]../Format/Resources/Binary/wow.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:beer:[/c][/td]
+[td]Пиво[/td]
+[td][img]../Format/Resources/Binary/beer.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:team:[/c][/td]
+[td]Команда[/td]
+[td][img]../Format/Resources/Binary/invasion.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:no:[/c][/td]
+[td]Нет[/td]
+[td][img]../Format/Resources/Binary/no.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:nopont:[/c][/td]
+[td]Нет понтов[/td]
+[td][img]../Format/Resources/Binary/nopont.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:xz:[/c][/td]
+[td]ХЗ (не знаю)[/td]
+[td][img]../Format/Resources/Binary/xz.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:???:[/c][/td]
+[td]Запутался[/td]
+[td][img]../Format/Resources/Binary/confused.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:facepalm:[/c][/td]
+[td]Facepalm[/td]
+[td][img]../Format/Resources/Binary/Facepalm.gif[/img][/td]
+[/tr]
+[tr]
+[td][c]:sarcasm:[/c][/td]
+[td]Сарказм[/td]
+[td][img]../Format/Resources/Binary/sarcasm.gif[/img][/td]
+[/tr]
+[/t]
+
+[hr]
+
+[h2]Подробное описание тегов[/h2]
+
+[h3]Форматирование текста[/h3]
+
+[h4]Жирный текст [c]&#91;b][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;b]текст&#91;/b][/c]
+
+[b]Пример:[/b]
+[code]
+Это &#91;b]важный&#91;/b] текст.
+[/code]
+
+[b]Результат:[/b] Это [b]важный[/b] текст.
+
+[hr]
+
+[h4]Курсив [c]&#91;i][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;i]текст&#91;/i][/c]
+
+[b]Пример:[/b]
+[code]
+Это &#91;i]курсивный&#91;/i] текст.
+[/code]
+
+[b]Результат:[/b] Это [i]курсивный[/i] текст.
+
+[hr]
+
+[h4]Подчёркивание [c]&#91;u][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;u]текст&#91;/u][/c]
+
+[b]Пример:[/b]
+[code]
+Это &#91;u]подчёркнутый&#91;/u] текст.
+[/code]
+
+[b]Результат:[/b] Это [u]подчёркнутый[/u] текст.
+
+[hr]
+
+[h4]Зачёркивание [c]&#91;s][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;s]текст&#91;/s][/c]
+
+[b]Пример:[/b]
+[code]
+Это &#91;s]зачёркнутый&#91;/s] текст.
+[/code]
+
+[b]Результат:[/b] Это [s]зачёркнутый[/s] текст.
+
+[hr]
+
+[h4]Подстрочный индекс [c]&#91;sub][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;sub]текст&#91;/sub][/c]
+
+[b]Пример:[/b]
+[code]
+Формула воды: H&#91;sub]2&#91;/sub]O
+[/code]
+
+[b]Результат:[/b] Формула воды: H[sub]2[/sub]O
+
+[hr]
+
+[h4]Надстрочный индекс [c]&#91;sup][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;sup]текст&#91;/sup][/c]
+
+[b]Пример:[/b]
+[code]
+Формула Эйнштейна: E=mc&#91;sup]2&#91;/sup]
+[/code]
+
+[b]Результат:[/b] Формула Эйнштейна: E=mc[sup]2[/sup]
+
+[hr]
+
+[h3]Ссылки и медиа[/h3]
+
+[h4]Гиперссылки [c]&#91;url][/c][/h4]
+
+[b]Синтаксис:[/b]
+[list]
+[*] [c]&#91;url]URL&#91;/url][/c] — ссылка отображается как URL
+[*] [c]&#91;url=URL]текст ссылки&#91;/url][/c] — ссылка с произвольным текстом
+[/list]
+
+[b]Примеры:[/b]
+[code]
+&#91;url]https://example.com&#91;/url]
+
+&#91;url=https://example.com]Нажмите здесь&#91;/url]
+[/code]
+
+[b]Результат:[/b]
+[list]
+[*] [url]https://example.com[/url]
+[*] [url=https://example.com]Нажмите здесь[/url]
+[/list]
+
+[hr]
+
+[h4]Email-ссылки [c]&#91;email][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;email]адрес&#91;/email][/c]
+
+[b]Пример:[/b]
+[code]
+Напишите на &#91;email]info@example.com&#91;/email]
+[/code]
+
+[b]Результат:[/b] Напишите на [email]info@example.com[/email]
+
+[hr]
+
+[h4]Изображения [c]&#91;img][/c][/h4]
+
+[b]Синтаксис:[/b]
+[list]
+[*] [c]&#91;img]URL&#91;/img][/c] — изображение стандартного размера
+[*] [c]&#91;img=small]URL&#91;/img][/c] — маленькое изображение
+[*] [c]&#91;img=large]URL&#91;/img][/c] — большое изображение
+[/list]
+
+[b]Примеры:[/b]
+[code]
+&#91;img]https://example.com/image.png&#91;/img]
+
+&#91;img=small]https://example.com/thumb.png&#91;/img]
+
+&#91;img=large]https://example.com/photo.png&#91;/img]
+[/code]
+
+[hr]
+
+[h3]Цитирование[/h3]
+
+[h4]Блочная цитата [c]&#91;quote][/c][/h4]
+
+[b]Синтаксис:[/b]
+[list]
+[*] [c]&#91;quote]текст цитаты&#91;/quote][/c]
+[*] [c]&#91;quote=автор]текст цитаты&#91;/quote][/c] — с указанием автора
+[/list]
+
+[b]Примеры:[/b]
+[code]
+&#91;quote]Это важная цитата.&#91;/quote]
+
+&#91;quote=Алберт Эйнштейн]Воображение важнее знания.&#91;/quote]
+[/code]
+
+[b]Результат:[/b]
+
+[quote]Это важная цитата.[/quote]
+
+[quote=Алберт Эйнштейн]Воображение важнее знания.[/quote]
+
+[hr]
+
+[h4]Inline-цитата [c]&#91;q][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;q]текст&#91;/q][/c] или [c]&#91;q=автор]текст&#91;/q][/c]
+
+[b]Пример:[/b]
+[code]
+Как сказал &#91;q=Козьма Прутков]Зри в корень&#91;/q].
+[/code]
+
+[hr]
+
+[h4]Префиксы цитирования[/h4]
+
+Префиксы цитирования позволяют быстро оформлять цитаты в тексте. Они должны находиться в начале строки.
+
+[b]Синтаксис:[/b] [c]Буквы>[/c] в начале строки
+
+[b]Примеры:[/b]
+[code]
+A> Это цитата первого уровня
+B> Это цитата второго уровня
+A> Продолжение цитаты
+
+·> Анонимная цитата
+[/code]
+
+[b]Поддерживаемые префиксы:[/b]
+[list]
+[*] [c]A>[/c], [c]B>[/c], [c]C>[/c] и т.д. — именованные цитаты
+[*] [c]AA>>[/c], [c]BB>>[/c] — вложенные цитаты
+[*] [c]·>[/c] — анонимная цитата (символ · — middle dot, U+00B7)
+[/list]
+
+[hr]
+
+[h3]Структура документа[/h3]
+
+[h4]Скрытый текст (спойлер) [c]&#91;cut][/c][/h4]
+
+[b]Синтаксис:[/b]
+[list]
+[*] [c]&#91;cut]скрытый текст&#91;/cut][/c]
+[*] [c]&#91;cut=заголовок]скрытый текст&#91;/cut][/c]
+[/list]
+
+[b]Пример:[/b]
+[code]
+&#91;cut=Спойлер!]Этот текст будет скрыт под спойлером.&#91;/cut]
+[/code]
+
+[b]Результат:[/b] Текст будет отображаться как раскрывающийся блок с заголовком "Спойлер!".
+
+[hr]
+
+[h4]Горизонтальная линия [c]&#91;hr][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;hr][/c]
+
+[b]Пример:[/b]
+[code]
+Текст до разделителя
+&#91;hr]
+Текст после разделителя
+[/code]
+
+[b]Результат:[/b]
+
+Текст до разделителя
+
+[hr]
+
+Текст после разделителя
+
+[hr]
+
+[h4]Заголовки [c]&#91;h1][/c]–[c]&#91;h6][/c][/h4]
+
+[b]Синтаксис:[/b] [c]&#91;hN]текст заголовка&#91;/hN][/c] где N от 1 до 6
+
+[b]Примеры:[/b]
+[code]
+&#91;h1]Заголовок 1 уровня&#91;/h1]
+&#91;h2]Заголовок 2 уровня&#91;/h2]
+&#91;h3]Заголовок 3 уровня&#91;/h3]
+[/code]
+
+[hr]
+
+[h3]Списки[/h3]
+
+[h4]Маркированный список [c]&#91;list][/c][/h4]
+
+[b]Синтаксис:[/b]
+[code]
+&#91;list]
+&#91;*] Первый пункт
+&#91;*] Второй пункт
+&#91;*] Третий пункт
+&#91;/list]
+[/code]
+
+[b]Результат:[/b]
+[list]
+[*] Первый пункт
+[*] Второй пункт
+[*] Третий пункт
+[/list]
+
+[hr]
+
+[h4]Нумерованный список [c]&#91;list=тип][/c][/h4]
+
+[b]Синтаксис:[/b]
+[code]
+&#91;list=1]
+&#91;*] Первый пункт
+&#91;*] Второй пункт
+&#91;/list]
+[/code]
+
+[b]Типы нумерации:[/b]
+[t]
+[tr]
+[th]Значение[/th]
+[th]Результат[/th]
+[/tr]
+[tr]
+[td][c]1[/c][/td]
+[td]1, 2, 3...[/td]
+[/tr]
+[tr]
+[td][c]a[/c][/td]
+[td]a, b, c...[/td]
+[/tr]
+[tr]
+[td][c]A[/c][/td]
+[td]A, B, C...[/td]
+[/tr]
+[tr]
+[td][c]i[/c][/td]
+[td]i, ii, iii...[/td]
+[/tr]
+[tr]
+[td][c]I[/c][/td]
+[td]I, II, III...[/td]
+[/tr]
+[/t]
+
+[b]Пример:[/b]
+[code]
+&#91;list=a]
+&#91;*] Пункт A
+&#91;*] Пункт B
+&#91;*] Пункт C
+&#91;/list]
+[/code]
+
+[b]Результат:[/b]
+[list=a]
+[*] Пункт A
+[*] Пункт B
+[*] Пункт C
+[/list]
+
+[hr]
+
+[h3]Таблицы[/h3]
+
+[b]Синтаксис:[/b]
+[code]
+&#91;t]
+&#91;tr]
+&#91;th]Заголовок 1&#91;/th]
+&#91;th]Заголовок 2&#91;/th]
+&#91;/tr]
+&#91;tr]
+&#91;td]Ячейка 1.1&#91;/td]
+&#91;td]Ячейка 1.2&#91;/td]
+&#91;/tr]
+&#91;tr]
+&#91;td]Ячейка 2.1&#91;/td]
+&#91;td]Ячейка 2.2&#91;/td]
+&#91;/tr]
+&#91;/t]
+[/code]
+
+[b]Теги таблицы:[/b]
+[list]
+[*] [c]&#91;t][/c] — контейнер таблицы
+[*] [c]&#91;tr][/c] — строка таблицы
+[*] [c]&#91;td][/c] — обычная ячейка
+[*] [c]&#91;th][/c] — ячейка заголовка
+[/list]
+
+[b]Результат:[/b]
+
+[t]
+[tr]
+[th]Заголовок 1[/th]
+[th]Заголовок 2[/th]
+[/tr]
+[tr]
+[td]Ячейка 1.1[/td]
+[td]Ячейка 1.2[/td]
+[/tr]
+[tr]
+[td]Ячейка 2.1[/td]
+[td]Ячейка 2.2[/td]
+[/tr]
+[/t]
+
+[hr]
+
+[h3]Исходный код[/h3]
+
+[h4]Блок кода [c]&#91;code][/c][/h4]
+
+[b]Синтаксис:[/b]
+[list]
+[*] [c]&#91;code]код&#91;/code][/c] — без подсветки
+[*] [c]&#91;code=язык]код&#91;/code][/c] — с подсветкой синтаксиса
+[/list]
+
+[b]Пример без подсветки:[/b]
+[code]
+&#91;code]
+function hello() {
+    console.log("Hello, World!");
+}
+&#91;/code]
+[/code]
+
+[b]Пример с подсветкой C#:[/b]
+[code]
+&#91;c#]
+public class HelloWorld
+{
+    public static void Main()
+    {
+        Console.WriteLine("Hello, World!");
+    }
+}
+&#91;/c#]
+[/code]
+
+[b]Пример с подсветкой Python:[/b]
+[code]
+&#91;python]
+def hello():
+    print("Hello, World!")
+
+if __name__ == "__main__":
+    hello()
+&#91;/python]
+[/code]
+
+[h4]Форматирование внутри блока кода[/h4]
+
+Внутри блока кода можно использовать теги форматирования: [c]&#91;b][/c], [c]&#91;i][/c], [c]&#91;u][/c], [c]&#91;s][/c], [c]&#91;sub][/c], [c]&#91;sup][/c].
+
+[b]Пример:[/b]
+[code]
+&#91;c#]
+// &#91;b]Важный комментарий&#91;/b]
+public void Method() { }
+&#91;/c#]
+[/code]
+
+[hr]
+
+[h3]Автоматическое распознавание[/h3]
+
+Форматтер автоматически распознаёт и преобразует:
+
+[list=1]
+[*] [b]URL-адреса[/b] — любой URL, начинающийся с [c]http://[/c] или [c]https://[/c], автоматически становится ссылкой
+
+[*] [b]Email-адреса[/b] — адреса электронной почты автоматически становятся ссылками [c]mailto:[/c]
+[/list]
+
+[b]Пример:[/b]
+[code]
+Посетите https://example.com или напишите на info@example.com
+[/code]
+
+[hr]
+
+[h3]Экранирование[/h3]
+
+Если нужно, чтобы тег не обрабатывался, используйте HTML entities: [c]&#91;[/c] вместо [c][[/c] и [c]&#93;[/c] вместо [c]][/c].
+
+[b]Пример:[/b]
+[code]
+&#91;b]Этот текст не будет жирным&#91;/b]
+[/code]
+
+[b]Результат:[/b] &#91;b]Этот текст не будет жирным&#91;/b]
