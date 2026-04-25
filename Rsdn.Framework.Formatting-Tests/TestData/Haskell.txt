@@ -1,0 +1,12 @@
+[haskell]
+-- Single line comment
+{- Multi-line
+   comment -}
+module Main where
+
+main :: IO ()
+main = do
+    putStrLn "Hello, World!"
+    let x = 42
+    print x
+[/haskell]

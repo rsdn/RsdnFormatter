@@ -1,0 +1,2 @@
+Text with [tt]monospace font[/tt].
+Regular [tt]fixed-width[/tt] text.

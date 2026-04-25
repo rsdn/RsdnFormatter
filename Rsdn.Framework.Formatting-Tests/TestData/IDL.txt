@@ -1,0 +1,12 @@
+[idl]
+// Single line comment
+/* Multi-line comment */
+[
+    uuid(12345678-1234-1234-1234-123456789012),
+    version(1.0)
+]
+interface HelloWorld
+{
+    void SayHello([in] string message);
+};
+[/idl]

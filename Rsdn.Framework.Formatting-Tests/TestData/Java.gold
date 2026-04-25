@@ -1,0 +1,14 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>// Single line comment
+/* Multi-line
+   comment */</span>
+<span class='kw'>public class</span> HelloWorld {
+    <span class='kw'>public static void</span> main(String[] args) {
+        System.out.println(<span class='str'>"Hello, World!"</span>);
+        <span class='kw'>int</span> x = 42;
+        <span class='kw'>final</span> String message = <span class='str'>"Java"</span>;
+    }
+}</code></pre>
+	</body>
+</html>

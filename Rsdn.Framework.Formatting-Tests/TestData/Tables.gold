@@ -1,0 +1,5 @@
+﻿<html>
+	<body>
+<table class='formatter' border='0' cellspacing='2' cellpadding='5'><tr class='formatter'><th class='formatter'>Header 1</th><th class='formatter'>Header 2</th></tr><tr class='formatter'><td class='formatter'>Cell 1</td><td class='formatter'>Cell 2</td></tr><tr class='formatter'><td class='formatter'>Cell 3</td><td class='formatter'>Cell 4</td></tr></table>
+	</body>
+</html>

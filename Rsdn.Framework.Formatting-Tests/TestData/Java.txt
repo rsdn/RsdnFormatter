@@ -1,0 +1,12 @@
+[java]
+// Single line comment
+/* Multi-line
+   comment */
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        int x = 42;
+        final String message = "Java";
+    }
+}
+[/java]

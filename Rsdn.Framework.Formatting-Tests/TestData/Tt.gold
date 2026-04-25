@@ -1,0 +1,6 @@
+﻿<html>
+	<body>
+Text with <tt>monospace font</tt>.<br />
+Regular <tt>fixed-width</tt> text.
+	</body>
+</html>

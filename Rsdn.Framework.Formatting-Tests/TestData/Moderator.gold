@@ -1,0 +1,7 @@
+﻿<html>
+	<body>
+Normal text before.<br />
+<div class='mod'>This is a moderator message.</div>
+Normal text after.
+	</body>
+</html>

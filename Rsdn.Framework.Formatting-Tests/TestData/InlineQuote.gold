@@ -1,0 +1,7 @@
+﻿<html>
+	<body>
+Text before.<br />
+<blockquote class='q'><p>This is inline quote</p></blockquote>
+Text after.
+	</body>
+</html>

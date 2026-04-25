@@ -1,0 +1,15 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>// Single line comment
+{ Multi-line comment }</span>
+<span class='kw'>program</span> HelloWorld;
+<span class='kw'>var</span>
+  x: Integer;
+  s: <span class='kw'>string</span>;
+<span class='kw'>begin</span>
+  writeln(<span class='str'>'Hello, World!'</span>);
+  x := 42;
+  s := <span class='str'>'Pascal'</span>;
+<span class='kw'>end</span>.</code></pre>
+	</body>
+</html>

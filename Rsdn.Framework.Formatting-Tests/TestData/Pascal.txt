@@ -1,0 +1,13 @@
+[pascal]
+// Single line comment
+{ Multi-line comment }
+program HelloWorld;
+var
+  x: Integer;
+  s: string;
+begin
+  writeln('Hello, World!');
+  x := 42;
+  s := 'Pascal';
+end.
+[/pascal]

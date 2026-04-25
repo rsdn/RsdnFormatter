@@ -1,0 +1,2 @@
+Contact us at [email]test@example.com[/email]
+Or mailto: [email]mailto:admin@rsdn.ru[/email]

@@ -1,0 +1,14 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>-- Single line comment
+{- Multi-line
+   comment -}</span>
+<span class='kw'>module</span> Main <span class='kw'>where</span>
+
+main :: IO ()
+main = <span class='kw'>do</span>
+    putStrLn <span class='str'>"Hello, World!"</span>
+    <span class='kw'>let</span> x = 42
+    print x</code></pre>
+	</body>
+</html>

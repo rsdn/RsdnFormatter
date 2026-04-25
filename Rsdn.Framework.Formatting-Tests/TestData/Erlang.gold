@@ -1,0 +1,10 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>% Single line comment</span>
+-module(hello).
+-export([hello_world/0]).
+
+hello_world() -&gt;
+    io:format(<span class='str'>"Hello, World!~n"</span>).</code></pre>
+	</body>
+</html>

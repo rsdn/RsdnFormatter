@@ -1,0 +1,11 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'># Single line comment</span>
+=begin comment
+Multi-line comment
+=cut
+<span class='kw'>print</span> <span class='str'>"Hello, World!"</span>;
+<span class='kw'>my</span> $x = 42;
+<span class='kw'>my</span> $s = <span class='str'>"Perl"</span>;</code></pre>
+	</body>
+</html>

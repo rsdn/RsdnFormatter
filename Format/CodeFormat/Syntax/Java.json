@@ -21,8 +21,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\b",
-      "postfix": "\\b",
+      "prefix": "WordBoundary",
+      "postfix": "WordBoundary",
       "keywords": [
         "break", "delete", "function", "return", "typeof", "case", "do", "if", "switch", "var",
         "catch", "else", "in", "this", "void", "continue", "false", "instanceof", "throw", "while",

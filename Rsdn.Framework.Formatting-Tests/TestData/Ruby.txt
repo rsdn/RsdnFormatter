@@ -1,0 +1,12 @@
+[ruby]
+# Single line comment
+=begin
+Multi-line comment
+=end
+puts "Hello, World!"
+x = 42
+s = "Ruby"
+def hello
+  puts "Hello"
+end
+[/ruby]

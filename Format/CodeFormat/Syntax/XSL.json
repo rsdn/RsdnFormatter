@@ -20,8 +20,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": null,
-      "postfix": "\\b",
+      "prefix": "None",
+      "postfix": "WordBoundary",
       "keywords": [
         "?xml"
       ]
@@ -29,8 +29,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\b",
-      "postfix": "\\b",
+      "prefix": "WordBoundary",
+      "postfix": "WordBoundary",
       "keywords": [
         "case-order", "current", "data-type", "disable-output-escaping", "document",
         "elements", "encoding", "format-number", "generate-id", "indent", "key",

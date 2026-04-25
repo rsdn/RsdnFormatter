@@ -1,0 +1,9 @@
+[perl]
+# Single line comment
+=begin comment
+Multi-line comment
+=cut
+print "Hello, World!";
+my $x = 42;
+my $s = "Perl";
+[/perl]

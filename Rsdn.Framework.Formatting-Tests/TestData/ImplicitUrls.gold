@@ -1,0 +1,8 @@
+﻿<html>
+	<body>
+Check out <a class="m" href="https://www.example.com" target="_blank">https://www.example.com</a> for more info.<br />
+Visit <a class="m" href="https://rsdn.orgrsdn.ru" target="_blank">www.rsdn.ru</a> for RSDN forums.<br />
+You can email at user@domain.com<br />
+FTP link: <a class="m" href="ftp://ftp.example.com/files" target="_blank">ftp://ftp.example.com/files</a>
+	</body>
+</html>

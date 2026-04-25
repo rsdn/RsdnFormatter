@@ -1,0 +1,11 @@
+[vb]
+' Single line comment
+' Multi-line comment
+Module HelloWorld
+    Sub Main()
+        Console.WriteLine("Hello, World!")
+        Dim x As Integer = 42
+        Dim s As String = "VB"
+    End Sub
+End Module
+[/vb]

@@ -1,0 +1,10 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>; Single line comment</span>
+(<span class='kw'>defun</span> hello-world ()
+  (<span class='kw'>print</span> <span class='str'>"Hello, World!"</span>))
+
+(<span class='kw'>let</span> ((x 42))
+  (<span class='kw'>format</span> t <span class='str'>"Value: ~a"</span> x))</code></pre>
+	</body>
+</html>

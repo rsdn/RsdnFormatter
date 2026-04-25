@@ -1,0 +1,10 @@
+[ocaml]
+(* Single line comment *)
+(* Multi-line
+   comment *)
+let hello_world () =
+  print_endline "Hello, World!"
+
+let x = 42
+let s = "OCaml"
+[/ocaml]

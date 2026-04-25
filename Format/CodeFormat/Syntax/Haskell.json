@@ -22,8 +22,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\b",
-      "postfix": "\\b",
+      "prefix": "WordBoundary",
+      "postfix": "WordBoundary",
       "keywords": [
         "as", "case", "class", "data", "default", "deriving", "do", "else", "foreign",
         "hiding", "if", "import", "in", "infix", "infixl", "infixr", "instance", "let",

@@ -1,0 +1,14 @@
+[c#]
+// Single line comment
+/* Multi-line
+   comment */
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("Hello, World!");
+        var x = 42;
+        string verbatim = @"C:\path\to\file";
+    }
+}
+[/c#]

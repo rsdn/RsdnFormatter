@@ -1,0 +1,14 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'># Single line comment
+=begin
+Multi-line comment
+=end</span>
+puts <span class='str'>"Hello, World!"</span>
+x = 42
+s = <span class='str'>"Ruby"</span>
+<span class='kw'>def</span> hello
+  puts <span class='str'>"Hello"</span>
+<span class='kw'>end</span></code></pre>
+	</body>
+</html>

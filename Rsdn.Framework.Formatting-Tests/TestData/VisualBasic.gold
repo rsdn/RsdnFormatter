@@ -1,0 +1,13 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>' Single line comment
+' Multi-line comment</span>
+Module HelloWorld
+    <span class='kw'>Sub</span> Main()
+        Console.WriteLine(<span class='str'>"Hello, World!"</span>)
+        <span class='kw'>Dim</span> x <span class='kw'>As</span> Integer = 42
+        <span class='kw'>Dim</span> s <span class='kw'>As String</span> = <span class='str'>"VB"</span>
+    <span class='kw'>End Sub
+End</span> Module</code></pre>
+	</body>
+</html>

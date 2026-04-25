@@ -1,0 +1,12 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>(* Single line comment *)</span>
+(* Multi-line
+   comment *)
+<span class='kw'>let</span> hello_world () =
+  print_endline <span class='str'>"Hello, World!"</span>
+
+<span class='kw'>let</span> x = 42
+<span class='kw'>let</span> s = <span class='str'>"OCaml"</span></code></pre>
+	</body>
+</html>

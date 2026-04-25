@@ -1,0 +1,11 @@
+[prolog]
+% Single line comment
+hello_world :-
+    write('Hello, World!'), nl.
+
+parent(tom, mary).
+parent(mary, ann).
+
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y).
+[/prolog]

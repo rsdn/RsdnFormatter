@@ -1,0 +1,16 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>// Single line comment
+/* Multi-line
+   comment */</span>
+<span class='kw'>public class</span> HelloWorld
+{
+    <span class='kw'>public static void</span> Main(<span class='kw'>string</span>[] args)
+    {
+        Console.WriteLine(<span class='str'>"Hello, World!"</span>);
+        <span class='kw'>var</span> x = 42;
+        <span class='kw'>string</span> verbatim = <span class='str'>@"C:\path\to\file"</span>;
+    }
+}</code></pre>
+	</body>
+</html>

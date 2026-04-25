@@ -21,8 +21,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\(",
-      "postfix": "\\b",
+      "prefix": "OpenParen",
+      "postfix": "WordBoundary",
       "ignoreCase": true,
       "keywords": [
         "defun", "defvar", "defparameter", "defconstant", "defmacro", "declaim",

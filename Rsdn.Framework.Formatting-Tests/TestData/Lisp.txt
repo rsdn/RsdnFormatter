@@ -1,0 +1,8 @@
+[lisp]
+; Single line comment
+(defun hello-world ()
+  (print "Hello, World!"))
+
+(let ((x 42))
+  (format t "Value: ~a" x))
+[/lisp]

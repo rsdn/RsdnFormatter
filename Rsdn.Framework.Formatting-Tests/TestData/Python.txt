@@ -1,0 +1,15 @@
+[python]
+# Single line comment
+def hello_world():
+    """Docstring comment"""
+    print("Hello, World!")
+    x = 42
+    return x
+
+class MyClass:
+    def __init__(self):
+        self.value = 10
+    
+    def method(self):
+        pass
+[/python]

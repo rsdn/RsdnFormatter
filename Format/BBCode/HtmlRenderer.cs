@@ -4,6 +4,7 @@ using System.Text;
 using System.Web;
 using CodeJam.Strings;
 using Rsdn.Framework.Formatting.BBCode.Nodes;
+using Rsdn.Framework.Formatting.CodeFormat;
 
 namespace Rsdn.Framework.Formatting.BBCode
 {

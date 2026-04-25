@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<body>
 <pre class='c'><code><span class='kw'>declaration</span> VariantDefinition : Container <span class='com'>// Container - добавляет out MemberTable : TableScope</span>
 {

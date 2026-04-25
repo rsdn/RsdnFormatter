@@ -21,8 +21,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\b",
-      "postfix": "\\b",
+      "prefix": "WordBoundary",
+      "postfix": "WordBoundary",
       "ignoreCase": true,
       "keywords": [
         "abolish", "abort", "arg", "asserta", "assertz", "atom", "atomic",

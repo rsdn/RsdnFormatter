@@ -23,8 +23,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\b",
-      "postfix": "\\b",
+      "prefix": "WordBoundary",
+      "postfix": "WordBoundary",
       "keywords": [
         "abstract", "and", "array", "as", "break", "case", "catch", "cfunction", "class",
         "clone", "const", "continue", "declare", "default", "die", "do", "echo", "else",

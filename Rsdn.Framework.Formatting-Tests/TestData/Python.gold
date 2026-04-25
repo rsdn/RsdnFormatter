@@ -1,0 +1,17 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'># Single line comment</span>
+<span class='kw'>def</span> hello_world():
+    <span class='com'>"""Docstring comment"""</span>
+    <span class='kw'>print</span>(<span class='str'>"Hello, World!"</span>)
+    x = 42
+    <span class='kw'>return</span> x
+
+<span class='kw'>class</span> MyClass:
+    <span class='kw'>def</span> __init__(self):
+        self.value = 10
+    
+    <span class='kw'>def</span> method(self):
+        <span class='kw'>pass</span></code></pre>
+	</body>
+</html>

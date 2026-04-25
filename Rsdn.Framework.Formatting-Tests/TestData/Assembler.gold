@@ -1,0 +1,15 @@
+﻿<html>
+	<body>
+<pre class='c'><code>; Single line <span class='kw'>comment
+section .data</span>
+    msg <span class='kw'>db</span> <span class='str'>'Hello, World!'</span>, 0
+<span class='kw'>section</span> .text
+    <span class='kw'>global</span> _start
+_start:
+    <span class='kw'>mov eax</span>, 4
+    <span class='kw'>mov ebx</span>, 1
+    <span class='kw'>mov ecx</span>, msg
+    <span class='kw'>mov edx</span>, 13
+    <span class='kw'>int</span> 0x80</code></pre>
+	</body>
+</html>

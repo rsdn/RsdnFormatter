@@ -22,8 +22,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\b",
-      "postfix": "\\b",
+      "prefix": "WordBoundary",
+      "postfix": "WordBoundary",
       "keywords": [
         "bless", "caller", "continue", "dbmclose", "dbmopen", "default", "defined",
         "delete", "do", "each", "else", "elsif", "END", "endgrent", "endhostent",

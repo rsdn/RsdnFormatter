@@ -1,0 +1,2 @@
+Protected URL: [purl=http://rsdn.ru]RSDN Site[/purl]
+Protected with ampersand: [purl=http://example.com?x=1&y=2]Example[/purl]

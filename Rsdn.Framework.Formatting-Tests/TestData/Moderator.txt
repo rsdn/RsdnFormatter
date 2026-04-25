@@ -1,0 +1,3 @@
+Normal text before.
+[moderator]This is a moderator message.[/moderator]
+Normal text after.

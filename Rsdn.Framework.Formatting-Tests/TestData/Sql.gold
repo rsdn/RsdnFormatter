@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<body>
 <pre class='c'><code><span class='kw'>select</span> x
     <span class='kw'>from</span> y

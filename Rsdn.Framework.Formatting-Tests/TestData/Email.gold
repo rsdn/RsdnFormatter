@@ -1,0 +1,6 @@
+﻿<html>
+	<body>
+Contact us at <a class='m' href='mailto:test@example.com'>test@example.com</a><br />
+Or mailto: [email]<a class="m" href="mailto:admin@rsdn.ru" target="_blank">mailto:admin@rsdn.ru</a>[/email]
+	</body>
+</html>

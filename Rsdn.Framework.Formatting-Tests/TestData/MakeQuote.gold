@@ -1,15 +1,13 @@
 ﻿<html>
 	<body>
-Здравствуйте, CaptainFlint, Вы писали:
-
-A>> Level One
-
-CF>Level Zero
-
-CCC>>>> Level Three [url]http://example.com/mega-funny-pick.jpg[/url]
-CF>Level Zero - [url]http://example.com/mega-funny-pick.jpg[/url]
-BB>>> Level Two
-A>> Level One
-CF>Level Zero
+<span class='lineQuote level1'>A&gt; Level One</span><br />
+<br />
+Level Zero<br />
+<span class='lineQuote level3'><br />
+CCC&gt;&gt;&gt; Level Three <img border='0' src='http://example.com/mega-funny-pick.jpg' /></span><br />
+Level Zero &mdash; <a class="m" href="" target="_blank">http://example.com/mega-funny-pick.jpg</a><br />
+<span class='lineQuote level2'>BB&gt;&gt; Level Two</span><br />
+<span class='lineQuote level1'>A&gt; Level One</span><br />
+Level Zero
 	</body>
 </html>

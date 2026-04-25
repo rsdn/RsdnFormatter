@@ -1,0 +1,10 @@
+﻿<html>
+	<body>
+Some text before.<br />
+[quote=Author Name]<br />
+This is a quoted text.<br />
+It can span multiple lines.<br />
+[/quote]<br />
+Some text after.
+	</body>
+</html>

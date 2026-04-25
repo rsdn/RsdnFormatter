@@ -1,0 +1,6 @@
+﻿<html>
+	<body>
+Protected URL: <a class="m" href="https://rsdn.org" target="_blank">RSDN Site</a><br />
+Protected with ampersand: <a class="m" href="http://example.com?x=1&y=2" target="_blank">Example</a>
+	</body>
+</html>

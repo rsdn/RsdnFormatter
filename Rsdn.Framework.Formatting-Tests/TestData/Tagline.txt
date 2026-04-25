@@ -1,0 +1,3 @@
+Normal text before.
+[tagline]This is my tagline[/tagline]
+Normal text after.

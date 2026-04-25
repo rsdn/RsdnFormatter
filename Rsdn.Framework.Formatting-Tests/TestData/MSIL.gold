@@ -1,0 +1,13 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>// MSIL code</span>
+<span class='kw'>.assembly</span> HelloWorld {}
+<span class='kw'>.method public static void</span> Main() cil managed
+{
+    <span class='kw'>.entrypoint
+    ldstr</span> <span class='str'>"Hello, World!"</span>
+    <span class='kw'>call void</span> [mscorlib]System.Console::WriteLine(<span class='kw'>string</span>)
+    <span class='kw'>ret</span>
+}</code></pre>
+	</body>
+</html>

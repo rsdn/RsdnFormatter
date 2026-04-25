@@ -1,0 +1,6 @@
+Some text before.
+[quote=Author Name]
+This is a quoted text.
+It can span multiple lines.
+[/quote]
+Some text after.

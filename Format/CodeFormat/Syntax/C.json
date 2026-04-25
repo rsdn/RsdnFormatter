@@ -23,8 +23,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "#\\s*",
-      "postfix": "\\b",
+      "prefix": "HashWithSpace",
+      "postfix": "WordBoundary",
       "keywords": [
         "define", "elif", "else", "endif", "error", "if", "ifdef", "ifndef",
         "import", "include", "line", "pragma", "undef"
@@ -33,8 +33,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\b",
-      "postfix": "\\b",
+      "prefix": "WordBoundary",
+      "postfix": "WordBoundary",
       "keywords": [
         "__abstract", "__asm", "__based", "__box", "__cdecl", "__declspec", "__delegate",
         "__event", "__except", "__fastcall", "__finally", "__gc", "__identifier", "__inline",

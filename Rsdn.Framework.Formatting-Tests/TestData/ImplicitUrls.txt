@@ -1,0 +1,4 @@
+Check out https://www.example.com for more info.
+Visit www.rsdn.ru for RSDN forums.
+You can email at user@domain.com
+FTP link: ftp://ftp.example.com/files

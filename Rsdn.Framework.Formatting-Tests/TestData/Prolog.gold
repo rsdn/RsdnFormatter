@@ -1,0 +1,13 @@
+﻿<html>
+	<body>
+<pre class='c'><code><span class='com'>% Single line comment</span>
+hello_world :-
+    <span class='kw'>write</span>('Hello, World!'), <span class='kw'>nl</span>.
+
+parent(tom, mary).
+parent(mary, ann).
+
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y).</code></pre>
+	</body>
+</html>

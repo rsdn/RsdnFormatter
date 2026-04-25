@@ -14,7 +14,7 @@ public class PatternDefinition
 	/// Имя группы (определяет CSS-класс: kw, str, com).
 	/// </summary>
 	[JsonPropertyName("name")]
-	public string Name => "";
+	public string Name { get; set; } = "";
 
 	/// <summary>
 	/// Тип паттерна: keyword, regex.
@@ -23,16 +23,16 @@ public class PatternDefinition
 	public PatternType Type { get; set; } = PatternType.Regex;
 
 	/// <summary>
-	/// Префикс для ключевых слов (например, \b для границ слова).
+	/// Граница перед ключевым словом.
 	/// </summary>
 	[JsonPropertyName("prefix")]
-	public string? Prefix { get; set; }
+	public KeywordBoundary Prefix { get; set; } = KeywordBoundary.None;
 
 	/// <summary>
-	/// Постфикс для ключевых слов.
+	/// Граница после ключевого слова.
 	/// </summary>
 	[JsonPropertyName("postfix")]
-	public string? Postfix { get; set; }
+	public KeywordBoundary Postfix { get; set; } = KeywordBoundary.None;
 
 	/// <summary>
 	/// Список ключевых слов (для type = keyword).

@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Rsdn.Framework.Formatting.CodeFormat;
+using CodeJam;
+using CodeJam.Strings;
 
-namespace Rsdn.Framework.Formatting
+namespace Rsdn.Framework.Formatting.CodeFormat
 {
     /// <summary>
     /// Подсветка синтаксиса кода с использованием Trie для ключевых слов
@@ -14,19 +16,16 @@ namespace Rsdn.Framework.Formatting
     /// </summary>
     public class CodeHighlighter
     {
-        private readonly SyntaxDefinition _syntax;
-        private readonly List<TrieKeywordMatcher> _keywordMatchers = new();
-        private readonly List<RegexPattern> _regexPatterns = new();
+        private readonly List<TrieKeywordMatcher> _keywordMatchers = [];
         private readonly Regex? _combinedRegex;
         private readonly string[] _groupNames;
 
         /// <summary>
-        /// Создать подсветчик из определения синтаксиса.
+        /// Создать подсветку из определения синтаксиса.
         /// </summary>
         public CodeHighlighter(SyntaxDefinition syntax)
         {
-            _syntax = syntax ?? throw new ArgumentNullException(nameof(syntax));
-
+            Code.NotNull(syntax, nameof(syntax));
             var regexBuilder = new StringBuilder();
             var groupIndex = 0;
             var groupList = new List<string>();
@@ -34,7 +33,6 @@ namespace Rsdn.Framework.Formatting
             foreach (var pattern in syntax.Patterns)
             {
                 if (pattern.Type == PatternType.Keyword && pattern.Keywords.Count > 0)
-                {
                     // Для ключевых слов используем Trie
                     _keywordMatchers.Add(new TrieKeywordMatcher(
                         pattern.Keywords,
@@ -42,9 +40,7 @@ namespace Rsdn.Framework.Formatting
                         pattern.Prefix,
                         pattern.Postfix,
                         pattern.IgnoreCase));
-                }
                 else if (pattern.Expressions.Count > 0)
-                {
                     // Для regex паттернов строим комбинированное выражение
                     foreach (var expr in pattern.Expressions)
                     {
@@ -55,7 +51,6 @@ namespace Rsdn.Framework.Formatting
                         groupList.Add(pattern.Name);
                         groupIndex++;
                     }
-                }
             }
 
             _groupNames = groupList.ToArray();
@@ -78,17 +73,6 @@ namespace Rsdn.Framework.Formatting
         }
 
         /// <summary>
-        /// Загрузить подсветчик из JSON-потока.
-        /// </summary>
-        public static CodeHighlighter FromJsonStream(Stream stream)
-        {
-            using var reader = new StreamReader(stream);
-            var json = reader.ReadToEnd();
-            var syntax = JsonSerializer.Deserialize<SyntaxDefinition>(json);
-            return new CodeHighlighter(syntax ?? throw new InvalidOperationException("Invalid syntax definition"));
-        }
-
-        /// <summary>
         /// Подсветить код.
         /// </summary>
         public string Highlight(string code)
@@ -104,14 +88,12 @@ namespace Rsdn.Framework.Formatting
                 result = _combinedRegex.Replace(result, match =>
                 {
                     // Находим имя группы, которая совпала
-                    for (int i = 0; i < _groupNames.Length; i++)
+                    for (var i = 0; i < _groupNames.Length; i++)
                     {
                         var groupName = $"{SanitizeGroupName(_groupNames[i])}_{i}";
                         var group = match.Groups[groupName];
                         if (group.Success)
-                        {
                             return $"<{_groupNames[i]}>{match.Value}</{_groupNames[i]}>";
-                        }
                     }
                     return match.Value;
                 });
@@ -119,17 +101,12 @@ namespace Rsdn.Framework.Formatting
 
             // Затем применяем Trie для ключевых слов
             // Но только к частям, которые ещё не выделены
-            foreach (var matcher in _keywordMatchers)
-            {
-                result = HighlightKeywords(result, matcher);
-            }
-
-            return result;
+            return _keywordMatchers.Aggregate(result, HighlightKeywords);
         }
 
-        private string HighlightKeywords(string input, TrieKeywordMatcher matcher)
+        private static string HighlightKeywords(string input, TrieKeywordMatcher matcher)
         {
-            // Разбиваем на части: уже выделенные и не выделенные
+            // Разбиваем на части: уже выделенные и не выделенные.
             // Применяем matcher только к не выделенным частям
             var result = new StringBuilder(input.Length * 2);
             var pos = 0;
@@ -148,9 +125,7 @@ namespace Rsdn.Framework.Formatting
 
                 // Подсвечиваем часть до тега
                 if (tagStart > pos)
-                {
                     result.Append(matcher.Highlight(input.Substring(pos, tagStart - pos)));
-                }
 
                 // Находим конец тега
                 var tagEnd = input.IndexOf('>', tagStart);
@@ -199,7 +174,7 @@ namespace Rsdn.Framework.Formatting
             // <span class='kw'> -> span
             // <kw> -> kw
             var start = tagContent.IndexOf('<') + 1;
-            var end = tagContent.IndexOfAny(new[] { ' ', '>', '\t' }, start);
+            var end = tagContent.IndexOfAny([' ', '>', '\t'], start);
             if (end == -1)
                 end = tagContent.Length - 1;
 
@@ -223,7 +198,7 @@ namespace Rsdn.Framework.Formatting
         {
             var result = RegexOptions.None;
 
-            if (string.IsNullOrEmpty(options))
+            if (options.IsNullOrEmpty())
                 return result;
 
             // Парсим опции в формате (?in) или (?inm)
@@ -242,12 +217,6 @@ namespace Rsdn.Framework.Formatting
                 result |= RegexOptions.Singleline;
 
             return result;
-        }
-
-        private class RegexPattern
-        {
-            public string Name { get; set; } = "";
-            public Regex Regex { get; set; } = null!;
         }
     }
 }

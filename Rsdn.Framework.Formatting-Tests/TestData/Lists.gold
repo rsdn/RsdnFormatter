@@ -1,0 +1,15 @@
+﻿<html>
+	<body>
+<ul style='margin-top:0; margin-bottom:0;'><li />Item 1<br />
+<li />Item 2<br />
+<li />Item 3</ul>
+<br />
+<ol type='a'  style='margin-top:0; margin-bottom:0;'><li />Item A<br />
+<li />Item B<br />
+<li />Item C</ol>
+<br />
+<ol type='1' start='1' style='margin-top:0; margin-bottom:0;'><li />First<br />
+<li />Second<br />
+<li />Third</ol>
+	</body>
+</html>

@@ -1,0 +1,9 @@
+[php]
+<?php
+// Single line comment
+/* Multi-line comment */
+echo "Hello, World!";
+$x = 42;
+$s = "PHP";
+?>
+[/php]

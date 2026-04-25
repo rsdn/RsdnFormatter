@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<body>
 <pre class='c'><code><span class='kw'>typedef void</span> *(*some_func)(<span class='kw'>void</span>);
 ((some_func)data)();</code></pre>

@@ -15,6 +15,7 @@ namespace Rsdn.Framework.Formatting.Tests
 	{
 		public IEnumerator GetEnumerator()
 		{
+			// Original tests
 			yield return GetTestCaseData("Img");
 			yield return GetTestCaseData("Nitra");
 			yield return GetTestCaseData("Nemerle");
@@ -36,6 +37,42 @@ namespace Rsdn.Framework.Formatting.Tests
 			yield return GetTestCaseData("Urls");
 			yield return GetTestCaseData("XSS");
 			yield return GetTestCaseData("LinkJSInjection");
+
+			// New BBCode tests
+			yield return GetTestCaseData("Lists");
+			yield return GetTestCaseData("Tables");
+			yield return GetTestCaseData("Email");
+			yield return GetTestCaseData("Quote");
+			yield return GetTestCaseData("InlineQuote");
+			yield return GetTestCaseData("Hr");
+			yield return GetTestCaseData("Msdn");
+			yield return GetTestCaseData("Purl");
+			yield return GetTestCaseData("ImplicitUrls");
+			yield return GetTestCaseData("Moderator");
+			yield return GetTestCaseData("Tagline");
+			yield return GetTestCaseData("Tt");
+
+			// Additional smiles test
+			yield return GetTestCaseData("MoreSmiles");
+
+			// New language tests
+			yield return GetTestCaseData("CSharp");
+			yield return GetTestCaseData("Java");
+			yield return GetTestCaseData("Python");
+			yield return GetTestCaseData("Pascal");
+			yield return GetTestCaseData("VisualBasic");
+			yield return GetTestCaseData("PHP");
+			yield return GetTestCaseData("Perl");
+			yield return GetTestCaseData("Ruby");
+			yield return GetTestCaseData("Assembler");
+			yield return GetTestCaseData("IDL");
+			yield return GetTestCaseData("MSIL");
+			yield return GetTestCaseData("XSL");
+			yield return GetTestCaseData("Erlang");
+			yield return GetTestCaseData("Haskell");
+			yield return GetTestCaseData("Lisp");
+			yield return GetTestCaseData("Ocaml");
+			yield return GetTestCaseData("Prolog");
 		}
 
 		private static TestCaseData GetTestCaseData(string name)

@@ -21,8 +21,8 @@
     {
       "name": "kw",
       "type": "keyword",
-      "prefix": "\\b",
-      "postfix": "\\b",
+      "prefix": "WordBoundary",
+      "postfix": "WordBoundary",
       "ignoreCase": true,
       "keywords": [
         "add", "add.ovf", "add.ovf.un", "and", "arglist", "beq", "beq.s", "bge",

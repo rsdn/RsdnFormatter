@@ -1,0 +1,11 @@
+﻿<html>
+	<body>
+<pre class='c'><code>&lt;?php
+<span class='com'>// Single line comment
+/* Multi-line comment */</span>
+<span class='kw'>echo</span> <span class='str'>"Hello, World!"</span>;
+$x = 42;
+$s = <span class='str'>"PHP"</span>;
+?&gt;</code></pre>
+	</body>
+</html>

@@ -1,0 +1,7 @@
+﻿<html>
+	<body>
+Text before horizontal rule.<br />
+<hr /><br />
+Text after horizontal rule.
+	</body>
+</html>

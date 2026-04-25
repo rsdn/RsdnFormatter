@@ -1,0 +1,15 @@
+﻿<html>
+	<body>
+<pre class='c'><code>&lt;<span class='kw'>?xml version</span>=<span class='str'>"1.0"</span> <span class='kw'>encoding</span>=<span class='str'>"UTF-8"</span>?&gt;
+&lt;<span class='kw'>xsl:stylesheet version</span>=<span class='str'>"1.0"</span> <span class='kw'>xmlns:xsl</span>=<span class='str'>"http://www.w3.org/1999/XSL/Transform"</span>&gt;
+    &lt;!-- Comment --&gt;
+    &lt;<span class='kw'>xsl:template match</span>=<span class='str'>"/"</span>&gt;
+        &lt;html&gt;
+            &lt;body&gt;
+                &lt;h1&gt;Hello, World!&lt;/h1&gt;
+            &lt;/body&gt;
+        &lt;/html&gt;
+    &lt;/<span class='kw'>xsl:template</span>&gt;
+&lt;/<span class='kw'>xsl:stylesheet</span>&gt;</code></pre>
+	</body>
+</html>
