@@ -16,7 +16,7 @@ public class TagNode(string tagName, string? attribute = null) : Node
 	/// <summary>
 	/// Значение атрибута (может быть null)
 	/// </summary>
-	public string? Attribute { get; } = attribute;
+	public string? Attribute { get; set; } = attribute;
 
 	/// <summary>
 	/// Дочерние узлы
@@ -26,6 +26,11 @@ public class TagNode(string tagName, string? attribute = null) : Node
 	public override void Accept<TContext>(INodeVisitor<TContext> visitor, TContext ctx)
 	{
 		visitor.Visit(this, ctx);
+	}
+
+	public override void Accept(INodeVisitor visitor)
+	{
+		visitor.Visit(this);
 	}
 
 	public override string ToString() => 

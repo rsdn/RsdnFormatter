@@ -1,14 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 
 namespace Rsdn.Framework.Formatting.Resources
 {
 	public abstract class Resource : IDisposable
 	{
 		#region Construction
-		private object _cachedData;
+		private object? _cachedData;
 
-		internal Resource(string fullName, ResourceKind kind, Stream stream)
+		internal Resource(string fullName, ResourceKind kind, Stream? stream)
 		{
 			FullName = fullName;
 			Kind = kind;
@@ -26,28 +27,29 @@ namespace Rsdn.Framework.Formatting.Resources
 
 		public void Dispose()
 		{
-			if (Stream != null)
-			{
-				Stream.Dispose();
-				Stream = null;
-				GC.SuppressFinalize(this);
-			}
+			if (Stream == null)
+				return;
+			Stream.Dispose();
+			Stream = null;
+			GC.SuppressFinalize(this);
 		}
 
 
 		public string GetContentType()
 		{
-			var attr = Kind.GetCustomAttribute<ContentTypeAttribute>();
-			return attr != null ? attr.ContentType : String.Empty;
+			var attr = Kind.GetType().GetCustomAttribute<ContentTypeAttribute>();
+			return attr != null ? attr.ContentType : string.Empty;
 		}
 
 
 		public object Read()
 		{
 			if (Stream == null)
-				throw new ObjectDisposedException(typeof(Resource).Name);
+				throw new ObjectDisposedException(nameof(Resource));
 
-			return Stream.Position > 0 ? _cachedData : _cachedData = ObtainResource();
+			return Stream.Position > 0
+				? _cachedData!
+				: _cachedData = ObtainResource();
 		}
 
 
@@ -61,7 +63,7 @@ namespace Rsdn.Framework.Formatting.Resources
 
 		public bool Binary { get; private set; }
 
-		protected Stream Stream { get; private set; }
+		protected Stream? Stream { get; private set; }
 		#endregion
 	}
 }

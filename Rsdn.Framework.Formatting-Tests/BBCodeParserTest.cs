@@ -263,7 +263,8 @@ namespace Rsdn.Framework.Formatting.Tests
             var renderer = new HtmlRenderer();
             var html = renderer.Render(doc);
 
-            Assert.AreEqual("<a target=\"_blank\" href=\"https://example.com\">Example</a>", html);
+            // HtmlRenderer добавляет class="m" как это делает старый форматтер
+            Assert.AreEqual("<a class=\"m\" href=\"https://example.com\" target=\"_blank\">Example</a>", html);
         }
 
         [Test]
@@ -277,7 +278,8 @@ namespace Rsdn.Framework.Formatting.Tests
             var renderer = new HtmlRenderer();
             var html = renderer.Render(doc);
 
-            Assert.AreEqual("<a target=\"_blank\" href=\"https://example.com\">https://example.com</a>", html);
+            // HtmlRenderer добавляет class="m" как это делает старый форматтер
+            Assert.AreEqual("<a class=\"m\" href=\"https://example.com\" target=\"_blank\">https://example.com</a>", html);
         }
 
         [Test]
@@ -424,7 +426,8 @@ namespace Rsdn.Framework.Formatting.Tests
             var formatter = new TextFormatter();
             var html = formatter.FormatBBCode("[url=https://example.com]Example[/url]");
 
-            Assert.AreEqual("<a target=\"_blank\" href=\"https://example.com\">Example</a>", html);
+            // FormatBBCode использует старый форматтер, который добавляет class="m"
+            Assert.AreEqual("<a class=\"m\" href=\"https://example.com\" target=\"_blank\">Example</a>", html);
         }
 
         [Test]

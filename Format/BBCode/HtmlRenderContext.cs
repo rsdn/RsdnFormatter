@@ -1,4 +1,5 @@
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Rsdn.Framework.Formatting.BBCode;
 
@@ -6,6 +7,7 @@ namespace Rsdn.Framework.Formatting.BBCode;
 /// Контекст рендеринга HTML.
 /// Иммутабельный объект, передаваемый через аргументы методов визитора.
 /// </summary>
+[PublicAPI]
 public class HtmlRenderContext
 {
 	/// <summary>

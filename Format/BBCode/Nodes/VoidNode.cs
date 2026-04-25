@@ -17,5 +17,10 @@ public class VoidNode(string tagName) : Node
 		visitor.Visit(this, ctx);
 	}
 
+	public override void Accept(INodeVisitor visitor)
+	{
+		visitor.Visit(this);
+	}
+
 	public override string ToString() => $"Void: [{TagName}]";
 }

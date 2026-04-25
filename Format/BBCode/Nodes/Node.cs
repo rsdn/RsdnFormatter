@@ -9,4 +9,9 @@ public abstract class Node
 	/// Принять посетителя с контекстом (паттерн Visitor)
 	/// </summary>
 	public abstract void Accept<TContext>(INodeVisitor<TContext> visitor, TContext ctx);
+
+	/// <summary>
+	/// Принять посетителя без контекста (паттерн Visitor)
+	/// </summary>
+	public abstract void Accept(INodeVisitor visitor);
 }

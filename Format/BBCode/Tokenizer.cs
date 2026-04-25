@@ -165,7 +165,7 @@ public ref struct Tokenizer(ReadOnlySpan<char> text)
     /// <summary>
     /// Проверить, находимся ли мы в позиции где может начинаться префикс цитирования
     /// (начало строки или начало документа)
-    /// Паттерн: одна или более букв A-Z, за которыми следует один или более '>'
+    /// Паттерн: один или более символов (буквы A-Z, ·, и др.), за которыми следует один или более '>'
     /// </summary>
     private bool IsQuotePrefixStart()
     {
@@ -174,8 +174,8 @@ public ref struct Tokenizer(ReadOnlySpan<char> text)
         
         var ch = _text[Position];
         
-        // Префикс цитирования начинается с буквы A-Z
-        if (ch is < 'A' or > 'Z')
+        // Префикс цитирования начинается с буквы A-Z или специальных символов (·)
+        if (!IsQuotePrefixChar(ch))
             return false;
         
         // Проверяем, что это начало строки
@@ -186,33 +186,51 @@ public ref struct Tokenizer(ReadOnlySpan<char> text)
                 return false;
         }
         
-        // Теперь проверяем, что за буквами следует '>'
-        // Считаем количество букв
+        // Теперь проверяем, что за символами следует '>'
+        // Считаем количество символов префикса
         var pos = Position;
-        while (pos < _text.Length && _text[pos] is >= 'A' and <= 'Z')
+        while (pos < _text.Length && IsQuotePrefixChar(_text[pos]))
             pos++;
         
-        // Должен быть хотя бы один '>' после букв
+        // Должен быть хотя бы один '>' после символов
         return pos < _text.Length && _text[pos] == '>';
     }
 
     /// <summary>
-    /// Прочитать префикс цитирования: A>, BB>>, AAA>>>, и т.д.
+    /// Проверить, является ли символ допустимым в префиксе цитирования
+    /// </summary>
+    private static bool IsQuotePrefixChar(char ch)
+    {
+        // Буквы A-Z
+        if (ch is >= 'A' and <= 'Z')
+            return true;
+        
+        // Буквы а-я, А-Я (кириллица)
+        if (ch is >= 'а' and <= 'я' or >= 'А' and <= 'Я')
+            return true;
+        
+        // Специальные символы, используемые как имена в цитатах
+        // · (middle dot, U+00B7) - используется как "анонимное" цитирование
+        if (ch == '\u00B7')
+            return true;
+        
+        return false;
+    }
+
+    /// <summary>
+    /// Прочитать префикс цитирования: A>, BB>>, AAA>>>, ·>, и т.д.
     /// </summary>
     private Token ReadQuotePrefix()
     {
         var start = Position;
         
-        // Читаем буквы (A, B, AA, BB, AAA, и т.д.)
-        while (Position < _text.Length)
+        // Читаем символы префикса (A, B, AA, BB, AAA, ·, и т.д.)
+        while (Position < _text.Length && IsQuotePrefixChar(_text[Position]))
         {
-            var ch = _text[Position];
-            if (ch is < 'A' or > 'Z')
-                break;
             Position++;
         }
         
-        // Должны быть хотя бы одна буква
+        // Должен быть хотя бы один символ префикса
         if (Position == start)
             return Token.TextToken(new TextRange(start, Position), start);
         
@@ -231,17 +249,8 @@ public ref struct Tokenizer(ReadOnlySpan<char> text)
             return Token.TextToken(new TextRange(start, Position), start);
         }
         
-        // Проверяем, что после '>' идёт пробел или конец строки/документа
-        // (это отличает цитирование от обычного текста типа "A>B")
-        if (Position < _text.Length)
-        {
-            var nextChar = _text[Position];
-            if (nextChar != ' ' && nextChar != '\t' && nextChar != '\n' && nextChar != '\r')
-            {
-                // Это не префикс цитирования - возвращаем как обычный текст
-                return Token.TextToken(new TextRange(start, Position), start);
-            }
-        }
+        // Примечание: не проверяем что после '>' идёт пробел,
+        // так как префикс может быть сразу перед текстом (например "·>text")
         
         return Token.QuotePrefixToken(new TextRange(start, Position), level, start);
     }
@@ -291,11 +300,12 @@ public ref struct Tokenizer(ReadOnlySpan<char> text)
             return new TextRange(start + 1, Position - 1);
         }
 
-        // Атрибут без кавычек - читаем до ']' или пробела
+        // Атрибут без кавычек - читаем до ']'
+        // (пробелы допустимы в значении атрибута, например [cut=Some hidden text])
         while (Position < _text.Length)
         {
             var ch = _text[Position];
-            if (ch == ']' || char.IsWhiteSpace(ch))
+            if (ch == ']')
                 break;
             Position++;
         }

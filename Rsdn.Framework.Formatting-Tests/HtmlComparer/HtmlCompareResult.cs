@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Rsdn.Framework.Formatting.Tests.HtmlComparer;
@@ -16,7 +18,7 @@ public class HtmlCompareResult
 	/// <summary>
 	/// Список различий
 	/// </summary>
-	public List<HtmlDifference> Differences { get; set; } = new();
+	public List<HtmlDifference> Differences { get; set; } = [];
 
 	/// <summary>
 	/// Ожидаемый HTML
@@ -36,19 +38,74 @@ public class HtmlCompareResult
 		var sb = new StringBuilder();
 		sb.AppendLine("HTML documents differ:");
 		sb.AppendLine(new string('=', 60));
-			
-		foreach (var diff in Differences)
+
+		var diffLines = GetDifferingLinesWithContext();
+		sb.Append(diffLines);
+
+		return sb.ToString();
+	}
+
+	/// <summary>
+	/// Получить различающиеся строки с контекстом (строка до, строка с различием, строка после)
+	/// </summary>
+	private string GetDifferingLinesWithContext()
+	{
+		var expectedLines = ExpectedHtml.Split(["\r\n", "\n"], StringSplitOptions.None);
+		var actualLines = ActualHtml.Split(["\r\n", "\n"], StringSplitOptions.None);
+
+		var diffLineIndices = new HashSet<int>();
+		var sb = new StringBuilder();
+
+		// Находим строки с различиями
+		var maxLines = Math.Max(expectedLines.Length, actualLines.Length);
+		for (int i = 0; i < maxLines; i++)
 		{
-			sb.AppendLine(diff.ToString());
-			sb.AppendLine();
+			var expectedLine = i < expectedLines.Length ? expectedLines[i] : "";
+			var actualLine = i < actualLines.Length ? actualLines[i] : "";
+
+			if (expectedLine == actualLine)
+				continue;
+			// Добавляем саму строку и контекст (строку до и после)
+			if (i > 0) diffLineIndices.Add(i - 1);
+			diffLineIndices.Add(i);
+			if (i < maxLines - 1) diffLineIndices.Add(i + 1);
 		}
 
-		sb.AppendLine(new string('=', 60));
-		sb.AppendLine("Полный ожидаемый HTML:");
-		sb.AppendLine(ExpectedHtml);
-		sb.AppendLine();
-		sb.AppendLine("Полный фактический HTML:");
-		sb.AppendLine(ActualHtml);
+		// Сортируем индексы и группируем подряд идущие строки
+		var sortedIndices = diffLineIndices.OrderBy(i => i).ToList();
+		
+		if (sortedIndices.Count == 0)
+			return "Нет построчных различий (возможно различия в структуре HTML)";
+
+		int? lastPrintedIndex = null;
+		var inGroup = false;
+
+		foreach (var idx in sortedIndices)
+		{
+			// Если разрыв между строками больше 1, добавляем разделитель
+			if (lastPrintedIndex.HasValue && idx > lastPrintedIndex.Value + 1)
+			{
+				sb.AppendLine("...");
+				inGroup = false;
+			}
+
+			var expectedLine = idx < expectedLines.Length ? expectedLines[idx] : "";
+			var actualLine = idx < actualLines.Length ? actualLines[idx] : "";
+
+			if (expectedLine == actualLine)
+			{
+				// Строка контекста (без различий)
+				sb.AppendLine($"  {idx + 1,4}: {expectedLine}");
+			}
+			else
+			{
+				// Строка с различием
+				sb.AppendLine($"- {idx + 1,4}: {expectedLine}");
+				sb.AppendLine($"+ {idx + 1,4}: {actualLine}");
+			}
+
+			lastPrintedIndex = idx;
+		}
 
 		return sb.ToString();
 	}

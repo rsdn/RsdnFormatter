@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
+using CodeJam.Strings;
 using Rsdn.Framework.Formatting.BBCode.Nodes;
 
 namespace Rsdn.Framework.Formatting.BBCode
@@ -9,7 +10,7 @@ namespace Rsdn.Framework.Formatting.BBCode
 	/// <summary>
 	/// HTML рендерер для AST узлов BBCode
 	/// </summary>
-	public class HtmlRenderer : INodeVisitor<HtmlRenderContext>, IQuoteLineVisitor
+	public class HtmlRenderer : INodeVisitor<HtmlRenderContext>
 	{
 		// Маппинг языковых тегов на "code"
 		private static readonly Dictionary<string, string> _languageTagAliases = new(StringComparer.OrdinalIgnoreCase)
@@ -44,6 +45,10 @@ namespace Rsdn.Framework.Formatting.BBCode
 			{ "vbcode", "code" },
 			{ "pascal", "code" },
 			{ "delphi", "code" },
+			{ "nemerle", "code" },
+			{ "nitra", "code" },
+			{ "objc", "code" },
+			{ "objectivec", "code" },
 		};
 
 		/// <summary>
@@ -70,27 +75,20 @@ namespace Rsdn.Framework.Formatting.BBCode
 		{
 			// Обрабатываем детей с учётом контекста (для цитат)
 			var children = node.Children;
-			for (int i = 0; i < children.Count; i++)
+			foreach (var child in children)
 			{
-				var child = children[i];
-				
 				if (child is QuoteLineNode quoteNode)
-				{
 					// Проверяем, что идёт после цитаты
-					var nextIsQuote = (i + 1 < children.Count && children[i + 1] is QuoteLineNode);
-					RenderQuoteLineWithContext(quoteNode, ctx, nextIsQuote);
-				}
+					RenderQuoteLineWithContext(quoteNode, ctx);
 				else
-				{
 					child.Accept(this, ctx);
-				}
 			}
 		}
-		
+
 		/// <summary>
 		/// Отрендерить строку цитирования с учётом контекста
 		/// </summary>
-		private void RenderQuoteLineWithContext(QuoteLineNode node, HtmlRenderContext ctx, bool nextIsQuote)
+		private static void RenderQuoteLineWithContext(QuoteLineNode node, HtmlRenderContext ctx)
 		{
 			var level = node.Level;
 			var prefix = node.Prefix;
@@ -98,25 +96,17 @@ namespace Rsdn.Framework.Formatting.BBCode
 			var hasLeadingNewline = node.HasLeadingNewline;
 			
 			// Убираем перенос строки в конце текста
-			text = text?.TrimEnd('\r', '\n') ?? "";
+			text = text.TrimEnd('\r', '\n');
 			
 			// Если перед цитатой была пустая строка, добавляем <br /> внутри span
-			if (hasLeadingNewline)
-			{
-				// <span class='lineQuote levelN'><br />A> text</span><br />
-				ctx.Output.AppendFormat("<span class='lineQuote level{0}'><br />\n{1}{2}</span><br />\n", 
-					level,
-					HttpUtility.HtmlEncode(prefix),
-					HttpUtility.HtmlEncode(text));
-			}
-			else
-			{
-				// <span class='lineQuote levelN'>A> text</span><br />
-				ctx.Output.AppendFormat("<span class='lineQuote level{0}'>{1}{2}</span><br />\n", 
-					level,
-					HttpUtility.HtmlEncode(prefix),
-					HttpUtility.HtmlEncode(text));
-			}
+			// <span class='lineQuote levelN'><br />A> text</span><br />
+			ctx.Output.AppendFormat(
+				hasLeadingNewline
+					? "<span class='lineQuote level{0}'><br />\n{1}{2}</span><br />\n"
+					: "<span class='lineQuote level{0}'>{1}{2}</span><br />\n",
+				level,
+				HttpUtility.HtmlEncode(prefix),
+				HttpUtility.HtmlEncode(text));
 		}
 
 		// Теги, которые являются блочными (после них не нужен <br />)
@@ -125,7 +115,7 @@ namespace Rsdn.Framework.Formatting.BBCode
 			"h1", "h2", "h3", "h4", "h5", "h6",
 			"blockquote", "quote", "div", "pre", "code",
 			"ul", "ol", "li", "table", "tr", "td", "th",
-			"p", "hr", "cut"
+			"p", "hr", "cut", "details", "summary", "span"
 		};
 
 		public void Visit(TextNode node, HtmlRenderContext ctx)
@@ -151,7 +141,7 @@ namespace Rsdn.Framework.Formatting.BBCode
 			
 			// Разбиваем текст на строки и добавляем <br /> после каждой (кроме последней)
 			var lines = text.Split('\n');
-			for (int i = 0; i < lines.Length; i++)
+			for (var i = 0; i < lines.Length; i++)
 			{
 				var line = lines[i];
 				// Нормализуем \r в конце строки
@@ -176,7 +166,7 @@ namespace Rsdn.Framework.Formatting.BBCode
 		}
 
 		/// <summary>
-		/// Проверить, заканчивается ли вывод закрывающим тегом блочного элемента
+		/// Проверить, заканчивается ли вывод блочным элементом (открывающим или закрывающим)
 		/// </summary>
 		private static bool LastOutputWasBlockElement(StringBuilder output)
 		{
@@ -184,20 +174,37 @@ namespace Rsdn.Framework.Formatting.BBCode
 			if (string.IsNullOrEmpty(text))
 				return false;
 			
-			// Ищем последний закрывающий тег
+			// Ищем последний '>'
 			var lastCloseBracket = text.LastIndexOf('>');
 			if (lastCloseBracket < 0)
 				return false;
 			
-			// Ищем начало тега
-			var tagStart = text.LastIndexOf("</", lastCloseBracket);
-			if (tagStart < 0)
-				return false;
+			// Проверяем, это закрывающий тег </tag>?
+			var tagStart = text.LastIndexOfInvariant("</", lastCloseBracket);
+			if (tagStart >= 0 && tagStart < lastCloseBracket)
+			{
+				// Извлекаем имя тега
+				var tagName = text.Substring(tagStart + 2, lastCloseBracket - tagStart - 2).Trim();
+				if (_blockTags.Contains(tagName))
+					return true;
+			}
 			
-			// Извлекаем имя тега
-			var tagName = text.Substring(tagStart + 2, lastCloseBracket - tagStart - 2).Trim();
+			// Проверяем, это открывающий тег <tag ...>?
+			// Ищем '<' перед последним '>'
+			var openBracket = text.LastIndexOf('<', lastCloseBracket);
+			if (openBracket >= 0 && openBracket < lastCloseBracket)
+			{
+				// Извлекаем имя тега (от '<' до первого пробела или '>')
+				var tagContent = text.Substring(openBracket + 1, lastCloseBracket - openBracket - 1);
+				var spaceIndex = tagContent.IndexOf(' ');
+				var tagName = spaceIndex >= 0 ? tagContent.Substring(0, spaceIndex) : tagContent;
+				
+				// Проверяем, это блочный тег (div, summary, details, etc.)
+				if (_blockTags.Contains(tagName))
+					return true;
+			}
 			
-			return _blockTags.Contains(tagName);
+			return false;
 		}
 
 		public void Visit(TagNode node, HtmlRenderContext ctx)
@@ -313,21 +320,36 @@ namespace Rsdn.Framework.Formatting.BBCode
 		private static void RenderUrl(TagNode node, HtmlRenderContext ctx)
 		{
 			var url = node.Attribute;
+			var text = GetTextContent(node);
+			
 			if (!string.IsNullOrEmpty(url))
 			{
 				// [url=...]текст[/url]
-				ctx.Output.AppendFormat("<a target=\"_blank\" href=\"{0}\">", HttpUtility.HtmlAttributeEncode(url));
-				RenderChildren(node, ctx);
+				// Если атрибут не является валидным URL, а текст является - меняем местами
+				if (!Uri.IsWellFormedUriString(url, UriKind.Absolute) && 
+				    !string.IsNullOrEmpty(text) && 
+				    Uri.IsWellFormedUriString(text, UriKind.Absolute))
+				{
+					(url, text) = (text, url);
+				}
+				
+				// Экранируем амперсанды в URL для HTML
+				var safeUrl = HttpUtility.HtmlAttributeEncode(url);
+				ctx.Output.AppendFormat("<a class=\"m\" href=\"{0}\" target=\"_blank\">", safeUrl);
+				if (!string.IsNullOrEmpty(text))
+					ctx.Output.Append(HttpUtility.HtmlEncode(text));
+				else
+					RenderChildren(node, ctx);
 				ctx.Output.Append("</a>");
 			}
 			else
 			{
 				// [url]ссылка[/url] - текст является ссылкой
-				var text = GetTextContent(node);
 				if (!string.IsNullOrEmpty(text))
 				{
-					ctx.Output.AppendFormat("<a target=\"_blank\" href=\"{0}\">{1}</a>", 
-						HttpUtility.HtmlAttributeEncode(text),
+					var safeUrl = HttpUtility.HtmlAttributeEncode(text);
+					ctx.Output.AppendFormat("<a class=\"m\" href=\"{0}\" target=\"_blank\">{1}</a>", 
+						safeUrl,
 						HttpUtility.HtmlEncode(text));
 				}
 			}
@@ -381,31 +403,43 @@ namespace Rsdn.Framework.Formatting.BBCode
 		private static void RenderQuote(TagNode node, HtmlRenderContext ctx)
 		{
 			ctx.Output.Append("<blockquote class=\"quote\">");
-			if (!string.IsNullOrEmpty(node.Attribute))
-			{
+			if (node.Attribute.NotNullNorEmpty())
 				ctx.Output.AppendFormat("<div class=\"quote-author\">{0}</div>", HttpUtility.HtmlEncode(node.Attribute));
-			}
 			RenderChildren(node, ctx);
 			ctx.Output.Append("</blockquote>");
 		}
 
 		private static void RenderInlineQuote(TagNode node, HtmlRenderContext ctx)
 		{
-			ctx.Output.Append("<q>");
-			if (!string.IsNullOrEmpty(node.Attribute))
-			{
+			ctx.Output.Append("<blockquote class='q'><p>");
+			if (node.Attribute.NotNullNorEmpty())
 				ctx.Output.AppendFormat("<cite>{0}</cite>", HttpUtility.HtmlEncode(node.Attribute));
-			}
 			RenderChildren(node, ctx);
-			ctx.Output.Append("</q>");
+			
+			// Убираем trailing <br /> перед </p>
+			var output = ctx.Output;
+			var text = output.ToString();
+			if (text.EndsWith("<br />"))
+			{
+				output.Remove(output.Length - 6, 6);
+			}
+			else if (text.EndsWith("<br />\n"))
+			{
+				output.Remove(output.Length - 7, 7);
+			}
+			
+			ctx.Output.Append("</p></blockquote>");
 		}
 
 		private static void RenderCut(TagNode node, HtmlRenderContext ctx)
 		{
-			var title = node.Attribute ?? "Читать дальше";
-			ctx.Output.AppendFormat("<div class=\"cut\"><span class=\"cut-title\">{0}</span>", HttpUtility.HtmlEncode(title));
+			var title = node.Attribute ?? "Скрытый текст";
+			ctx.Output.AppendFormat(
+				"<details class=\"spoiler\">"
+					+ "<summary class=\"spoiler-title\">{0}</summary><div class=\"spoiler-content\">",
+				HttpUtility.HtmlEncode(title));
 			RenderChildren(node, ctx);
-			ctx.Output.Append("</div>");
+			ctx.Output.Append("</div></details>");
 		}
 
 		private void RenderCode(TagNode node, HtmlRenderContext ctx)
@@ -414,7 +448,7 @@ namespace Rsdn.Framework.Formatting.BBCode
 			
 			ctx.Output.Append("<pre class='c'><code>");
 			
-			// Рендерим детей с поддержкой BBCode и подсветкой
+			// Рендерим детей с поддержкой BBCode и подсветкой (в preformatted режиме)
 			RenderCodeChildren(node, ctx, lang);
 			
 			ctx.Output.Append("</code></pre>");
@@ -426,59 +460,57 @@ namespace Rsdn.Framework.Formatting.BBCode
 		private void RenderCodeChildren(TagNode node, HtmlRenderContext ctx, string? lang)
 		{
 			CodeHighlighter? highlighter = null;
-			if (!string.IsNullOrEmpty(lang))
-			{
+			if (lang.NotNullNorEmpty())
 				highlighter = FormatterHelper.GetCodeHighlighterByTag(lang);
-			}
 			
 			foreach (var child in node.Children)
-			{
-				if (child is TextNode textNode)
+				switch (child)
 				{
-					var text = textNode.Text;
-					if (!string.IsNullOrEmpty(text))
+					case TextNode textNode:
 					{
-						// Заменяем табуляцию на 4 пробела
-						text = text.Replace("\t", "    ");
-						
-						if (highlighter != null)
+						var text = textNode.Text;
+						if (text.NotNullNorEmpty())
 						{
-							// Подсвечиваем текст
-							var highlighted = highlighter.Highlight(text);
-							highlighted = SetFont(highlighted);
-							ctx.Output.Append(highlighted);
+							// Заменяем табуляцию на 4 пробела
+							text = text.Replace("\t", "    ");
+						
+							if (highlighter != null)
+							{
+								// Подсвечиваем текст
+								var highlighted = highlighter.Highlight(text);
+								highlighted = SetFont(highlighted);
+								ctx.Output.Append(highlighted);
+							}
+							else
+								ctx.Output.Append(HttpUtility.HtmlEncode(text));
+						}
+
+						break;
+					}
+					case TagNode tagChild:
+					{
+						// Рендерим BBCode теги внутри code (b, i, s, u)
+						var tagName = tagChild.TagName.ToLowerInvariant();
+						if (tagName is "b" or "i" or "s" or "u" or "sub" or "sup")
+						{
+							ctx.Output.AppendFormat("<{0}>", tagName);
+							RenderCodeChildren(tagChild, ctx, lang);
+							ctx.Output.AppendFormat("</{0}>", tagName);
 						}
 						else
-						{
-							ctx.Output.Append(HttpUtility.HtmlEncode(text));
-						}
+							// Другие теги - просто рендерим содержимое
+							RenderCodeChildren(tagChild, ctx, lang);
+
+						break;
 					}
 				}
-				else if (child is TagNode tagChild)
-				{
-					// Рендерим BBCode теги внутри code (b, i, s, u)
-					var tagName = tagChild.TagName.ToLowerInvariant();
-					if (tagName == "b" || tagName == "i" || tagName == "s" || tagName == "u" ||
-					    tagName == "sub" || tagName == "sup")
-					{
-						ctx.Output.AppendFormat("<{0}>", tagName);
-						RenderCodeChildren(tagChild, ctx, lang);
-						ctx.Output.AppendFormat("</{0}>", tagName);
-					}
-					else
-					{
-						// Другие теги - просто рендерим содержимое
-						RenderCodeChildren(tagChild, ctx, lang);
-					}
-				}
-			}
 		}
 		
-		private static readonly System.Text.RegularExpressions.Regex _rxSetFont01 = 
-			new System.Text.RegularExpressions.Regex(@"</(?<tag>kw|str|com)>(\s+)<\k<tag>>");
+		private static readonly System.Text.RegularExpressions.Regex _rxSetFont01 =
+			new(@"</(?<tag>kw|str|com)>(\s+)<\k<tag>>");
 		
 		private static readonly System.Text.RegularExpressions.Regex _rxSetFont02 =
-			new System.Text.RegularExpressions.Regex(@"(?s)<(?<tag>kw|str|com)>(?<content>.*?)</\k<tag>>");
+			new(@"(?s)<(?<tag>kw|str|com)>(?<content>.*?)</\k<tag>>");
 
 		private static string SetFont(string code)
 		{
@@ -553,20 +585,19 @@ namespace Rsdn.Framework.Formatting.BBCode
 		/// Отрендерить строку цитирования
 		/// Формат: <span class="lineQuote levelN">A> text</span><br />
 		/// </summary>
-		public void VisitQuoteLine(QuoteLineNode node, object ctx)
+		public void Visit(QuoteLineNode node, HtmlRenderContext ctx)
 		{
-			var context = (HtmlRenderContext)ctx;
 			var level = node.Level;
 			var prefix = node.Prefix;
 			var text = node.Text;
 			
 			// Убираем перенос строки в конце текста
-			text = text?.TrimEnd('\r', '\n') ?? "";
+			text = text.TrimEnd('\r', '\n');
 			
 			// <span class='lineQuote levelN'>A> text</span><br />
 			// prefix уже содержит '>' (например "A>" или "BB>>")
 			// text уже содержит ведущий пробел (после A>)
-			context.Output.AppendFormat("<span class='lineQuote level{0}'>{1}{2}</span><br />\n", 
+			ctx.Output.AppendFormat("<span class='lineQuote level{0}'>{1}{2}</span><br />\n", 
 				level,
 				HttpUtility.HtmlEncode(prefix),
 				HttpUtility.HtmlEncode(text));

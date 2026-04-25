@@ -4,50 +4,36 @@ namespace Rsdn.Framework.Formatting.BBCode.Nodes;
 /// Узел строки цитирования (A> text, BB>> text, и т.д.)
 /// Каждая строка с префиксом цитирования становится span с классом levelN
 /// </summary>
-public class QuoteLineNode : Node
+public class QuoteLineNode(int level, string prefix, string text) : Node
 {
 	/// <summary>
 	/// Уровень цитирования (количество '>')
 	/// </summary>
-	public int Level { get; }
-	
+	public int Level { get; } = level;
+
 	/// <summary>
 	/// Префикс цитирования (например "A>" или "BB>>")
 	/// </summary>
-	public string Prefix { get; }
-	
+	public string Prefix { get; } = prefix;
+
 	/// <summary>
 	/// Текст строки (без префикса)
 	/// </summary>
-	public string Text { get; }
-	
+	public string Text { get; set; } = text;
+
 	/// <summary>
 	/// Была ли пустая строка перед этой цитатой
 	/// (нужно для добавления <br /> внутри span)
 	/// </summary>
 	public bool HasLeadingNewline { get; set; }
 
-	public QuoteLineNode(int level, string prefix, string text)
-	{
-		Level = level;
-		Prefix = prefix;
-		Text = text;
-		HasLeadingNewline = false;
-	}
-
 	public override void Accept<TContext>(INodeVisitor<TContext> visitor, TContext ctx)
 	{
-		if (visitor is IQuoteLineVisitor quoteVisitor)
-			quoteVisitor.VisitQuoteLine(this, ctx);
-		else
-			throw new System.NotSupportedException("Visitor must implement IQuoteLineVisitor");
+			visitor.Visit(this, ctx);
 	}
-}
 
-/// <summary>
-/// Интерфейс посетителя для обработки строк цитирования
-/// </summary>
-public interface IQuoteLineVisitor
-{
-	void VisitQuoteLine(QuoteLineNode node, System.Object ctx);
+	public override void Accept(INodeVisitor visitor)
+	{
+		visitor.Visit(this);
+	}
 }

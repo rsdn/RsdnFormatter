@@ -19,16 +19,27 @@ namespace Rsdn.Framework.Formatting.Tests
 	{
 		public IEnumerator GetEnumerator()
 		{
-			// Подмножество тестов которые должны работать с новым парсером
-			// Пока только простые тесты - остальные будут добавлены по мере реализации
-			yield return GetTestCaseData("SimpleFormatting");
-			yield return GetTestCaseData("SubSup");
-			// Urls - требует постобработки URL (замена rsdn.ru на rsdn.org, class="m")
-			// yield return GetTestCaseData("Urls");
-			yield return GetTestCaseData("Img");
-			yield return GetTestCaseData("Quotation");
-			yield return GetTestCaseData("Heading");
 			yield return GetTestCaseData("Cpp");
+			yield return GetTestCaseData("Cut");
+			yield return GetTestCaseData("ExcessiveBrs");
+			yield return GetTestCaseData("Heading");
+			yield return GetTestCaseData("Img");
+			yield return GetTestCaseData("LinkJSInjection");
+			yield return GetTestCaseData("MakeQuote").Ignore("TBD");
+			yield return GetTestCaseData("Msg2408361");
+			yield return GetTestCaseData("Nemerle");
+			yield return GetTestCaseData("Nitra");
+			yield return GetTestCaseData("ObjC");
+			yield return GetTestCaseData("Quotation");
+			yield return GetTestCaseData("Quotation2");
+			yield return GetTestCaseData("RsdnLink");
+			yield return GetTestCaseData("Rust");
+			yield return GetTestCaseData("SimpleFormatting");
+			yield return GetTestCaseData("Smiles");
+			yield return GetTestCaseData("Sql");
+			yield return GetTestCaseData("SubSup");
+			yield return GetTestCaseData("Urls");
+			yield return GetTestCaseData("XSS");
 		}
 
 		private static TestCaseData GetTestCaseData(string name)

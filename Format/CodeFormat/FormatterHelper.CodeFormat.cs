@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
+using Rsdn.Framework.Formatting.CodeFormat;
 
 namespace Rsdn.Framework.Formatting
 {
@@ -182,7 +183,8 @@ namespace Rsdn.Framework.Formatting
         /// </summary>
         public static CodeHighlighter? GetCodeHighlighterByTag(string tagName)
         {
-            if (tagName == null) throw new ArgumentNullException(nameof(tagName));
+            if (tagName == null)
+                throw new ArgumentNullException(nameof(tagName));
             
             if (!_codeTags.TryGetValue(tagName, out var name) || name == null)
                 return null;

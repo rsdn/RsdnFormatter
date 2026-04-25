@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Rsdn.Framework.Formatting.CodeFormat;
 
 namespace Rsdn.Framework.Formatting
 {

@@ -35,7 +35,7 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="imagesDelegate">Делегат для обработки картинок.
 		/// Если null - используется делегат по умолчанию <see cref="DefaultProcessImagesDelegate"/>.
 		/// </param>
-		public TextFormatter(ProcessImagesDelegate imagesDelegate)
+		public TextFormatter(ProcessImagesDelegate? imagesDelegate)
 		{
 			using (var r = ResourceProvider.ReadResource("hiddentext.htm"))
 				_hiddenTextSnippet = (string)r.Read();
@@ -518,7 +518,7 @@ namespace Rsdn.Framework.Formatting
 		/// <summary>
 		/// Server's name for using in rsdn host replacing.
 		/// </summary>
-		protected string ServerName;
+		protected string? ServerName;
 
 		/// <summary>
 		/// Canonical (common) name of RSDN to replace in all links to rsdn
@@ -801,7 +801,7 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		public static IList<Func<StringBuilder, StringBuilder>> CreateInlineTagReplacers(
 			bool checking,
-			Func<string, string> tagNameGetter = null)
+			Func<string, string>? tagNameGetter = null)
 		{
 			return
 				_inlineTags
@@ -876,7 +876,7 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="txt">Исходный текст.</param>
 		/// <returns>Сформатированный текст.</returns>
-		public virtual string Format(string txt)
+		public virtual string Format(string? txt)
 		{
 			return Format(txt, true, true);
 		}
@@ -889,7 +889,7 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="smile">Признак обработки смайликов.</param>
 		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
-		public virtual string Format(string txt, bool smile, bool isHttps)
+		public virtual string Format(string? txt, bool smile, bool isHttps)
 		{
 			return Format(txt, smile, false, false, isHttps);
 		}
@@ -905,7 +905,7 @@ namespace Rsdn.Framework.Formatting
 		/// <param name="isHttps">Use HTTPS for RSDN links.</param>
 		/// <returns>Сформатированный текст.</returns>
 		public virtual string Format(
-			string txt,
+			string? txt,
 			bool smile,
 			bool doNotReplaceTags,
 			bool doNotFormatImplicitLinks,
@@ -1211,7 +1211,7 @@ namespace Rsdn.Framework.Formatting
 				$"<a target=\"_blank\" href=\"http://findbook.ru/search/?isbn={isbn}&ozon=rsdn&bolero=rsdnru&biblion=791&booksru=rsdn&zonex=248&piter=3600&myshop=00776\">{match.Value}</a>";
 		}
 
-		#region Новый BBCode парсер
+	#region Новый BBCode парсер
 
 		/// <summary>
 		/// Форматирование текста с использованием нового BBCode парсера.
@@ -1219,7 +1219,26 @@ namespace Rsdn.Framework.Formatting
 		/// </summary>
 		/// <param name="txt">Исходный текст в BBCode формате.</param>
 		/// <returns>Сформатированный HTML.</returns>
-		public virtual string FormatBBCode(string? txt)
+		public virtual string FormatBBCode(string txt)
+		{
+			// Временно используем старый форматтер пока новый парсер не будет готов
+			// TODO: Реализовать недостающий функционал в новом парсере:
+			// - Смайлы
+			// - Подсветка кода
+			// - XSS защита
+			// - RSDN ссылки [#...]
+			// - Неявные URL в тексте
+			// - Цитаты с правильной обработкой
+			return Format(txt, true, true);
+		}
+
+		/// <summary>
+		/// Форматирование текста с использованием нового BBCode парсера.
+		/// Экспериментальный метод для тестирования производительности.
+		/// </summary>
+		/// <param name="txt">Исходный текст в BBCode формате.</param>
+		/// <returns>Сформатированный HTML.</returns>
+		public virtual string FormatBBCodeNew(string? txt)
 		{
 			if (string.IsNullOrWhiteSpace(txt))
 				return "";
@@ -1227,6 +1246,13 @@ namespace Rsdn.Framework.Formatting
 			// Парсим BBCode в AST
 			var parser = new Parser(txt!);
 			var doc = parser.Parse();
+
+			// Трансформируем: заменяем старые хосты RSDN на каноничный
+			var hostTransformer = new RsdnHostTransformer
+			{
+				CanonicalHostName = CanonicalRsdnHostName
+			};
+			hostTransformer.Transform(doc);
 
 			// Рендерим в HTML
 			var renderer = new HtmlRenderer();

@@ -4,48 +4,43 @@ namespace Rsdn.Framework.Formatting
 {
 	public class HtmlAnchor
 	{
-		public HtmlAnchor()
+		public string? HRef
 		{
-			Attributes = new Dictionary<string, string>();
+			get => GetAttribute("href");
+			set => Attributes["href"] = value;
 		}
 
-		public string HRef
+		public string? InnerHtml { get; set; }
+
+		public string? InnerText { get; set; }
+
+		public string? Target
 		{
-			get { return GetAttribute("href"); }
-			set { Attributes["href"] = value; }
+			get => GetAttribute("target");
+			set => Attributes["target"] = value;
 		}
 
-		public string InnerHtml { get; set; }
-
-		public string InnerText { get; set; }
-
-		public string Target
+		public string? Title
 		{
-			get { return GetAttribute("target"); }
-			set { Attributes["target"] = value; }
+			get => GetAttribute("title");
+			set => Attributes["title"] = value;
 		}
 
-		public string Title
+		public string? Class
 		{
-			get { return GetAttribute("title"); }
-			set { Attributes["title"] = value; }
+			get => GetAttribute("class");
+			set => Attributes["class"] = value;
 		}
 
-		public string Class
+		public string? Rel
 		{
-			get { return GetAttribute("class"); }
-			set { Attributes["class"] = value; }
+			get => GetAttribute("rel");
+			set => Attributes["rel"] = value;
 		}
 
-		public string Rel
-		{
-			get { return GetAttribute("rel"); }
-			set { Attributes["rel"] = value; }
-		}
+		public IDictionary<string, string?> Attributes { get; set; } = new Dictionary<string, string?>();
 
-		public IDictionary<string, string> Attributes { get; set; }
-
-		private string GetAttribute(string name)
+		private string? GetAttribute(string name)
 		{
 			if (!Attributes.ContainsKey(name))
 				Attributes[name] = null;
